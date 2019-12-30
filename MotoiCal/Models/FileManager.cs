@@ -28,5 +28,10 @@ namespace MotoiCal.Models
         {
             File.WriteAllText(filePath, string.Empty);
         }
+
+        public void DeleteFile(string filePath)
+        {
+            File.Delete(filePath);
+        }
     }
 }
