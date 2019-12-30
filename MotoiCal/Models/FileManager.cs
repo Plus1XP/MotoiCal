@@ -33,5 +33,12 @@ namespace MotoiCal.Models
         {
             File.Delete(filePath);
         }
+
+        public void SaveToFile(string filePath, string Value)
+        {
+            StreamWriter writeFile = new StreamWriter(filePath);
+            writeFile.Write(Value);
+            writeFile.Close();
+        }
     }
 }
