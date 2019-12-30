@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotoiCal", "MotoiCal\MotoiCal.csproj", "{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {964CBE93-2CE0-4325-B90F-CBB5BF1B88C2}
+	EndGlobalSection
+EndGlobal
