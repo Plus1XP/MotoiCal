@@ -18,5 +18,10 @@ namespace MotoiCal.Models
         {
             return File.Exists(filePath) ? true : false;
         }
+
+        public void CreateFile(string filePath)
+        {
+            File.Create(filePath).Close();
+        }
     }
 }
