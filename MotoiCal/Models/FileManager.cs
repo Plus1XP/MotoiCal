@@ -40,5 +40,15 @@ namespace MotoiCal.Models
             writeFile.Write(Value);
             writeFile.Close();
         }
+
+        public string ReadFromFile(string filePath)
+        {
+            StringBuilder text = new StringBuilder();
+            foreach (string line in File.ReadLines(filePath))
+            {
+                text.Append(line);
+            }
+            return text.ToString();
+        }
     }
 }
