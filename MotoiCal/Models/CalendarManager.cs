@@ -102,5 +102,13 @@ namespace MotoiCal.Models
                 this.fileManager.CreateFile(filePath);
             }
         }
+
+        public string CreateICSFile(string filePath)
+        {
+            // After validating the ICS file the iCalendar entries will be writtern and confirmation will be returned.
+            this.ValidateFileIsUsable(filePath);
+            this.fileManager.SaveToFile(filePath, this.RetrieveCalendarEntries());
+            return "ICS file created";
+        }
     }
 }
