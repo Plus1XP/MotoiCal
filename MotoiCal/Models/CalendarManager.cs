@@ -76,5 +76,11 @@ namespace MotoiCal.Models
             this.calendarEntry.AppendLine("DESCRIPTION:" + description);
             this.calendarEntry.AppendLine("END:VEVENT");
         }
+
+        public void CloseCalendarEntry()
+        {
+            // Ends the icalendar entry.
+            this.calendarEntry.AppendLine("END:VCALENDAR");
+        }
     }
 }
