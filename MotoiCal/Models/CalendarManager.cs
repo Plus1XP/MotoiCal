@@ -9,6 +9,7 @@ namespace MotoiCal.Models
     public class CalendarManager
     {
         public StringBuilder calendarEntry;
+        private FileManager fileManager;
 
         public CalendarManager()
         {
@@ -87,6 +88,19 @@ namespace MotoiCal.Models
         {
             // Returns the string initially created with the iCalendar entry.
             return this.calendarEntry.ToString();
+        }
+
+        private void ValidateFileIsUsable(string filePath)
+        {
+            // If file has been created => clear file, otherwise create new file.
+            if (this.fileManager.isFileCreated(filePath))
+            {
+                this.fileManager.ClearFile(filePath);
+            }
+            else
+            {
+                this.fileManager.CreateFile(filePath);
+            }
         }
     }
 }
