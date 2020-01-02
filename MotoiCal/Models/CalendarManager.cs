@@ -116,5 +116,20 @@ namespace MotoiCal.Models
             // If file exists return all lines from file, otherwise return string "No Data".
             return this.fileManager.isFileCreated(filePath) ? this.fileManager.ReadFromFile(filePath) : "No Data";
         }
+
+        public string DeleteICSFile(string filePath)
+        {
+            // If file exists delete file and return confirmation, otherwise return string "No File".
+            string results;
+            if (this.fileManager.isFileCreated(filePath))
+            {
+                this.fileManager.DeleteFile(filePath);
+                return results = $"{filePath} Deleted";
+            }
+            else
+            {
+                return results = "No File";
+            }
+        }
     }
 }
