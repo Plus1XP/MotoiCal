@@ -110,5 +110,11 @@ namespace MotoiCal.Models
             this.fileManager.SaveToFile(filePath, this.RetrieveCalendarEntries());
             return "ICS file created";
         }
+
+        public string ReadICSFile(string filePath)
+        {
+            // If file exists return all lines from file, otherwise return string "No Data".
+            return this.fileManager.isFileCreated(filePath) ? this.fileManager.ReadFromFile(filePath) : "No Data";
+        }
     }
 }
