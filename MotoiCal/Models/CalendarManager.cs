@@ -15,9 +15,14 @@ namespace MotoiCal.Models
 
         public DateTime ParseDateTimeToUTC(string dateTime)
         {
-            DateTime parsedDateTime;
-            DateTime.TryParse(dateTime, out parsedDateTime);
+            DateTime.TryParse(dateTime, out DateTime parsedDateTime);
             return parsedDateTime.ToUniversalTime();
+        }
+
+        public DateTime ParseDateTimeToLocal(string dateTime)
+        {
+            DateTime.TryParse(dateTime, out DateTime parsedDateTime);
+            return parsedDateTime.ToLocalTime();
         }
     }
 }
