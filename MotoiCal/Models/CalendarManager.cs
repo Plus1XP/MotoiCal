@@ -55,5 +55,26 @@ namespace MotoiCal.Models
             this.calendarEntry.AppendLine("END:DAYLIGHT");
             this.calendarEntry.AppendLine("END:VTIMEZONE");
         }
+
+        public void CreateCalendarEventEntry(DateTime startTime, DateTime endTime, string subject, string location, string description)
+        {
+            // Add the event.
+            this.calendarEntry.AppendLine("BEGIN:VEVENT");
+
+            // Specify the date time with the time zone stamp. 
+            /*
+            this.calendarEntry.AppendLine("DTSTART;TZID=GMT Standard Time:" + startTime.ToString("yyyyMMddTHHmm00"));
+            this.calendarEntry.AppendLine("DTEND;TZID=GMT Standard Time:" + endTime.ToString("yyyyMMddTHHmm00"));           
+            */
+
+            // Specify the date time in UTC (Z).
+            this.calendarEntry.AppendLine("DTSTART:" + startTime.ToString("yyyyMMddTHHmm00Z"));
+            this.calendarEntry.AppendLine("DTEND:" + endTime.ToString("yyyyMMddTHHmm00Z"));
+
+            this.calendarEntry.AppendLine("SUMMARY:" + subject);
+            this.calendarEntry.AppendLine("LOCATION:" + location);
+            this.calendarEntry.AppendLine("DESCRIPTION:" + description);
+            this.calendarEntry.AppendLine("END:VEVENT");
+        }
     }
 }
