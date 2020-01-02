@@ -82,5 +82,11 @@ namespace MotoiCal.Models
             // Ends the icalendar entry.
             this.calendarEntry.AppendLine("END:VCALENDAR");
         }
+
+        private string RetrieveCalendarEntries()
+        {
+            // Returns the string initially created with the iCalendar entry.
+            return this.calendarEntry.ToString();
+        }
     }
 }
