@@ -8,7 +8,7 @@ namespace MotoiCal.Models
 {
     public class CalendarManager
     {
-        public StringBuilder calendarEntry;
+        private StringBuilder calendarEntry;
         private FileManager fileManager;
 
         public CalendarManager()
