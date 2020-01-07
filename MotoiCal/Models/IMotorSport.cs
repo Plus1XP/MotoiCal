@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MotoiCal.Models
 {
-    public interface IMotorSports
+    public interface IMotorSport
     {
         string FilePath { get; }
         string SportIdentifier { get; }
