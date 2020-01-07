@@ -8,23 +8,23 @@ namespace MotoiCal.Models
 {
     public interface IMotorSports
     {
-        string FilePath { get; set; }
-        string SportIdentifier { get; set; }
-        string EventTablePath { get; set; }
-        string ClassNamePath { get; set; }
-        string SessionNamePath { get; set; }
-        string RaceNamePath { get; set; }
-        string CircuitNamePath { get; set; }
-        string LocationNamePath { get; set; }
-        string StartDatePath { get; set; }
-        string StartDateAttribute { get; set; }
-        string EndDatePath { get; set; }
-        string EndDateAttribute { get; set; }
-        string GMTOffset { get; set; }
+        string FilePath { get; }
+        string SportIdentifier { get; }
+        string EventTablePath { get; }
+        string ClassNamePath { get; }
+        string SessionNamePath { get; }
+        string RaceNamePath { get; }
+        string CircuitNamePath { get; }
+        string LocationNamePath { get; }
+        string StartDatePath { get; }
+        string StartDateAttribute { get; }
+        string EndDatePath { get; }
+        string EndDateAttribute { get; }
+        string GMTOffset { get; }
 
-        string[] EventURLs { get; set; }
-        string[] ExcludedClasses { get; set; }
-        string[] ExcludedEvents { get; set; }
-        string[] ExcludedWords { get; set; }
+        string[] EventURLs { get; }
+        string[] ExcludedClasses { get; }
+        string[] ExcludedEvents { get; }
+        string[] ExcludedWords { get; }
     }
 }
