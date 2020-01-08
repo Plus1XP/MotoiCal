@@ -27,5 +27,10 @@ namespace MotoiCal.Models
         {
             return this.resultsOutput != null ? this.iCalendar.CreateICSFile(this.motorSport.FilePath) : "Can not generate ICS file without first showing dates";
         }
+
+        public string ReadiCalendar()
+        {
+            return this.iCalendar.ReadICSFile(motorSport.FilePath);
+        }
     }
 }
