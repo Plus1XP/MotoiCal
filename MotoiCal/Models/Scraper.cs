@@ -23,5 +23,9 @@ namespace MotoiCal.Models
             this.iCalendar = new CalendarManager();
         }
 
+        public string GenerateiCalendar()
+        {
+            return this.resultsOutput != null ? this.iCalendar.CreateICSFile(this.motorSport.FilePath) : "Can not generate ICS file without first showing dates";
+        }
     }
 }
