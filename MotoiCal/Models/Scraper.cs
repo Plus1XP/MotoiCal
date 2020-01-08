@@ -30,7 +30,12 @@ namespace MotoiCal.Models
 
         public string ReadiCalendar()
         {
-            return this.iCalendar.ReadICSFile(motorSport.FilePath);
+            return this.iCalendar.ReadICSFile(this.motorSport.FilePath);
+        }
+
+        public string DeleteiCalendar()
+        {
+            return this.iCalendar.DeleteICSFile(this.motorSport.FilePath);
         }
     }
 }
