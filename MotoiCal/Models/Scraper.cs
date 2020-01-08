@@ -37,5 +37,10 @@ namespace MotoiCal.Models
         {
             return this.iCalendar.DeleteICSFile(this.motorSport.FilePath);
         }
+
+        public void ResetResultsOutput()
+        {
+            this.resultsOutput = null;
+        }
     }
 }
