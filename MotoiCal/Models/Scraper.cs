@@ -52,6 +52,14 @@ namespace MotoiCal.Models
             */
             this.GetEventURL(this.motorSport.EventURLs);
             this.iCalendar.CloseCalendarEntry();
-        }        
+        }
+
+        private void GetEventURL(string[] urls)
+        {
+            foreach (string url in urls)
+            {
+                this.ScrapeEventURL(url);
+            }
+        }
     }
 }
