@@ -26,5 +26,7 @@ namespace MotoiCal.Models
         string[] ExcludedClasses { get; }
         string[] ExcludedEvents { get; }
         string[] ExcludedWords { get; }
+
+        string CheckForExcludedWords(string stringToCheck);
     }
 }

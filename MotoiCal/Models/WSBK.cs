@@ -56,5 +56,16 @@ namespace MotoiCal.Models
             "Live Video",
             "WorldSBK - "
         };
+
+        // Not in use.
+        public string CheckForExcludedWords(string stringToCheck)
+        {
+            foreach (string word in this.ExcludedWords)
+            {
+                stringToCheck = stringToCheck.Replace(word, string.Empty);
+            }
+
+            return stringToCheck.Trim();
+        }
     }
 }
