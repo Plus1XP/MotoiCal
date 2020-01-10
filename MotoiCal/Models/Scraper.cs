@@ -42,5 +42,16 @@ namespace MotoiCal.Models
         {
             this.resultsOutput = null;
         }
+
+        public void ScrapeEventsToiCalendar()
+        {
+            this.resultsOutput = new StringBuilder();
+            this.iCalendar.CreateCalendarEntry();
+            /*
+            this.iCal.CreateTimeZone();
+            */
+            this.GetEventURL(this.motorSport.EventURLs);
+            this.iCalendar.CloseCalendarEntry();
+        }        
     }
 }
