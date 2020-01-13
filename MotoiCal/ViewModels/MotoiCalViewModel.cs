@@ -26,7 +26,11 @@ namespace MotoiCal.ViewModels
 
         public MotoiCalViewModel()
         {
-            
+            this.scraper = new Scraper();
+            this.PullDatesCMD = new RelayCommand(o => this.PullDates(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.GenerateICSCMD = new RelayCommand(o => this.GenerateICS(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.ReadICSCMD = new RelayCommand(o => this.ReadICS(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.DeleteICSCMD = new RelayCommand(o => this.DeleteICS(), o => this.CanExecuteCmd(this.motorSportSeries));
         }
 
         public string AppVersion => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
