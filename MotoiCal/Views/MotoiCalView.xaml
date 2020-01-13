@@ -6,7 +6,12 @@
         xmlns:local="clr-namespace:MotoiCal"
         xmlns:ViewModels="clr-namespace:MotoiCal.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{Binding WindowTitle}" Height="550" Width="800">
+
+    <Window.DataContext>
+        <ViewModels:MotoiCalViewModel/>
+    </Window.DataContext>
+    
     <Grid>
         
     </Grid>
