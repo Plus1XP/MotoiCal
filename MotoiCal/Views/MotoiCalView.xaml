@@ -93,7 +93,7 @@
             </ScrollViewer>
         </Grid>
 
-        <TextBlock Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="6" 
+        <TextBlock Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="3" 
                    Style="{StaticResource HeaderContent}" 
                    Text="{Binding MainHeader}">
         </TextBlock>
