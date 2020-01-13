@@ -97,5 +97,9 @@
                    Style="{StaticResource HeaderContent}" 
                    Text="{Binding MainHeader}">
         </TextBlock>
+
+        <ScrollViewer Grid.Column="5" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="2">
+            <TextBlock Style="{StaticResource ResultsOutputContent}"/>
+        </ScrollViewer>
     </Grid>
 </Window>
