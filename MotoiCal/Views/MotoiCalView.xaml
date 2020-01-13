@@ -56,5 +56,11 @@
             <TextBlock Style="{StaticResource MotorSportSeriesRadioContent}" 
                        Text="{Binding SearchingWSBKContent}"/>
         </DockPanel>
+
+        <Button Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" 
+                Style="{StaticResource CalendarOptionsButton}" 
+                Content="{Binding PullDatesContent}" 
+                Command="{Binding PullDatesCMD}">
+        </Button>
     </Grid>
 </Window>
