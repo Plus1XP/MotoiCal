@@ -165,5 +165,15 @@ namespace MotoiCal.ViewModels
             this.SubHeader = $"{this.motorSportSeries.FilePath}";
             this.ICalendarResults = this.scraper.DeleteiCalendar(this.motorSportSeries);
         }
+
+        private void SetFormula1Instance()
+        {
+            if (this.isSearchingF1)
+            {
+                this.motorSportSeries = new Formula1();
+                this.mainHeader = "Formula 1 Calendar Results";
+            }
+
+        }
     }
 }
