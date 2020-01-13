@@ -193,5 +193,17 @@ namespace MotoiCal.ViewModels
                 this.mainHeader = "WSBK Calendar Results";
             }
         }
+
+        private bool CanExecuteCmd(object parameter)
+        {
+            if (this.motorSportSeries == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
