@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MotoiCal.Models
 {
-    public class WSBK : IMotorSport
+    public class WorldSBK : IMotorSport
     {
-        public string FilePath => "WSBK.ics";
+        public string FilePath => "WorldSBK.ics";
         public string SportIdentifier => "WSBK";
         public string EventTablePath => "//div[@class='timeIso']";
         public string ClassNamePath => "//title";

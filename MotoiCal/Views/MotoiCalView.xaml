@@ -52,33 +52,33 @@
 
         <DockPanel Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="1">
             <RadioButton Style="{StaticResource MotorSportSeriesRadioButton}" 
-                         IsChecked="{Binding IsSearchingWSBK}"/>
+                         IsChecked="{Binding IsSearchingWorldSBK}"/>
             <TextBlock Style="{StaticResource MotorSportSeriesRadioContent}" 
-                       Text="{Binding SearchingWSBKContent}"/>
+                       Text="{Binding SearchingWorldSBKContent}"/>
         </DockPanel>
 
         <Button Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" 
                 Style="{StaticResource CalendarOptionsButton}" 
                 Content="{Binding PullDatesContent}" 
-                Command="{Binding PullDatesCMD}">
+                Command="{Binding PullDatesCmd}">
         </Button>
 
         <Button Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" 
                 Style="{StaticResource CalendarOptionsButton}" 
                 Content="{Binding GenerateIcsContent}" 
-                Command="{Binding GenerateIcsCMD}">
+                Command="{Binding GenerateIcsCmd}">
         </Button>
 
         <Button Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1"
                 Style="{StaticResource CalendarOptionsButton}" 
                 Content="{Binding ReadIcsContent}" 
-                Command="{Binding ReadIcsCMD}">
+                Command="{Binding ReadIcsCmd}">
         </Button>
 
         <Button Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="1" 
                 Style="{StaticResource CalendarOptionsButton}" 
                 Content="{Binding DeleteIcsContent}" 
-                Command="{Binding DeleteIcsCMD}">
+                Command="{Binding DeleteIcsCmd}">
         </Button>
 
         <TextBlock Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" 

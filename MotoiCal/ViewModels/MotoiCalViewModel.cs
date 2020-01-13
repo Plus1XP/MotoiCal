@@ -22,15 +22,15 @@ namespace MotoiCal.ViewModels
         private string subHeader;
         private bool isSearchingF1;
         private bool isSearchingMotoGP;
-        private bool isSearchingWSBK;
+        private bool isSearchingWorldSBK;
 
         public MotoiCalViewModel()
         {
             this.scraper = new Scraper();
-            this.PullDatesCMD = new RelayCommand(o => this.PullDates(), o => this.CanExecuteCmd(this.motorSportSeries));
-            this.GenerateICSCMD = new RelayCommand(o => this.GenerateICS(), o => this.CanExecuteCmd(this.motorSportSeries));
-            this.ReadICSCMD = new RelayCommand(o => this.ReadICS(), o => this.CanExecuteCmd(this.motorSportSeries));
-            this.DeleteICSCMD = new RelayCommand(o => this.DeleteICS(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.PullDatesCmd = new RelayCommand(o => this.PullDates(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.GenerateIcsCmd = new RelayCommand(o => this.GenerateIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.ReadIcsCmd = new RelayCommand(o => this.ReadIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.DeleteIcsCmd = new RelayCommand(o => this.DeleteIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
         }
 
         public string AppVersion => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
@@ -39,11 +39,11 @@ namespace MotoiCal.ViewModels
 
         public string WindowTitle => $"{this.AppTitle} v{this.AppVersion}";
 
-        public string SearchingFormula1Content => "Formula1";
+        public string SearchingFormula1Content => "Formula 1";
 
         public string SearchingMotoGPContent => "MotoGP";
 
-        public string SearchingWSBKContent => "WSBK";
+        public string SearchingWorldSBKContent => "WorldSBK";
 
         public string PullDatesContent => "Pull Dates";
 
@@ -125,25 +125,25 @@ namespace MotoiCal.ViewModels
             }
         }
 
-        public bool IsSearchingWSBK
+        public bool IsSearchingWorldSBK
         {
-            get => this.isSearchingWSBK;
+            get => this.isSearchingWorldSBK;
             set
             {
-                this.isSearchingWSBK = value;
-                this.SetWSBKInstance();
-                this.OnPropertyChanged("IsSearchingWSBK");
+                this.isSearchingWorldSBK = value;
+                this.SetWorldSBKInstance();
+                this.OnPropertyChanged("IsSearchingWorldSBK");
             }
 
         }
 
-        public RelayCommand PullDatesCMD { get; }
+        public RelayCommand PullDatesCmd { get; }
 
-        public RelayCommand GenerateICSCMD { get; }
+        public RelayCommand GenerateIcsCmd { get; }
 
-        public RelayCommand ReadICSCMD { get; }
+        public RelayCommand ReadIcsCmd { get; }
 
-        public RelayCommand DeleteICSCMD { get; }
+        public RelayCommand DeleteIcsCmd { get; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -160,19 +160,19 @@ namespace MotoiCal.ViewModels
             MessageBox.Show("DONE!", $"{this.MainHeader}");
         }
 
-        private void GenerateICS()
+        private void GenerateIcs()
         {
             this.SubHeader = $"{this.motorSportSeries.FilePath}";
             this.ICalendarResults = this.scraper.GenerateiCalendar(this.motorSportSeries);
         }
 
-        private void ReadICS()
+        private void ReadIcs()
         {
             this.SubHeader = $"{this.motorSportSeries.FilePath}";
             this.ICalendarResults = this.scraper.ReadiCalendar(this.motorSportSeries);
         }
 
-        private void DeleteICS()
+        private void DeleteIcs()
         {
             this.SubHeader = $"{this.motorSportSeries.FilePath}";
             this.ICalendarResults = this.scraper.DeleteiCalendar(this.motorSportSeries);
@@ -197,12 +197,12 @@ namespace MotoiCal.ViewModels
             }
         }
 
-        private void SetWSBKInstance()
+        private void SetWorldSBKInstance()
         {
-            if (this.isSearchingWSBK)
+            if (this.isSearchingWorldSBK)
             {
-                this.motorSportSeries = new WSBK();
-                this.mainHeader = "WSBK Calendar Results";
+                this.motorSportSeries = new WorldSBK();
+                this.mainHeader = "WorldSBK Calendar Results";
             }
         }
 
