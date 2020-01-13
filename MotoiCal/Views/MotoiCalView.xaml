@@ -68,5 +68,11 @@
                 Content="{Binding GenerateIcsContent}" 
                 Command="{Binding GenerateIcsCMD}">
         </Button>
+
+        <Button Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1"
+                Style="{StaticResource CalendarOptionsButton}" 
+                Content="{Binding ReadIcsContent}" 
+                Command="{Binding ReadIcsCMD}">
+        </Button>
     </Grid>
 </Window>
