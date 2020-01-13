@@ -147,5 +147,11 @@ namespace MotoiCal.ViewModels
             this.ResultsOutput = this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries);
             MessageBox.Show("DONE!", $"{this.MainHeader}");
         }
+
+        private void GenerateICS()
+        {
+            this.SubHeader = $"{this.motorSportSeries.FilePath}";
+            this.ICalendarResults = this.scraper.GenerateiCalendar(this.motorSportSeries);
+        }
     }
 }
