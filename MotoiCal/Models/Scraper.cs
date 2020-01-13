@@ -13,7 +13,6 @@ namespace MotoiCal.Models
         private HtmlWeb webGet;
         private HtmlDocument doc;
         private CalendarManager iCalendar;
-        private IMotorSport motorSport;
         private StringBuilder resultsOutput;
 
         public Scraper()
@@ -23,19 +22,20 @@ namespace MotoiCal.Models
             this.iCalendar = new CalendarManager();
         }
 
-        public string GenerateiCalendar()
+        public string GenerateiCalendar(IMotorSport motorSport)
         {
-            return this.resultsOutput != null ? this.iCalendar.CreateICSFile(this.motorSport.FilePath) : "Can not generate ICS file without first showing dates";
+            // Checks if resultsOutput has a value, if not then it is assumed the dates have not been pulled.
+            return this.resultsOutput != null ? this.iCalendar.CreateICSFile(motorSport.FilePath) : "Can not generate ICS file without first showing dates";
         }
 
-        public string ReadiCalendar()
+        public string ReadiCalendar(IMotorSport motorSport)
         {
-            return this.iCalendar.ReadICSFile(this.motorSport.FilePath);
+            return this.iCalendar.ReadICSFile(motorSport.FilePath);
         }
 
-        public string DeleteiCalendar()
+        public string DeleteiCalendar(IMotorSport motorSport)
         {
-            return this.iCalendar.DeleteICSFile(this.motorSport.FilePath);
+            return this.iCalendar.DeleteICSFile(motorSport.FilePath);
         }
 
         public void ResetResultsOutput()
@@ -43,54 +43,60 @@ namespace MotoiCal.Models
             this.resultsOutput = null;
         }
 
-        public void ScrapeEventsToiCalendar()
+        public string GetResultsString()
+        {
+            return this.resultsOutput != null ? this.resultsOutput.ToString() : "Please Pull Results First";
+        }
+
+        public string ScrapeEventsToiCalendar(IMotorSport motorSport)
         {
             this.resultsOutput = new StringBuilder();
             this.iCalendar.CreateCalendarEntry();
             /*
             this.iCal.CreateTimeZone();
             */
-            this.GetEventURL(this.motorSport.EventURLs);
+            this.GetEventURL(motorSport);
             this.iCalendar.CloseCalendarEntry();
+            return this.resultsOutput.ToString();
         }
 
-        private void GetEventURL(string[] urls)
+        private void GetEventURL(IMotorSport motorSport)
         {
-            foreach (string url in urls)
+            foreach (string url in motorSport.EventURLs)
             {
-                this.ScrapeEventURL(url);
+                this.ScrapeEventURL(motorSport, url);
             }
         }
 
-        private void ScrapeEventURL(string url)
+        private void ScrapeEventURL(IMotorSport motorSport, string url)
         {
             this.doc = this.webGet.Load(url);
 
-            string RaceName = this.doc.DocumentNode.SelectSingleNode(this.motorSport.RaceNamePath).InnerText;
-            string LocationName = this.doc.DocumentNode.SelectSingleNode(this.motorSport.LocationNamePath).InnerText;
-            string CircuitName = this.motorSport.CheckForExcludedWords(this.doc.DocumentNode.SelectSingleNode(this.motorSport.CircuitNamePath).InnerText);
+            string RaceName = this.doc.DocumentNode.SelectSingleNode(motorSport.RaceNamePath).InnerText;
+            string LocationName = this.doc.DocumentNode.SelectSingleNode(motorSport.LocationNamePath).InnerText;
+            string CircuitName = motorSport.CheckForExcludedWords(this.doc.DocumentNode.SelectSingleNode(motorSport.CircuitNamePath).InnerText);
 
-            this.resultsOutput.AppendLine($"\n{this.motorSport.SportIdentifier} {RaceName}\n{CircuitName}\n{LocationName}");
+            this.resultsOutput.AppendLine($"\n{motorSport.SportIdentifier} {RaceName}\n{CircuitName}\n{LocationName}");
 
-            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(this.motorSport.EventTablePath))
+            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath))
             {
-                string ClassName = node.SelectSingleNode(this.motorSport.ClassNamePath).InnerText.Trim();
+                string ClassName = node.SelectSingleNode(motorSport.ClassNamePath).InnerText.Trim();
 
                 // This checks if the node contains any of the substrings in the excluded array.
-                if (this.motorSport.ExcludedClasses.Any(ClassName.Contains))
+                if (motorSport.ExcludedClasses.Any(ClassName.Contains))
                 {
                     continue;
                 }
 
-                string SessionName = this.motorSport.CheckForExcludedWords(node.SelectSingleNode(this.motorSport.SessionNamePath).InnerText.Trim());
+                string SessionName = motorSport.CheckForExcludedWords(node.SelectSingleNode(motorSport.SessionNamePath).InnerText.Trim());
 
                 // This checks if the node contains any of the substrings in the excluded array.
-                if (this.motorSport.ExcludedEvents.Any(SessionName.Contains))
+                if (motorSport.ExcludedEvents.Any(SessionName.Contains))
                 {
                     continue;
                 }
 
-                string dtStart = node.SelectSingleNode(this.motorSport.StartDatePath)?.Attributes[this.motorSport.StartDateAttribute].Value;
+                string dtStart = node.SelectSingleNode(motorSport.StartDatePath)?.Attributes[motorSport.StartDateAttribute].Value;
 
                 // This checks if the node is null or empty, if it is the session is missing on the website and skips over it.
                 if (string.IsNullOrEmpty(dtStart))
@@ -100,15 +106,15 @@ namespace MotoiCal.Models
                 }
 
                 // To handle empty rows ? checks whether or not the returned HtmlNodeCollection is null.
-                string dtEndNullCheck = node.SelectSingleNode(this.motorSport.EndDatePath)?.Attributes[this.motorSport.EndDateAttribute].Value;
+                string dtEndNullCheck = node.SelectSingleNode(motorSport.EndDatePath)?.Attributes[motorSport.EndDateAttribute].Value;
 
                 // Handles if the end time result is null (default to start time + 1 HR) or not (parse end time) using a ternary operator.
                 string dtEnd = string.IsNullOrEmpty(dtEndNullCheck) ? DateTime.Parse(dtStart).AddHours(1).ToString() : dtEndNullCheck;
 
                 // Formula1 handles the GMT offset differently (+0000) compared to MotoGP & WSBK (0000-00-00T00:00:00+0000").
-                if (this.motorSport.SportIdentifier.Equals("Formula1"))
+                if (motorSport.SportIdentifier.Equals("Formula1"))
                 {
-                    string dtOffset = node.SelectSingleNode(this.motorSport.StartDatePath).Attributes[this.motorSport.GMTOffset].Value;
+                    string dtOffset = node.SelectSingleNode(motorSport.StartDatePath).Attributes[motorSport.GMTOffset].Value;
                     dtStart += dtOffset;
                     dtEnd += dtOffset;
                 }
