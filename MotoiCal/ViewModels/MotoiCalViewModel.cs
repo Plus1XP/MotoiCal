@@ -175,5 +175,14 @@ namespace MotoiCal.ViewModels
             }
 
         }
+
+        private void SetMotoGPInstance()
+        {
+            if (this.isSearchingMotoGP)
+            {
+                this.motorSportSeries = new MotoGP();
+                this.mainHeader = "MotoGP Calendar Results";
+            }
+        }
     }
 }
