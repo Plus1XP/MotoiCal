@@ -13,7 +13,7 @@ namespace MotoiCal.Models
 
         public CalendarManager()
         {
-
+            this.fileManager = new FileManager();
         }
 
         public DateTime ParseDateTimeToUTC(string dateTime)
