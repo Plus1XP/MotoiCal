@@ -4,12 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MotoiCal"
-        xmlns:ViewModels="clr-namespace:MotoiCal.ViewModels"
+        xmlns:viewModels="clr-namespace:MotoiCal.ViewModels"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="550" Width="800">
 
     <Window.DataContext>
-        <ViewModels:MotoiCalViewModel/>
+        <viewModels:MotoiCalViewModel/>
     </Window.DataContext>
 
     <Grid>
