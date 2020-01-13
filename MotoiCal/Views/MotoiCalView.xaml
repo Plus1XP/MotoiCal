@@ -80,5 +80,10 @@
                 Content="{Binding DeleteIcsContent}" 
                 Command="{Binding DeleteIcsCMD}">
         </Button>
+
+        <TextBlock Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" 
+                   Style="{StaticResource HeaderContent}"
+                   Text="{Binding SubHeader}">
+        </TextBlock>
     </Grid>
 </Window>
