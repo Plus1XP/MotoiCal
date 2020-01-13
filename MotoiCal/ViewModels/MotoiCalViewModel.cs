@@ -41,6 +41,14 @@ namespace MotoiCal.ViewModels
 
         public string SearchingWSBKContent => "WSBK";
 
+        public string PullDatesContent => "Pull Dates";
+
+        public string GenerateIcsContent => "Generate ICS";
+
+        public string ReadIcsContent => "Read ICS";
+
+        public string DeleteIcsContent => "Delete ICS";
+
         public IMotorSport MotorSportSeries
         {
             get => this.motorSportSeries;
