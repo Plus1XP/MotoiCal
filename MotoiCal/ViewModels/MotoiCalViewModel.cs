@@ -159,5 +159,11 @@ namespace MotoiCal.ViewModels
             this.SubHeader = $"{this.motorSportSeries.FilePath}";
             this.ICalendarResults = this.scraper.ReadiCalendar(this.motorSportSeries);
         }
+
+        private void DeleteICS()
+        {
+            this.SubHeader = $"{this.motorSportSeries.FilePath}";
+            this.ICalendarResults = this.scraper.DeleteiCalendar(this.motorSportSeries);
+        }
     }
 }
