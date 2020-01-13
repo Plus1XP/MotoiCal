@@ -62,5 +62,11 @@
                 Content="{Binding PullDatesContent}" 
                 Command="{Binding PullDatesCMD}">
         </Button>
+
+        <Button Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" 
+                Style="{StaticResource CalendarOptionsButton}" 
+                Content="{Binding GenerateIcsContent}" 
+                Command="{Binding GenerateIcsCMD}">
+        </Button>
     </Grid>
 </Window>
