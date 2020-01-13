@@ -184,5 +184,14 @@ namespace MotoiCal.ViewModels
                 this.mainHeader = "MotoGP Calendar Results";
             }
         }
+
+        private void SetWSBKInstance()
+        {
+            if (this.isSearchingWSBK)
+            {
+                this.motorSportSeries = new WSBK();
+                this.mainHeader = "WSBK Calendar Results";
+            }
+        }
     }
 }
