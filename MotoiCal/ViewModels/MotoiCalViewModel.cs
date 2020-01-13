@@ -140,5 +140,12 @@ namespace MotoiCal.ViewModels
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
+
+        private void PullDates()
+        {
+            this.OnPropertyChanged("MainHeader");
+            this.ResultsOutput = this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries);
+            MessageBox.Show("DONE!", $"{this.MainHeader}");
+        }
     }
 }
