@@ -42,5 +42,12 @@
             <TextBlock Style="{StaticResource MotorSportSeriesRadioContent}" 
                        Text="{Binding SearchingFormula1Content}"/>
         </DockPanel>
+        
+        <DockPanel Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1">
+            <RadioButton Style="{StaticResource MotorSportSeriesRadioButton}" 
+                         IsChecked="{Binding IsSearchingMotoGP}"/>
+            <TextBlock Style="{StaticResource MotorSportSeriesRadioContent}" 
+                       Text="{Binding SearchingMotoGPContent}"/>
+        </DockPanel>
     </Grid>
 </Window>
