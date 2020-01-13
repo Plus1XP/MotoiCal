@@ -35,5 +35,12 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
+
+        <DockPanel Grid.Column="1" Grid.Row="1">
+            <RadioButton Style="{StaticResource MotorSportSeriesRadioButton}" 
+                         IsChecked="{Binding IsSearchingF1}"/>
+            <TextBlock Style="{StaticResource MotorSportSeriesRadioContent}" 
+                       Text="{Binding SearchingFormula1Content}"/>
+        </DockPanel>
     </Grid>
 </Window>
