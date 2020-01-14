@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyDescription("Scrapes motorsport event dates and creates an ics file")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("https://github.com/aleuts")]
-[assembly: AssemblyProduct("Moto iCal")]
+[assembly: AssemblyProduct("Moto-iCal")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -52,5 +52,5 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.1")]
-[assembly: AssemblyInformationalVersion("0.1.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyInformationalVersion("0.2.0")]
+[assembly: AssemblyFileVersion("0.2.0.0")]
