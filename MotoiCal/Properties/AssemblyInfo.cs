@@ -11,7 +11,7 @@ using System.Windows;
 [assembly: AssemblyDescription("Scrapes motorsport event dates and creates an ics file")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("https://github.com/aleuts")]
-[assembly: AssemblyProduct("Moto iCal")]
+[assembly: AssemblyProduct("Moto-iCal")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
