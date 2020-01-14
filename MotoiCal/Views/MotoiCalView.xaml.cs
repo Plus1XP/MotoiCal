@@ -22,7 +22,7 @@ namespace MotoiCal
     {
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

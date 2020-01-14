@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using HtmlAgilityPack;
 
@@ -10,10 +8,10 @@ namespace MotoiCal.Models
 {
     public class Scraper
     {
-        private HtmlWeb webGet;
         private HtmlDocument doc;
-        private CalendarManager iCalendar;
+        private readonly CalendarManager iCalendar;
         private StringBuilder resultsOutput;
+        private readonly HtmlWeb webGet;
 
         public Scraper()
         {
@@ -25,7 +23,9 @@ namespace MotoiCal.Models
         public string GenerateiCalendar(IMotorSport motorSport)
         {
             // Checks if resultsOutput has a value, if not then it is assumed the dates have not been pulled.
-            return this.resultsOutput != null ? this.iCalendar.CreateICSFile(motorSport.FilePath) : "Can not generate ICS file without first showing dates";
+            return this.resultsOutput != null
+                ? this.iCalendar.CreateICSFile(motorSport.FilePath)
+                : "Can not generate ICS file without first showing dates";
         }
 
         public string ReadiCalendar(IMotorSport motorSport)
@@ -109,7 +109,9 @@ namespace MotoiCal.Models
                 string dtEndNullCheck = node.SelectSingleNode(motorSport.EndDatePath)?.Attributes[motorSport.EndDateAttribute].Value;
 
                 // Handles if the end time result is null (default to start time + 1 HR) or not (parse end time) using a ternary operator.
-                string dtEnd = string.IsNullOrEmpty(dtEndNullCheck) ? DateTime.Parse(dtStart).AddHours(1).ToString() : dtEndNullCheck;
+                string dtEnd = string.IsNullOrEmpty(dtEndNullCheck)
+                    ? DateTime.Parse(dtStart).AddHours(1).ToString()
+                    : dtEndNullCheck;
 
                 // Formula1 handles the GMT offset differently (+0000) compared to MotoGP & WSBK (0000-00-00T00:00:00+0000").
                 if (motorSport.SportIdentifier.Equals("Formula1"))
@@ -129,7 +131,8 @@ namespace MotoiCal.Models
 
                 this.resultsOutput.AppendLine($"{ClassName} {SessionName} : {StartTimeLocal} - {EndTimeLocal}");
 
-                this.iCalendar.CreateCalendarEventEntry(StartTimeUTC, EndTimeUTC, $"{ClassName} {RaceName} {SessionName}", LocationName, CircuitName);
+                this.iCalendar.CreateCalendarEventEntry(
+                    StartTimeUTC, EndTimeUTC, $"{ClassName} {RaceName} {SessionName}", LocationName, CircuitName);
             }
         }
     }

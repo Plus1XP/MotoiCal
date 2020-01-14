@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MotoiCal.Models
+﻿namespace MotoiCal.Models
 {
     public class MotoGP : IMotorSport
     {
@@ -70,7 +64,6 @@ namespace MotoiCal.Models
             {
                 stringToCheck = stringToCheck.Replace(word, string.Empty);
             }
-
             return stringToCheck.Trim();
         }
     }

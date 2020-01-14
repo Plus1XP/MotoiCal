@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace MotoiCal.Models
@@ -19,10 +15,7 @@ namespace MotoiCal.Models
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException("execute");
-
-            this.execute = execute;
+            this.execute = execute ?? throw new ArgumentNullException("execute");
             this.canExecute = canExecute;
         }
 
@@ -55,9 +48,7 @@ namespace MotoiCal.Models
 
         public RelayCommand(Action<T> execute, Predicate<T> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException("execute");
-            this.execute = execute;
+            this.execute = execute ?? throw new ArgumentNullException("execute");
             this.canExecute = canExecute;
         }
 
@@ -69,12 +60,12 @@ namespace MotoiCal.Models
 
         public bool CanExecute(object parameter)
         {
-            return this.canExecute == null || this.canExecute((T)parameter);
+            return this.canExecute == null || this.canExecute((T) parameter);
         }
 
         public void Execute(object parameter)
         {
-            this.execute((T)parameter);
+            this.execute((T) parameter);
         }
     }
 }
