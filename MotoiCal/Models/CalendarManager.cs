@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MotoiCal.Models
 {
     public class CalendarManager
     {
         private StringBuilder calendarEntry;
-        private FileManager fileManager;
+        private readonly FileManager fileManager;
 
         public CalendarManager()
         {
@@ -93,7 +90,7 @@ namespace MotoiCal.Models
         private void ValidateFileIsUsable(string filePath)
         {
             // If file has been created => clear file, otherwise create new file.
-            if (this.fileManager.isFileCreated(filePath))
+            if (this.fileManager.IsFileCreated(filePath))
             {
                 this.fileManager.ClearFile(filePath);
             }
@@ -114,14 +111,14 @@ namespace MotoiCal.Models
         public string ReadICSFile(string filePath)
         {
             // If file exists return all lines from file, otherwise return string "No Data".
-            return this.fileManager.isFileCreated(filePath) ? this.fileManager.ReadFromFile(filePath) : "No Data";
+            return this.fileManager.IsFileCreated(filePath) ? this.fileManager.ReadFromFile(filePath) : "No Data";
         }
 
         public string DeleteICSFile(string filePath)
         {
             // If file exists delete file and return confirmation, otherwise return string "No File".
             string results;
-            if (this.fileManager.isFileCreated(filePath))
+            if (this.fileManager.IsFileCreated(filePath))
             {
                 this.fileManager.DeleteFile(filePath);
                 return results = $"{filePath} Deleted";

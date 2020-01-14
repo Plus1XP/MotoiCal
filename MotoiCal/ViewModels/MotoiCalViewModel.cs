@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.ComponentModel;
+using System.Reflection;
 using System.Windows;
 
 using MotoiCal.Models;
@@ -14,11 +9,11 @@ namespace MotoiCal.ViewModels
 {
     public class MotoiCalViewModel : INotifyPropertyChanged
     {
-        private Scraper scraper;
+        private readonly Scraper scraper;
         private IMotorSport motorSportSeries;
-        private string resultsOutput;
-        private string iCalendarResults;
+        private string iCalendarResults;    
         private string mainHeader;
+        private string resultsOutput;
         private string subHeader;
         private bool isSearchingF1;
         private bool isSearchingMotoGP;
@@ -31,6 +26,17 @@ namespace MotoiCal.ViewModels
             this.GenerateIcsCmd = new RelayCommand(o => this.GenerateIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.ReadIcsCmd = new RelayCommand(o => this.ReadIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.DeleteIcsCmd = new RelayCommand(o => this.DeleteIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public IMotorSport MotorSportSeries
+        {
+            get => this.motorSportSeries;
+            set
+            {
+                this.motorSportSeries = value;
+                this.OnPropertyChanged("MotorSportSeries");
+            }
         }
 
         public string AppVersion => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
@@ -53,19 +59,9 @@ namespace MotoiCal.ViewModels
 
         public string DeleteIcsContent => "Delete ICS";
 
-        public IMotorSport MotorSportSeries
-        {
-            get => this.motorSportSeries;
-            set
-            {
-                this.motorSportSeries = value;
-                this.OnPropertyChanged("MotorSportSeries");
-            }
-        }
-
         public string MainHeader
         {
-            get => this.mainHeader; 
+            get => this.mainHeader;
             set
             {
                 this.mainHeader = value;
@@ -134,7 +130,6 @@ namespace MotoiCal.ViewModels
                 this.SetWorldSBKInstance();
                 this.OnPropertyChanged("IsSearchingWorldSBK");
             }
-
         }
 
         public RelayCommand PullDatesCmd { get; }
@@ -145,12 +140,12 @@ namespace MotoiCal.ViewModels
 
         public RelayCommand DeleteIcsCmd { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public void OnPropertyChanged(string property)
         {
             if (PropertyChanged != null)
+            {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
         }
 
         private void PullDates()
@@ -185,7 +180,6 @@ namespace MotoiCal.ViewModels
                 this.motorSportSeries = new Formula1();
                 this.mainHeader = "Formula 1 Calendar Results";
             }
-
         }
 
         private void SetMotoGPInstance()

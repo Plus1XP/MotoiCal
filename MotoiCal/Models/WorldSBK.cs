@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MotoiCal.Models
+﻿namespace MotoiCal.Models
 {
     public class WorldSBK : IMotorSport
     {
@@ -16,7 +10,7 @@ namespace MotoiCal.Models
         public string RaceNamePath => "//div[@class='title-event-circuit']/span";
         public string CircuitNamePath => "//div[@class='title-event-circuit']/h2";
 
-        // Location value is filler as the website doesnt have much scrape.
+        // LocationNamePath value is filler as the website doesnt have much to scrape.
         public string LocationNamePath => "//*[text()[contains(., 'WorldSBK')]]";
         public string StartDatePath => ".//div[@data_ini]";
         public string StartDateAttribute => "data_ini";
@@ -64,7 +58,6 @@ namespace MotoiCal.Models
             {
                 stringToCheck = stringToCheck.Replace(word, string.Empty);
             }
-
             return stringToCheck.Trim();
         }
     }

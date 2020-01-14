@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace MotoiCal.Models
 {
@@ -11,10 +7,9 @@ namespace MotoiCal.Models
     {
         public FileManager()
         {
-
         }
 
-        public bool isFileCreated(string filePath)
+        public bool IsFileCreated(string filePath)
         {
             return File.Exists(filePath) ? true : false;
         }
