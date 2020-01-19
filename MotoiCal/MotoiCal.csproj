@@ -74,6 +74,7 @@
     <Compile Include="Models\FileManager.cs" />
     <Compile Include="Models\Formula1.cs" />
     <Compile Include="Models\IMotorSport.cs" />
+    <Compile Include="Models\IRaceData.cs" />
     <Compile Include="Models\MotoGP.cs" />
     <Compile Include="Models\RelayCommand.cs" />
     <Compile Include="Models\Championship.cs" />
