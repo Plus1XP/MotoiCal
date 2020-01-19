@@ -23,7 +23,8 @@ namespace MotoiCal.Models
         string EndDateAttribute { get; }
         string GMTOffset { get; }
 
-        string[] EventURLs { get; }
+        List<string> EventUrlList { get; set; }
+        string[] ExcludedUrls { get; }
         string[] ExcludedClasses { get; }
         string[] ExcludedEvents { get; }
         string[] ExcludedWords { get; }
