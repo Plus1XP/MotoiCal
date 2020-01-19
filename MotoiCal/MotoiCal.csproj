@@ -77,7 +77,7 @@
     <Compile Include="Models\IRaceData.cs" />
     <Compile Include="Models\MotoGP.cs" />
     <Compile Include="Models\RelayCommand.cs" />
-    <Compile Include="Models\Championship.cs" />
+    <Compile Include="Models\MotorSportID.cs" />
     <Compile Include="Models\Scraper.cs" />
     <Compile Include="Models\WorldSBK.cs" />
     <Compile Include="ViewModels\MotoiCalViewModel.cs" />
