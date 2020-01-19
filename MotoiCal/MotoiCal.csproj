@@ -79,6 +79,7 @@
     <Compile Include="Models\RelayCommand.cs" />
     <Compile Include="Models\MotorSportID.cs" />
     <Compile Include="Models\Scraper.cs" />
+    <Compile Include="Models\SubstringExtentions.cs" />
     <Compile Include="Models\WorldSBK.cs" />
     <Compile Include="ViewModels\MotoiCalViewModel.cs" />
     <Compile Include="Views\MotoiCalView.xaml.cs">
