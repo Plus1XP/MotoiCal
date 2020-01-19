@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -9,25 +11,26 @@ namespace MotoiCal.Models
     public class Scraper
     {
         private HtmlDocument doc;
-        private readonly CalendarManager iCalendar;
-        private StringBuilder resultsOutput;
         private readonly HtmlWeb webGet;
+        private readonly CalendarManager iCalendar;
+        private ObservableCollection<IRaceData> raceData;
+
 
         public Scraper()
         {
-            this.webGet = new HtmlWeb();
             this.doc = new HtmlDocument();
+            this.webGet = new HtmlWeb();
             this.iCalendar = new CalendarManager();
         }
 
-        public string GenerateiCalendar(IMotorSport motorSport)
+         public string GenerateiCalendar(IMotorSport motorSport)
         {
             // Checks if resultsOutput has a value, if not then it is assumed the dates have not been pulled.
             return this.resultsOutput != null
                 ? this.iCalendar.CreateICSFile(motorSport.FilePath)
                 : "Can not generate ICS file without first showing dates";
         }
-
+       
         public string ReadiCalendar(IMotorSport motorSport)
         {
             return this.iCalendar.ReadICSFile(motorSport.FilePath);
