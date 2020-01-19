@@ -1,14 +1,21 @@
-﻿namespace MotoiCal.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace MotoiCal.Models
 {
-    public class MotoGP : IMotorSport
+    public class MotoGP : IMotorSport, IRaceData
     {
+        public MotorSportID SportIdentifier => MotorSportID.MotoGP;
         public string FilePath => "MotoGP.ics";
-        public string SportIdentifier => "MotoGP";
+        public string Url => "https://www.motogp.com/en/calendar";
+        public string UrlPartial => "";
+        public string UrlPath => "//a[@class='event_name']";
+        public string UrlAttribute => "href";
         public string EventTablePath => "//div[contains(@class, 'c-schedule__table-container')]/div/div[contains(@class, 'c-schedule__table-row')]";
-        public string ClassNamePath => ".//div[@class='c-schedule__table-cell'][1]";
+        public string SeriesNamePath => ".//div[@class='c-schedule__table-cell'][1]";
         public string SessionNamePath => ".//span[@class='hidden-xs']";
-        public string RaceNamePath => "//div[@class='circuit_subtitle'][2]";
-        public string CircuitNamePath => "//h1[@id='circuit_title']";
+        public string GrandPrixNamePath => "//div[@class='circuit_subtitle'][2]";
+        public string SponserNamePath => "//h1[@id='circuit_title']";
         public string LocationNamePath => "//div[@class='circuit_subtitle']";
         public string StartDatePath => ".//span[@data-ini-time]";
         public string StartDateAttribute => "data-ini-time";
@@ -16,27 +23,28 @@
         public string EndDateAttribute => "data-end";
         public string GMTOffset => string.Empty;
 
-        public string[] EventURLs => new string[]
+        public string Series { get; set; } // MotoGP
+        public string GrandPrix { get; set; } // Qatar
+        public string Session { get; set; } // Race
+        public string Sponser { get; set; } // Grand Prix of Qatar
+        public string Location { get; set; } // Losail International Circuit
+        public DateTime Season { get; set; } // YYYY
+        public DateTime Start { get; set; } // Local DD/MM/YYYY HH:MM:SS
+        public DateTime End { get; set; } // Local DD/MM/YYYY HH:MM:SS
+        public DateTime StartUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
+        public DateTime EndUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
+
+        public string DisplayHeader => $"\n{this.Series} {this.GrandPrix} \n{this.Sponser} \n{this.Location} \n";
+        public string DisplayBody => $"{this.Series} {this.GrandPrix} {this.Session} : {this.Start} - {this.End}";
+        public string IcalendarSubject => $"{this.Series} {this.GrandPrix} {this.Session}";
+        public string IcalendarLocation => $"{Location}";
+        public string IcalendarDescription => $"{Sponser}";
+
+        List<string> IMotorSport.EventUrlList { get; set; }
+
+        public string[] ExcludedUrls => new string[]
         {
-            "http://www.motogp.com/en/event/Qatar",
-            "http://www.motogp.com/en/event/Argentina",
-            "http://www.motogp.com/en/event/Americas",
-            "http://www.motogp.com/en/event/Spain",
-            "http://www.motogp.com/en/event/France",
-            "http://www.motogp.com/en/event/Italy",
-            "http://www.motogp.com/en/event/Catalunya",
-            "http://www.motogp.com/en/event/Netherlands",
-            "http://www.motogp.com/en/event/Germany",
-            "http://www.motogp.com/en/event/Czech+Republic",
-            "http://www.motogp.com/en/event/Austria",
-            "http://www.motogp.com/en/event/Great+Britain",
-            "http://www.motogp.com/en/event/San+Marino",
-            "http://www.motogp.com/en/event/Aragon",
-            "http://www.motogp.com/en/event/Thailand",
-            "http://www.motogp.com/en/event/Japan",
-            "http://www.motogp.com/en/event/Australia",
-            "http://www.motogp.com/en/event/Malaysia",
-            "http://www.motogp.com/en/event/Valencia"
+            "Test",
         };
 
         public string[] ExcludedClasses => new string[]
