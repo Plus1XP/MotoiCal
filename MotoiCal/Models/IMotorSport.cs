@@ -1,14 +1,21 @@
-﻿namespace MotoiCal.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace MotoiCal.Models
 {
     public interface IMotorSport
     {
+        MotorSportID SportIdentifier { get; }
         string FilePath { get; }
-        string SportIdentifier { get; }
+        string Url { get; }
+        string UrlPartial { get; }
+        string UrlPath { get; }
+        string UrlAttribute { get; }
         string EventTablePath { get; }
-        string ClassNamePath { get; }
+        string SeriesNamePath { get; }
         string SessionNamePath { get; }
-        string RaceNamePath { get; }
-        string CircuitNamePath { get; }
+        string GrandPrixNamePath { get; }
+        string SponserNamePath { get; }
         string LocationNamePath { get; }
         string StartDatePath { get; }
         string StartDateAttribute { get; }
@@ -16,7 +23,8 @@
         string EndDateAttribute { get; }
         string GMTOffset { get; }
 
-        string[] EventURLs { get; }
+        List<string> EventUrlList { get; set; }
+        string[] ExcludedUrls { get; }
         string[] ExcludedClasses { get; }
         string[] ExcludedEvents { get; }
         string[] ExcludedWords { get; }
