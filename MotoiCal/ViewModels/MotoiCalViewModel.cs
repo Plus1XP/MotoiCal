@@ -150,9 +150,11 @@ namespace MotoiCal.ViewModels
 
         private void PullDates()
         {
+            string TempHeader = this.MainHeader;
             this.OnPropertyChanged("MainHeader");
             this.ResultsOutput = this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries);
-            MessageBox.Show("DONE!", $"{this.MainHeader}");
+            this.MainHeader += $" {this.scraper.RacesFound(this.MotorSportSeries)} Races";
+            MessageBox.Show($"DONE! \nScraped {this.scraper.RacesFound(this.MotorSportSeries)} Races \nScraped {this.scraper.EventsFound()} Events", $"{TempHeader}");
         }
 
         private void GenerateIcs()
