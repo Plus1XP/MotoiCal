@@ -167,17 +167,74 @@ namespace MotoiCal.Models
                 }
 
                 // Use UTC time for iCal event.
-                DateTime StartTimeUTC = this.iCalendar.ParseDateTimeToUTC(dtStart);
-                DateTime EndTimeUTC = this.iCalendar.ParseDateTimeToUTC(dtEnd);
+                DateTime StartUTC = this.iCalendar.ParseDateTimeToUTC(dtStart);
+                DateTime EndUTC = this.iCalendar.ParseDateTimeToUTC(dtEnd);
 
                 // Use local time for console results.
-                DateTime StartTimeLocal = this.iCalendar.ParseDateTimeToLocal(dtStart);
-                DateTime EndTimeLocal = this.iCalendar.ParseDateTimeToLocal(dtEnd);
+                DateTime Start = this.iCalendar.ParseDateTimeToLocal(dtStart);
+                DateTime End = this.iCalendar.ParseDateTimeToLocal(dtEnd);
 
-                this.resultsOutput.AppendLine($"{ClassName} {SessionName} : {StartTimeLocal} - {EndTimeLocal}");
+                this.AddData(motorSport, GrandPrix, Location, Sponser, Series, Session, Start, End, StartUTC, EndUTC);
+            }
+        }
 
-                this.iCalendar.CreateCalendarEventEntry(
-                    StartTimeUTC, EndTimeUTC, $"{ClassName} {RaceName} {SessionName}", LocationName, CircuitName);
+        private void AddData(
+            IMotorSport motorSport, 
+            string grandPrix, 
+            string location, 
+            string sponser, 
+            string series, 
+            string session, 
+            DateTime start, 
+            DateTime end, 
+            DateTime startUTC, 
+            DateTime endUTC
+            )
+        {
+            switch (motorSport.SportIdentifier)
+            {
+                case MotorSportID.Formula1:
+                    this.raceData.Add(new Formula1
+                    {
+                        GrandPrix = grandPrix,
+                        Location = location,
+                        Sponser = sponser,
+                        Series = series,
+                        Session = session,
+                        Start = start,
+                        End = end,
+                        StartUTC = startUTC,
+                        EndUTC = endUTC
+                    });
+                    break;
+                case MotorSportID.MotoGP:
+                    this.raceData.Add(new MotoGP
+                    {
+                        GrandPrix = grandPrix,
+                        Location = location,
+                        Sponser = sponser,
+                        Series = series,
+                        Session = session,
+                        Start = start,
+                        End = end,
+                        StartUTC = startUTC,
+                        EndUTC = endUTC
+                    });
+                    break;
+                case MotorSportID.WorldSBK:
+                    this.raceData.Add(new WorldSBK
+                    {
+                        GrandPrix = grandPrix,
+                        Location = location,
+                        Sponser = sponser,
+                        Series = series,
+                        Session = session,
+                        Start = start,
+                        End = end,
+                        StartUTC = startUTC,
+                        EndUTC = endUTC
+                    });
+                    break;
             }
         }
     }
