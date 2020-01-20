@@ -41,60 +41,102 @@ namespace MotoiCal.Models
             return this.iCalendar.DeleteICSFile(motorSport.FilePath);
         }
 
-        public void ResetResultsOutput()
+        // currentGrandPrix is initially set to null, then each loop is given the current GrandPRix value.
+        // This allows the stringbuilder to check if it needs to update header.
+        private string ProcessDisplayResults()
         {
-            this.resultsOutput = null;
+            StringBuilder raceresults = new StringBuilder();
+
+            string currentGrandPrix = null;
+
+            foreach (var race in this.raceData)
+            {
+                string header = race.GrandPrix == currentGrandPrix ? string.Empty : race.DisplayHeader;
+                string body = race.DisplayBody;
+
+                raceresults.Append(header);
+                raceresults.AppendLine(body);
+
+                currentGrandPrix = race.GrandPrix;
+            }
+            return raceresults.ToString();
         }
 
-        public string GetResultsString()
+        private void ProcessiCalendarResults()
         {
-            return this.resultsOutput != null ? this.resultsOutput.ToString() : "Please Pull Results First";
-        }
-
-        public string ScrapeEventsToiCalendar(IMotorSport motorSport)
-        {
-            this.resultsOutput = new StringBuilder();
             this.iCalendar.CreateCalendarEntry();
             /*
             this.iCal.CreateTimeZone();
             */
-            this.GetEventURL(motorSport);
+            foreach (var item in this.raceData)
+            {
+                this.iCalendar.CreateCalendarEventEntry(item.StartUTC, item.EndUTC, item.IcalendarSubject, item.IcalendarLocation, item.IcalendarDescription);
+            }
             this.iCalendar.CloseCalendarEntry();
-            return this.resultsOutput.ToString();
         }
 
-        private void GetEventURL(IMotorSport motorSport)
+        public string ScrapeEventsToiCalendar(IMotorSport motorSport)
         {
-            foreach (string url in motorSport.EventURLs)
+            this.raceData = new ObservableCollection<IRaceData>();
+            // Checks list, Same as if list == null or motorSport.Count == 0
+            if (motorSport.EventUrlList?.Any() != true)
             {
-                this.ScrapeEventURL(motorSport, url);
+                this.AddMotoSportEventsToList(motorSport);
+            }
+            this.ProcessMotorSportEvents(motorSport);
+            return this.ProcessDisplayResults();
+        }
+
+        private void AddMotoSportEventsToList(IMotorSport motorSport)
+        {
+            this.doc = this.webGet.Load(motorSport.Url);
+            motorSport.EventUrlList = new List<string>();
+
+            foreach (var node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
+            {              
+                string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
+                string url = string.IsNullOrEmpty(scrapedUrl) ? url = "URL not found" : url = $"{motorSport.UrlPartial}{scrapedUrl}";
+                if (motorSport.ExcludedUrls.Any(url.Contains))
+                {
+                    continue;
+                }
+                motorSport.EventUrlList.Add(url);
             }
         }
 
-        private void ScrapeEventURL(IMotorSport motorSport, string url)
+        private void ProcessMotorSportEvents(IMotorSport motorSport)
+        {
+            foreach (string url in motorSport.EventUrlList)
+            {
+                this.FindMotorSportSessions(motorSport, url);
+            }
+        }
+
+        // Some Nodes return null if there is a problem with the paths or the data is missing.
+        // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
+        private void FindMotorSportSessions(IMotorSport motorSport, string url)
         {
             this.doc = this.webGet.Load(url);
 
-            string RaceName = this.doc.DocumentNode.SelectSingleNode(motorSport.RaceNamePath).InnerText;
-            string LocationName = this.doc.DocumentNode.SelectSingleNode(motorSport.LocationNamePath).InnerText;
-            string CircuitName = motorSport.CheckForExcludedWords(this.doc.DocumentNode.SelectSingleNode(motorSport.CircuitNamePath).InnerText);
-
-            this.resultsOutput.AppendLine($"\n{motorSport.SportIdentifier} {RaceName}\n{CircuitName}\n{LocationName}");
+            string GrandPrix = this.doc.DocumentNode.SelectSingleNode(motorSport.GrandPrixNamePath)?.InnerText ?? "No Data";
+            // Location is empty in WSBK Catalunya
+            string Location = this.doc.DocumentNode.SelectSingleNode(motorSport.LocationNamePath)?.InnerText ?? "No Data";
+            string Sponser = this.doc.DocumentNode.SelectSingleNode(motorSport.SponserNamePath)?.InnerText ?? "No Data";
 
             foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath))
             {
-                string ClassName = node.SelectSingleNode(motorSport.ClassNamePath).InnerText.Trim();
+                string Series = node.SelectSingleNode(motorSport.SeriesNamePath).InnerText.Trim();
 
                 // This checks if the node contains any of the substrings in the excluded array.
-                if (motorSport.ExcludedClasses.Any(ClassName.Contains))
+                if (motorSport.ExcludedClasses.Any(Series.Contains))
                 {
                     continue;
                 }
 
-                string SessionName = motorSport.CheckForExcludedWords(node.SelectSingleNode(motorSport.SessionNamePath).InnerText.Trim());
+                string Session = motorSport.CheckForExcludedWords(node.SelectSingleNode(motorSport.SessionNamePath).InnerText.Trim());
 
                 // This checks if the node contains any of the substrings in the excluded array.
-                if (motorSport.ExcludedEvents.Any(SessionName.Contains))
+                if (motorSport.ExcludedEvents.Any(Session.Contains))
                 {
                     continue;
                 }
