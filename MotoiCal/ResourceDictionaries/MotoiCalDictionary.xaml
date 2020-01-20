@@ -36,6 +36,7 @@
 
     <Style TargetType="TextBlock" x:Key="ResultsOutputContent">
         <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="Margin" Value="0,0,0,0"/>
         <Setter Property="Text" Value="{Binding ResultsOutput}"/>
     </Style>
