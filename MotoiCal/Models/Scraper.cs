@@ -23,14 +23,20 @@ namespace MotoiCal.Models
             this.iCalendar = new CalendarManager();
         }
 
-         public string GenerateiCalendar(IMotorSport motorSport)
+        public string GenerateiCalendar(IMotorSport motorSport)
         {
-            // Checks if resultsOutput has a value, if not then it is assumed the dates have not been pulled.
-            return this.resultsOutput != null
-                ? this.iCalendar.CreateICSFile(motorSport.FilePath)
-                : "Can not generate ICS file without first showing dates";
+            // Checks if url list has a value, if not then it is assumed the dates have not been pulled.
+            if (motorSport.EventUrlList?.Any() != true)
+            {
+                return "Can not generate ICS file without first showing dates";
+            }
+            else
+            {
+                this.ProcessiCalendarResults();
+                return this.iCalendar.CreateICSFile(motorSport.FilePath);
+            }
         }
-       
+
         public string ReadiCalendar(IMotorSport motorSport)
         {
             return this.iCalendar.ReadICSFile(motorSport.FilePath);
