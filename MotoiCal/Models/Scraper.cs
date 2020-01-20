@@ -52,6 +52,11 @@ namespace MotoiCal.Models
             return this.raceData.Count;
         }
 
+        public int RacesFound(IMotorSport motorSport)
+        {
+            return motorSport.EventUrlList.Count;
+        }
+
         // currentGrandPrix is initially set to null, then each loop is given the current GrandPRix value.
         // This allows the stringbuilder to check if it needs to update header.
         private string ProcessDisplayResults()
