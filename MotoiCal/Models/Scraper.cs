@@ -117,7 +117,7 @@ namespace MotoiCal.Models
                     : dtEndNullCheck;
 
                 // Formula1 handles the GMT offset differently (+0000) compared to MotoGP & WSBK (0000-00-00T00:00:00+0000").
-                if (motorSport.SportIdentifier.Equals("Formula1"))
+                if (motorSport.SportIdentifier.Equals(MotorSportID.Formula1))
                 {
                     string dtOffset = node.SelectSingleNode(motorSport.StartDatePath).Attributes[motorSport.GMTOffset].Value;
                     dtStart += dtOffset;
