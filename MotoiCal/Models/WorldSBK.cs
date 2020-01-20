@@ -66,10 +66,12 @@ namespace MotoiCal.Models
         public string[] ExcludedWords => new string[]
         {
             "Live Video",
-            "WorldSBK - "
+            "WorldSBK - ",
+            "Yamaha", // Remove from Round 01 Sponser
+            "Finance" // Remove from Round 01 Sponser
         };
 
-        // Not in use.
+        // Removes unwanted strings from Sponser.
         public string CheckForExcludedWords(string stringToCheck)
         {
             foreach (string word in this.ExcludedWords)
