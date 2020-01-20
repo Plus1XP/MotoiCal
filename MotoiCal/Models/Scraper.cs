@@ -152,7 +152,6 @@ namespace MotoiCal.Models
                 // This checks if the node is null or empty, if it is the session is missing on the website and skips over it.
                 if (string.IsNullOrEmpty(dtStart))
                 {
-                    this.resultsOutput.AppendLine($"{ClassName} {SessionName}");
                     continue;
                 }
 
