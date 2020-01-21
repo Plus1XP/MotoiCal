@@ -65,6 +65,8 @@ namespace MotoiCal.ViewModels
 
         public string DeleteIcsContent => "Delete ICS";
 
+        public Visibility IsEasterEggHidden => this.scraper.IsEasterEggActive(this.easterEggDate) ? Visibility.Visible : Visibility.Hidden;
+
         public string MainHeader
         {
             get => this.mainHeader;
