@@ -22,6 +22,11 @@ namespace MotoiCal.ViewModels
 
         private readonly string easterEggDate = "DD MMM, YYYY";
         private readonly string easterEggMessage = "Enter Easter Egg Text Here";
+        private readonly string easterEggDate = "04 May"; //DD MMM, YYYY
+        private readonly string easterEggTitle = "Did you know?";
+        private readonly string easterEggMessage = "On this day, Lorenzo made his championship debut.\n" +
+                                                    "It was the second qualifying day for the 2002 125cc Spanish Grand Prix.\n" + 
+                                                     "He missed Friday practice as he was not old enough to race!";
 
         public MotoiCalViewModel()
         {
