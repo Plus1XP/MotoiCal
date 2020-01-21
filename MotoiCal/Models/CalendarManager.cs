@@ -117,15 +117,14 @@ namespace MotoiCal.Models
         public string DeleteICSFile(string filePath)
         {
             // If file exists delete file and return confirmation, otherwise return string "No File".
-            string results;
             if (this.fileManager.IsFileCreated(filePath))
             {
                 this.fileManager.DeleteFile(filePath);
-                return results = $"{filePath} Deleted";
+                return $"{filePath} Deleted";
             }
             else
             {
-                return results = "No File";
+                return "No File";
             }
         }
     }
