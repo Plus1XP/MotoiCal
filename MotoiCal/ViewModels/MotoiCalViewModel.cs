@@ -154,6 +154,11 @@ namespace MotoiCal.ViewModels
             }
         }
 
+        private void EasterEgg()
+        {
+            MessageBox.Show(this.easterEggMessage);
+        }
+
         private void PullDates()
         {
             string TempHeader = this.MainHeader;
