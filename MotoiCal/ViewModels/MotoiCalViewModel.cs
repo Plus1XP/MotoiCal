@@ -18,6 +18,10 @@ namespace MotoiCal.ViewModels
         private bool isSearchingF1;
         private bool isSearchingMotoGP;
         private bool isSearchingWorldSBK;
+        private bool canExecuteEasterEgg;
+
+        private readonly string easterEggDate = "DD MMM, YYYY";
+        private readonly string easterEggMessage = "Enter Easter Egg Text Here";
 
         public MotoiCalViewModel()
         {
