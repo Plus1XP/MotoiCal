@@ -165,7 +165,7 @@ namespace MotoiCal.ViewModels
 
         private void EasterEgg()
         {
-            MessageBox.Show(this.easterEggMessage);
+            MessageBox.Show(this.easterEggMessage, this.easterEggTitle);
         }
 
         private void PullDates()
