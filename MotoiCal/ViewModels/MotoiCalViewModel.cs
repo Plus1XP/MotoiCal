@@ -18,14 +18,20 @@ namespace MotoiCal.ViewModels
         private bool isSearchingF1;
         private bool isSearchingMotoGP;
         private bool isSearchingWorldSBK;
+        private bool canExecuteEasterEgg;
+
+        private readonly string easterEggDate = "DD MMM, YYYY";
+        private readonly string easterEggMessage = "Enter Easter Egg Text Here";
 
         public MotoiCalViewModel()
         {
             this.scraper = new Scraper();
+            this.canExecuteEasterEgg = this.scraper.IsEasterEggActive(this.easterEggDate);
             this.PullDatesCmd = new RelayCommand(o => this.PullDates(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.GenerateIcsCmd = new RelayCommand(o => this.GenerateIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.ReadIcsCmd = new RelayCommand(o => this.ReadIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.DeleteIcsCmd = new RelayCommand(o => this.DeleteIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.EasterEggCmd = new RelayCommand(o => this.EasterEgg(), o => this.canExecuteEasterEgg);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -58,6 +64,8 @@ namespace MotoiCal.ViewModels
         public string ReadIcsContent => "Read ICS";
 
         public string DeleteIcsContent => "Delete ICS";
+
+        public Visibility IsEasterEggHidden => this.scraper.IsEasterEggActive(this.easterEggDate) ? Visibility.Visible : Visibility.Hidden;
 
         public string MainHeader
         {
@@ -140,12 +148,19 @@ namespace MotoiCal.ViewModels
 
         public RelayCommand DeleteIcsCmd { get; }
 
+        public RelayCommand EasterEggCmd { get; }
+
         public void OnPropertyChanged(string property)
         {
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
+        }
+
+        private void EasterEgg()
+        {
+            MessageBox.Show(this.easterEggMessage);
         }
 
         private void PullDates()
