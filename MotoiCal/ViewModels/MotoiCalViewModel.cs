@@ -18,10 +18,8 @@ namespace MotoiCal.ViewModels
         private bool isSearchingF1;
         private bool isSearchingMotoGP;
         private bool isSearchingWorldSBK;
-        private bool canExecuteEasterEgg;
+        private bool canExecuteEasterEgg; // Disabled for next planned release/v1.0.0-LorenzosLand
 
-        private readonly string easterEggDate = "DD MMM, YYYY";
-        private readonly string easterEggMessage = "Enter Easter Egg Text Here";
         private readonly string easterEggDate = "04 May"; //DD MMM, YYYY
         private readonly string easterEggTitle = "Did you know?";
         private readonly string easterEggMessage = "On this day, Lorenzo made his championship debut.\n" +
@@ -31,7 +29,7 @@ namespace MotoiCal.ViewModels
         public MotoiCalViewModel()
         {
             this.scraper = new Scraper();
-            this.canExecuteEasterEgg = this.scraper.IsEasterEggActive(this.easterEggDate);
+            this.canExecuteEasterEgg = false; // this.scraper.IsEasterEggActive(this.easterEggDate);
             this.PullDatesCmd = new RelayCommand(o => this.PullDates(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.GenerateIcsCmd = new RelayCommand(o => this.GenerateIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.ReadIcsCmd = new RelayCommand(o => this.ReadIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
