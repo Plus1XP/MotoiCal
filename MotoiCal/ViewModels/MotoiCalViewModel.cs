@@ -26,10 +26,12 @@ namespace MotoiCal.ViewModels
         public MotoiCalViewModel()
         {
             this.scraper = new Scraper();
+            this.canExecuteEasterEgg = this.scraper.IsEasterEggActive(this.easterEggDate);
             this.PullDatesCmd = new RelayCommand(o => this.PullDates(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.GenerateIcsCmd = new RelayCommand(o => this.GenerateIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.ReadIcsCmd = new RelayCommand(o => this.ReadIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
             this.DeleteIcsCmd = new RelayCommand(o => this.DeleteIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
+            this.EasterEggCmd = new RelayCommand(o => this.EasterEgg(), o => this.canExecuteEasterEgg);
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
