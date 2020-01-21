@@ -37,6 +37,10 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
+        <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="?" 
+                Background="White" Foreground="White" BorderThickness="0" 
+                Command="{Binding EasterEggCmd}" Visibility="{Binding IsEasterEggHidden}"/>
+
         <DockPanel Grid.Column="1" Grid.Row="1">
             <RadioButton Style="{StaticResource MotorSportSeriesRadioButton}" 
                          IsChecked="{Binding IsSearchingF1}"/>
