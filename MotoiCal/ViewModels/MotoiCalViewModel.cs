@@ -144,6 +144,8 @@ namespace MotoiCal.ViewModels
 
         public RelayCommand DeleteIcsCmd { get; }
 
+        public RelayCommand EasterEggCmd { get; }
+
         public void OnPropertyChanged(string property)
         {
             if (PropertyChanged != null)
