@@ -57,6 +57,11 @@ namespace MotoiCal.Models
             return motorSport.EventUrlList.Count;
         }
 
+        public bool IsEasterEggActive(string easterEggDate)
+        {
+            return DateTime.Parse(easterEggDate) == DateTime.Now.Date ? true : false;
+        }
+
         // currentGrandPrix is initially set to null, then each loop is given the current GrandPRix value.
         // This allows the stringbuilder to check if it needs to update header.
         private string ProcessDisplayResults()
