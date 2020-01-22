@@ -1,6 +1,6 @@
 ﻿namespace MotoiCal.Models
 {
-    public enum Championship
+    public enum MotorSportID
     {
         None,
         Formula1,

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:MotoiCal"
         xmlns:viewModels="clr-namespace:MotoiCal.ViewModels"
         mc:Ignorable="d"
-        Title="{Binding WindowTitle}" Height="550" Width="800">
+        Title="{Binding WindowTitle}" Height="550" Width="925" 
+        WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
         <viewModels:MotoiCalViewModel/>
@@ -35,6 +36,10 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="?" 
+                Background="White" Foreground="White" BorderThickness="0" 
+                Command="{Binding EasterEggCmd}" Visibility="{Binding IsEasterEggHidden}"/>
 
         <DockPanel Grid.Column="1" Grid.Row="1">
             <RadioButton Style="{StaticResource MotorSportSeriesRadioButton}" 
