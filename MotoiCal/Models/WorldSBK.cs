@@ -3,8 +3,25 @@ using System.Collections.Generic;
 
 namespace MotoiCal.Models
 {
-    public class WorldSBK : IMotorSport, IRaceData
+    public class WorldSBK : IRaceData, IMotorSport
     {
+        public string Series { get; set; } // WorldSBK
+        public string GrandPrix { get; set; } // Round ##
+        public string Session { get; set; } // Race #
+        public string Sponser { get; set; } // Yamaha Finance Australian Round
+        public string Location { get; set; } // Phillip Island
+        public DateTime Season { get; set; } // YYYY
+        public DateTime Start { get; set; } // Local DD/MM/YYYY HH:MM:SS
+        public DateTime End { get; set; } // Local DD/MM/YYYY HH:MM:SS
+        public DateTime StartUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
+        public DateTime EndUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
+
+        public string DisplayHeader => $"\n{this.Series} {this.CheckForExcludedWords(this.Sponser)} \n{this.Sponser.Before("Round")}{this.GrandPrix} \n{this.Location} \n";
+        public string DisplayBody => $"{this.Series} {this.CheckForExcludedWords(this.Sponser.Before("Round"))} {this.Session}: {this.Start} - {this.End}";
+        public string IcalendarSubject => $"{this.Series} {this.CheckForExcludedWords(this.Sponser.Before("Round"))} {this.Session}";
+        public string IcalendarLocation => $"{this.Location}";
+        public string IcalendarDescription => $"{this.Sponser.Before("Round")}{this.GrandPrix}";
+
         public MotorSportID SportIdentifier => MotorSportID.WorldSBK;
         public string FilePath => "WorldSBK.ics";
         public string Url => "http://www.worldsbk.com/en/calendar";
@@ -29,23 +46,6 @@ namespace MotoiCal.Models
         public string EndDatePath => ".//div[@data_end]";
         public string EndDateAttribute => "data_end";
         public string GMTOffset => string.Empty;
-
-        public string Series { get; set; } // WorldSBK
-        public string GrandPrix { get; set; } // Round ##
-        public string Session { get; set; } // Race #
-        public string Sponser { get; set; } // Yamaha Finance Australian Round
-        public string Location { get; set; } // Phillip Island
-        public DateTime Season { get; set; } // YYYY
-        public DateTime Start { get; set; } // Local DD/MM/YYYY HH:MM:SS
-        public DateTime End { get; set; } // Local DD/MM/YYYY HH:MM:SS
-        public DateTime StartUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
-        public DateTime EndUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
-
-        public string DisplayHeader => $"\n{this.Series} {this.CheckForExcludedWords(this.Sponser)} \n{this.Sponser.Before("Round")}{this.GrandPrix} \n{this.Location} \n";
-        public string DisplayBody => $"{this.Series} {this.CheckForExcludedWords(this.Sponser.Before("Round"))} {this.Session}: {this.Start} - {this.End}";
-        public string IcalendarSubject => $"{this.Series} {this.CheckForExcludedWords(this.Sponser.Before("Round"))} {this.Session}";
-        public string IcalendarLocation => $"{this.Location}";
-        public string IcalendarDescription => $"{this.Sponser.Before("Round")}{this.GrandPrix}";
 
         List<string> IMotorSport.EventUrlList { get; set; }
 

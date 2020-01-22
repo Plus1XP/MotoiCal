@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MotoiCal.Models
 {
@@ -20,7 +16,7 @@ namespace MotoiCal.Models
         DateTime EndUTC { get; set; }
         string DisplayHeader { get; }
         string DisplayBody { get; }
-        string IcalendarSubject {get;}
+        string IcalendarSubject { get; }
         string IcalendarLocation { get; }
         string IcalendarDescription { get; }
     }
