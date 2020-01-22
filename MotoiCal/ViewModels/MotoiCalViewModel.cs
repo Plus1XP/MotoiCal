@@ -222,14 +222,7 @@ namespace MotoiCal.ViewModels
 
         private bool CanExecuteCmd(object parameter)
         {
-            if (this.motorSportSeries == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return this.motorSportSeries != null;
         }
     }
 }
