@@ -48,6 +48,8 @@ namespace MotoiCal.ViewModels
             }
         }
 
+        public Visibility IsEasterEggHidden => this.canExecuteEasterEgg ? Visibility.Visible : Visibility.Hidden;
+
         public string AppVersion => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
 
         public string AppTitle => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductName;
@@ -67,8 +69,6 @@ namespace MotoiCal.ViewModels
         public string ReadIcsContent => "Read ICS";
 
         public string DeleteIcsContent => "Delete ICS";
-
-        public Visibility IsEasterEggHidden => this.scraper.IsEasterEggActive(this.easterEggDate) ? Visibility.Visible : Visibility.Hidden;
 
         public string MainHeader
         {
