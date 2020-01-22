@@ -3,8 +3,25 @@ using System.Collections.Generic;
 
 namespace MotoiCal.Models
 {
-    public class Formula1 : IMotorSport, IRaceData
+    public class Formula1 : IRaceData, IMotorSport
     {
+        public string Series { get; set; } // F1
+        public string GrandPrix { get; set; } // Australian Grand Prix YYYY
+        public string Session { get; set; } // Race
+        public string Sponser { get; set; } // Rolex Australian Grand Prix
+        public string Location { get; set; } // Melbourne Grand Prix Circuit
+        public DateTime Season { get; set; } // YYYY
+        public DateTime Start { get; set; } // Local DD/MM/YYYY HH:MM:SS
+        public DateTime End { get; set; } // Local DD/MM/YYYY HH:MM:SS
+        public DateTime StartUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
+        public DateTime EndUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
+
+        public string DisplayHeader => $"\n{this.Series} {this.GrandPrix.Before($"{DateTime.Now.Year}")} \n{this.Sponser.Between("1 ", $" {DateTime.Now.Year}")} \n{this.Location} \n";
+        public string DisplayBody => $"{this.Series} {this.GrandPrix.Before("Grand")}{this.Session} : {this.Start} - {this.End}";
+        public string IcalendarSubject => $"{this.Series} {this.GrandPrix.Before("Grand")}{this.Session}";
+        public string IcalendarLocation => $"{this.Location}";
+        public string IcalendarDescription => $"{this.Sponser.Between("1 ", $" {DateTime.Now.Year}")}";
+
         public MotorSportID SportIdentifier => MotorSportID.Formula1;
         public string FilePath => "Formula1.ics";
         public string Url => $"https://www.formula1.com/en/racing/{DateTime.Now.Year}.html";
@@ -22,23 +39,6 @@ namespace MotoiCal.Models
         public string EndDatePath => ".";
         public string EndDateAttribute => "data-end-time";
         public string GMTOffset => "data-gmt-offset";
-
-        public string Series { get; set; } // F1
-        public string GrandPrix { get; set; } // Australian Grand Prix YYYY
-        public string Session { get; set; } // Race
-        public string Sponser { get; set; } // Rolex Australian Grand Prix
-        public string Location { get; set; } // Melbourne Grand Prix Circuit
-        public DateTime Season { get; set; } // YYYY
-        public DateTime Start { get; set; } // Local DD/MM/YYYY HH:MM:SS
-        public DateTime End { get; set; } // Local DD/MM/YYYY HH:MM:SS
-        public DateTime StartUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
-        public DateTime EndUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
-
-        public string DisplayHeader => $"\n{this.Series} {this.GrandPrix.Before($"{DateTime.Now.Year}")} \n{this.Sponser.Between("1 ", $" {DateTime.Now.Year}")} \n{this.Location} \n";
-        public string DisplayBody => $"{this.Series} {this.GrandPrix.Before("Grand")}{this.Session} : {this.Start} - {this.End}";
-        public string IcalendarSubject => $"{this.Series} {this.GrandPrix.Before("Grand")}{this.Session}";
-        public string IcalendarLocation => $"{this.Location}";
-        public string IcalendarDescription => $"{this.Sponser.Between("1 ",$" {DateTime.Now.Year}")}";
 
         public List<string> EventUrlList { get; set; }
 
