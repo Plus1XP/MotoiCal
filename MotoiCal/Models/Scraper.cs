@@ -66,7 +66,7 @@ namespace MotoiCal.Models
         // This allows the stringbuilder to check if it needs to update header.
         private string ProcessDisplayResults()
         {
-            StringBuilder raceresults = new StringBuilder();
+            StringBuilder raceResults = new StringBuilder();
 
             string currentGrandPrix = null;
 
@@ -75,12 +75,12 @@ namespace MotoiCal.Models
                 string header = race.GrandPrix == currentGrandPrix ? string.Empty : race.DisplayHeader;
                 string body = race.DisplayBody;
 
-                raceresults.Append(header);
-                raceresults.AppendLine(body);
+                raceResults.Append(header);
+                raceResults.AppendLine(body);
 
                 currentGrandPrix = race.GrandPrix;
             }
-            return raceresults.ToString();
+            return  raceResults.ToString();
         }
 
         private void ProcessiCalendarResults()
