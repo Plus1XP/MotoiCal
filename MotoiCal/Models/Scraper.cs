@@ -125,19 +125,19 @@ namespace MotoiCal.Models
             }
         }
 
-        private void ProcessMotorSportEvents(IMotorSport motorSport)
+        private async Task ProcessMotorSportEvents(IMotorSport motorSport)
         {
             foreach (string url in motorSport.EventUrlList)
             {
-                this.FindMotorSportSessions(motorSport, url);
+                await this.FindMotorSportSessions(motorSport, url);
             }
         }
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
-        private void FindMotorSportSessions(IMotorSport motorSport, string url)
+        private async Task FindMotorSportSessions(IMotorSport motorSport, string url)
         {
-            this.doc = this.webGet.Load(url);
+            this.doc = await webGet.LoadFromWebAsync(url);
 
             string GrandPrix = this.doc.DocumentNode.SelectSingleNode(motorSport.GrandPrixNamePath)?.InnerText ?? "No Data";
             // Location is empty in WSBK Catalunya
