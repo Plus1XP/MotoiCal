@@ -223,7 +223,7 @@ namespace MotoiCal.ViewModels
         {
             if (this.isSearchingF1)
             {
-                this.motorSportSeries = new Formula1();
+                this.MotorSportSeries = new Formula1();
                 this.mainHeader = "Formula 1 Calendar Results";
             }
         }
@@ -232,7 +232,7 @@ namespace MotoiCal.ViewModels
         {
             if (this.isSearchingMotoGP)
             {
-                this.motorSportSeries = new MotoGP();
+                this.MotorSportSeries = new MotoGP();
                 this.mainHeader = "MotoGP Calendar Results";
             }
         }
@@ -241,14 +241,14 @@ namespace MotoiCal.ViewModels
         {
             if (this.isSearchingWorldSBK)
             {
-                this.motorSportSeries = new WorldSBK();
+                this.MotorSportSeries = new WorldSBK();
                 this.mainHeader = "WorldSBK Calendar Results";
             }
         }
 
         private bool CanExecuteCmd(object parameter)
         {
-            return this.motorSportSeries != null;
+            return parameter != null;
         }
     }
 }
