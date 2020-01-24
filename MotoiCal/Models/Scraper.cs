@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 namespace MotoiCal.Models
@@ -96,7 +96,7 @@ namespace MotoiCal.Models
             this.iCalendar.CloseCalendarEntry();
         }
 
-        public string ScrapeEventsToiCalendar(IMotorSport motorSport)
+        public async Task<string> ScrapeEventsToiCalendar(IMotorSport motorSport)
         {
             this.raceData = new ObservableCollection<IRaceData>();
             // Checks list, Same as if list == null or motorSport.Count == 0
@@ -104,7 +104,7 @@ namespace MotoiCal.Models
             {
                 this.AddMotoSportEventsToList(motorSport);
             }
-            this.ProcessMotorSportEvents(motorSport);
+            await this.ProcessMotorSportEvents(motorSport);
             return this.ProcessDisplayResults();
         }
 
@@ -114,7 +114,7 @@ namespace MotoiCal.Models
             motorSport.EventUrlList = new List<string>();
 
             foreach (var node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
-            {              
+            {
                 string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
                 string url = string.IsNullOrEmpty(scrapedUrl) ? url = "URL not found" : url = $"{motorSport.UrlPartial}{scrapedUrl}";
                 if (motorSport.ExcludedUrls.Any(url.Contains))
