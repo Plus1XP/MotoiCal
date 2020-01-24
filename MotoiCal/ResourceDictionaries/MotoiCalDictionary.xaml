@@ -6,6 +6,7 @@
     <Style TargetType="RadioButton" x:Key="MotorSportSeriesRadioButton">
         <Setter Property="GroupName" Value="MotorSportSeries"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="IsEnabled" Value="{Binding IsButtonEnabled}"/>
         <Setter Property="Margin" Value="0,0,0,0"/>
     </Style>
 
@@ -17,6 +18,7 @@
 
     <Style TargetType="Button" x:Key="CalendarOptionsButton">
         <Setter Property="Width" Value="110"/>
+        <Setter Property="IsEnabled" Value="{Binding IsButtonEnabled}"/>
         <Setter Property="Margin" Value="0,0,10,0"/>
     </Style>
 

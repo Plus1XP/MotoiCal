@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
-
+using System.Windows.Input;
 using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels
@@ -18,6 +19,8 @@ namespace MotoiCal.ViewModels
         private bool isSearchingF1;
         private bool isSearchingMotoGP;
         private bool isSearchingWorldSBK;
+        private bool isSearching;
+
         private bool canExecuteEasterEgg; // Disabled for next planned release/v1.0.0-LorenzosLand
 
         private readonly string easterEggDate = "04 May"; //DD MMM, YYYY
@@ -29,13 +32,15 @@ namespace MotoiCal.ViewModels
         public MotoiCalViewModel()
         {
             this.scraper = new Scraper();
+            this.IsSearching = false;
             this.canExecuteEasterEgg = false; // this.scraper.IsEasterEggActive(this.easterEggDate);
-            this.PullDatesCmd = new RelayCommand(o => this.PullDates(), o => this.CanExecuteCmd(this.motorSportSeries));
-            this.GenerateIcsCmd = new RelayCommand(o => this.GenerateIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
-            this.ReadIcsCmd = new RelayCommand(o => this.ReadIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
-            this.DeleteIcsCmd = new RelayCommand(o => this.DeleteIcs(), o => this.CanExecuteCmd(this.motorSportSeries));
-            this.EasterEggCmd = new RelayCommand(o => this.EasterEgg(), o => this.canExecuteEasterEgg);
+            this.PullDatesCmd = new AsynchronousRelayCommand(async () => await this.PullDates(), () => this.CanExecuteCmd(this.motorSportSeries));
+            this.GenerateIcsCmd = new SynchronousRelayCommand(this.GenerateIcs, () => this.CanExecuteCmd(this.motorSportSeries));
+            this.ReadIcsCmd = new SynchronousRelayCommand(this.ReadIcs, () => this.CanExecuteCmd(this.motorSportSeries));
+            this.DeleteIcsCmd = new SynchronousRelayCommand(this.DeleteIcs, () => this.CanExecuteCmd(this.motorSportSeries));
+            this.EasterEggCmd = new SynchronousRelayCommand(this.EasterEgg, () => this.canExecuteEasterEgg);
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public IMotorSport MotorSportSeries
@@ -49,6 +54,8 @@ namespace MotoiCal.ViewModels
         }
 
         public Visibility IsEasterEggHidden => this.canExecuteEasterEgg ? Visibility.Visible : Visibility.Hidden;
+
+        public Visibility ShowLoadingBar => this.isSearching ? Visibility.Visible : Visibility.Hidden;
 
         public string AppVersion => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
 
@@ -143,15 +150,32 @@ namespace MotoiCal.ViewModels
             }
         }
 
-        public RelayCommand PullDatesCmd { get; }
+        public bool IsSearching
+        {
+            get => this.isSearching;
+            set
+            {
+                if (this.isSearching != value)
+                {
+                    this.isSearching = value;
+                    this.OnPropertyChanged("IsSearching");
+                    this.OnPropertyChanged("IsButtonEnabled");
+                    this.OnPropertyChanged("ShowLoadingBar");
+                }
+            }
+        }
 
-        public RelayCommand GenerateIcsCmd { get; }
+        public bool IsButtonEnabled => !this.IsSearching;
 
-        public RelayCommand ReadIcsCmd { get; }
+        public ICommand PullDatesCmd { get; }
 
-        public RelayCommand DeleteIcsCmd { get; }
+        public ICommand GenerateIcsCmd { get; }
 
-        public RelayCommand EasterEggCmd { get; }
+        public ICommand ReadIcsCmd { get; }
+
+        public ICommand DeleteIcsCmd { get; }
+
+        public ICommand EasterEggCmd { get; }
 
         public void OnPropertyChanged(string property)
         {
@@ -166,12 +190,14 @@ namespace MotoiCal.ViewModels
             MessageBox.Show(this.easterEggMessage, this.easterEggTitle);
         }
 
-        private void PullDates()
+        private async Task PullDates()
         {
+            this.IsSearching = true;
             string unalteredMainHeader = this.MainHeader;
+            this.ResultsOutput = await this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries);
             this.OnPropertyChanged("MainHeader");
-            this.ResultsOutput = this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries);
             this.MainHeader += $" {this.scraper.RacesFound(this.MotorSportSeries)} Races";
+            this.IsSearching = false;
             MessageBox.Show($"DONE! \nScraped {this.scraper.RacesFound(this.MotorSportSeries)} Races \nScraped {this.scraper.EventsFound()} Events", $"{unalteredMainHeader}");
         }
 
@@ -197,7 +223,7 @@ namespace MotoiCal.ViewModels
         {
             if (this.isSearchingF1)
             {
-                this.motorSportSeries = new Formula1();
+                this.MotorSportSeries = new Formula1();
                 this.mainHeader = "Formula 1 Calendar Results";
             }
         }
@@ -206,7 +232,7 @@ namespace MotoiCal.ViewModels
         {
             if (this.isSearchingMotoGP)
             {
-                this.motorSportSeries = new MotoGP();
+                this.MotorSportSeries = new MotoGP();
                 this.mainHeader = "MotoGP Calendar Results";
             }
         }
@@ -215,14 +241,14 @@ namespace MotoiCal.ViewModels
         {
             if (this.isSearchingWorldSBK)
             {
-                this.motorSportSeries = new WorldSBK();
+                this.MotorSportSeries = new WorldSBK();
                 this.mainHeader = "WorldSBK Calendar Results";
             }
         }
 
         private bool CanExecuteCmd(object parameter)
         {
-            return this.motorSportSeries != null;
+            return parameter != null;
         }
     }
 }

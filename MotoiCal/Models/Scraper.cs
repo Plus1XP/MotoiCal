@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 namespace MotoiCal.Models
@@ -66,7 +66,7 @@ namespace MotoiCal.Models
         // This allows the stringbuilder to check if it needs to update header.
         private string ProcessDisplayResults()
         {
-            StringBuilder raceresults = new StringBuilder();
+            StringBuilder raceResults = new StringBuilder();
 
             string currentGrandPrix = null;
 
@@ -75,12 +75,12 @@ namespace MotoiCal.Models
                 string header = race.GrandPrix == currentGrandPrix ? string.Empty : race.DisplayHeader;
                 string body = race.DisplayBody;
 
-                raceresults.Append(header);
-                raceresults.AppendLine(body);
+                raceResults.Append(header);
+                raceResults.AppendLine(body);
 
                 currentGrandPrix = race.GrandPrix;
             }
-            return raceresults.ToString();
+            return  raceResults.ToString();
         }
 
         private void ProcessiCalendarResults()
@@ -96,7 +96,7 @@ namespace MotoiCal.Models
             this.iCalendar.CloseCalendarEntry();
         }
 
-        public string ScrapeEventsToiCalendar(IMotorSport motorSport)
+        public async Task<string> ScrapeEventsToiCalendar(IMotorSport motorSport)
         {
             this.raceData = new ObservableCollection<IRaceData>();
             // Checks list, Same as if list == null or motorSport.Count == 0
@@ -104,7 +104,7 @@ namespace MotoiCal.Models
             {
                 this.AddMotoSportEventsToList(motorSport);
             }
-            this.ProcessMotorSportEvents(motorSport);
+            await this.ProcessMotorSportEvents(motorSport);
             return this.ProcessDisplayResults();
         }
 
@@ -114,7 +114,7 @@ namespace MotoiCal.Models
             motorSport.EventUrlList = new List<string>();
 
             foreach (var node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
-            {              
+            {
                 string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
                 string url = string.IsNullOrEmpty(scrapedUrl) ? url = "URL not found" : url = $"{motorSport.UrlPartial}{scrapedUrl}";
                 if (motorSport.ExcludedUrls.Any(url.Contains))
@@ -125,19 +125,19 @@ namespace MotoiCal.Models
             }
         }
 
-        private void ProcessMotorSportEvents(IMotorSport motorSport)
+        private async Task ProcessMotorSportEvents(IMotorSport motorSport)
         {
             foreach (string url in motorSport.EventUrlList)
             {
-                this.FindMotorSportSessions(motorSport, url);
+                await this.FindMotorSportSessions(motorSport, url);
             }
         }
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
-        private void FindMotorSportSessions(IMotorSport motorSport, string url)
+        private async Task FindMotorSportSessions(IMotorSport motorSport, string url)
         {
-            this.doc = this.webGet.Load(url);
+            this.doc = await webGet.LoadFromWebAsync(url);
 
             string GrandPrix = this.doc.DocumentNode.SelectSingleNode(motorSport.GrandPrixNamePath)?.InnerText ?? "No Data";
             // Location is empty in WSBK Catalunya
