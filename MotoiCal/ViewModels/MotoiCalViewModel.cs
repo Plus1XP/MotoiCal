@@ -20,8 +20,7 @@ namespace MotoiCal.ViewModels
         private bool isSearchingMotoGP;
         private bool isSearchingWorldSBK;
         private bool isSearching;
-
-        private bool canExecuteEasterEgg; // Disabled for next planned release/v1.0.0-LorenzosLand
+        private bool canExecuteEasterEgg;
 
         private readonly string easterEggDate = "04 May"; //DD MMM, YYYY
         private readonly string easterEggTitle = "Did you know?";
@@ -33,7 +32,7 @@ namespace MotoiCal.ViewModels
         {
             this.scraper = new Scraper();
             this.IsSearching = false;
-            this.canExecuteEasterEgg = false; // this.scraper.IsEasterEggActive(this.easterEggDate);
+            this.canExecuteEasterEgg = this.scraper.IsEasterEggActive(this.easterEggDate);
             this.PullDatesCmd = new AsynchronousRelayCommand(async () => await this.PullDates(), () => this.CanExecuteCmd(this.motorSportSeries));
             this.GenerateIcsCmd = new SynchronousRelayCommand(this.GenerateIcs, () => this.CanExecuteCmd(this.motorSportSeries));
             this.ReadIcsCmd = new SynchronousRelayCommand(this.ReadIcs, () => this.CanExecuteCmd(this.motorSportSeries));
