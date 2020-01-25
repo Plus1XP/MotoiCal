@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
@@ -110,6 +112,7 @@ namespace MotoiCal.Models
 
         private void AddMotoSportEventsToList(IMotorSport motorSport)
         {
+            Stopwatch stopWatch = Stopwatch.StartNew();
             this.doc = this.webGet.Load(motorSport.Url);
             motorSport.EventUrlList = new List<string>();
 
