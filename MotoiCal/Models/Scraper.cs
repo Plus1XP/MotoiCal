@@ -17,7 +17,6 @@ namespace MotoiCal.Models
         private readonly CalendarManager iCalendar;
         private ObservableCollection<IRaceData> raceData;
 
-
         public Scraper()
         {
             this.doc = new HtmlDocument();
@@ -82,7 +81,7 @@ namespace MotoiCal.Models
 
                 currentGrandPrix = race.GrandPrix;
             }
-            return  raceResults.ToString();
+            return raceResults.ToString();
         }
 
         private void ProcessiCalendarResults()
