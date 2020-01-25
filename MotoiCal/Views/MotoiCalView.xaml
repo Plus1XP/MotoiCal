@@ -34,7 +34,10 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="10"/>
             <RowDefinition Height="20"/>
+
         </Grid.RowDefinitions>
 
         <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="?" 
@@ -106,5 +109,9 @@
         <ScrollViewer Grid.Column="5" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="2">
             <TextBlock Style="{StaticResource ResultsOutputContent}"/>
         </ScrollViewer>
+
+        <ProgressBar Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="6"
+                     IsIndeterminate="True" Background="White" BorderThickness="0"
+                     Visibility="{Binding ShowLoadingBar}"/>
     </Grid>
 </Window>
