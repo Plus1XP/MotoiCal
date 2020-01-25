@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 
@@ -14,7 +16,6 @@ namespace MotoiCal.Models
         private readonly HtmlWeb webGet;
         private readonly CalendarManager iCalendar;
         private ObservableCollection<IRaceData> raceData;
-
 
         public Scraper()
         {
@@ -80,7 +81,7 @@ namespace MotoiCal.Models
 
                 currentGrandPrix = race.GrandPrix;
             }
-            return  raceResults.ToString();
+            return raceResults.ToString();
         }
 
         private void ProcessiCalendarResults()
@@ -110,6 +111,7 @@ namespace MotoiCal.Models
 
         private void AddMotoSportEventsToList(IMotorSport motorSport)
         {
+            Stopwatch stopWatch = Stopwatch.StartNew();
             this.doc = this.webGet.Load(motorSport.Url);
             motorSport.EventUrlList = new List<string>();
 
@@ -123,78 +125,104 @@ namespace MotoiCal.Models
                 }
                 motorSport.EventUrlList.Add(url);
             }
+            stopWatch.Stop();
+            Debug.WriteLine($"URL Collection search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
         }
 
         private async Task ProcessMotorSportEvents(IMotorSport motorSport)
         {
+            Stopwatch stopWatch = Stopwatch.StartNew();
+            //Parallel.ForEach(motorSport.EventUrlList, async url =>
+            //{
+            //    await this.FindMotorSportSessions(motorSport, url);
+            //    Debug.WriteLine($"Thread No. {Thread.CurrentThread.ManagedThreadId}");
+            //    //Thread.Sleep(50);
+            //});
             foreach (string url in motorSport.EventUrlList)
             {
                 await this.FindMotorSportSessions(motorSport, url);
+                Debug.WriteLine($"Thread No. {Thread.CurrentThread.ManagedThreadId} ^");
             }
+            stopWatch.Stop();
+            Debug.WriteLine($"Total search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
         }
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
         private async Task FindMotorSportSessions(IMotorSport motorSport, string url)
         {
-            this.doc = await webGet.LoadFromWebAsync(url);
+            Stopwatch stopWatch = Stopwatch.StartNew();
+            //this.doc.OptionEmptyCollection = true;
+            this.doc = await this.webGet.LoadFromWebAsync(url);
+            stopWatch.Stop();
+            Debug.WriteLine($"Page scrape search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
 
             string GrandPrix = this.doc.DocumentNode.SelectSingleNode(motorSport.GrandPrixNamePath)?.InnerText ?? "No Data";
             // Location is empty in WSBK Catalunya
             string Location = this.doc.DocumentNode.SelectSingleNode(motorSport.LocationNamePath)?.InnerText ?? "No Data";
             string Sponser = this.doc.DocumentNode.SelectSingleNode(motorSport.SponserNamePath)?.InnerText ?? "No Data";
 
-            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath))
+            //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
+
+            // MotoGP are updated the schedule, eventsTable loads 404.
+            if (this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
             {
-                string Series = node.SelectSingleNode(motorSport.SeriesNamePath).InnerText.Trim();
-
-                // This checks if the node contains any of the substrings in the excluded array.
-                if (motorSport.ExcludedClasses.Any(Series.Contains))
+                foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath))
                 {
-                    continue;
+                    string Series = node.SelectSingleNode(motorSport.SeriesNamePath).InnerText.Trim();
+
+                    // This checks if the node contains any of the substrings in the excluded array.
+                    if (motorSport.ExcludedClasses.Any(Series.Contains))
+                    {
+                        continue;
+                    }
+
+                    string Session = motorSport.CheckForExcludedWords(node.SelectSingleNode(motorSport.SessionNamePath).InnerText.Trim());
+
+                    // This checks if the node contains any of the substrings in the excluded array.
+                    if (motorSport.ExcludedEvents.Any(Session.Contains))
+                    {
+                        continue;
+                    }
+
+                    string dtStart = node.SelectSingleNode(motorSport.StartDatePath)?.Attributes[motorSport.StartDateAttribute].Value;
+
+                    // This checks if the node is null or empty, if it is the session is missing on the website and skips over it.
+                    if (string.IsNullOrEmpty(dtStart))
+                    {
+                        continue;
+                    }
+
+                    // To handle empty rows ? checks whether or not the returned HtmlNodeCollection is null.
+                    string dtEndNullCheck = node.SelectSingleNode(motorSport.EndDatePath)?.Attributes[motorSport.EndDateAttribute].Value;
+
+                    // Handles if the end time result is null (default to start time + 1 HR) or not (parse end time) using a ternary operator.
+                    string dtEnd = string.IsNullOrEmpty(dtEndNullCheck)
+                        ? DateTime.Parse(dtStart).AddHours(1).ToString()
+                        : dtEndNullCheck;
+
+                    // Formula1 handles the GMT offset differently (+0000) compared to MotoGP & WSBK (0000-00-00T00:00:00+0000").
+                    if (motorSport.SportIdentifier.Equals(MotorSportID.Formula1))
+                    {
+                        string dtOffset = node.SelectSingleNode(motorSport.StartDatePath).Attributes[motorSport.GMTOffset].Value;
+                        dtStart += dtOffset;
+                        dtEnd += dtOffset;
+                    }
+
+                    // Use UTC time for iCal event.
+                    DateTime StartUTC = this.iCalendar.ParseDateTimeToUTC(dtStart);
+                    DateTime EndUTC = this.iCalendar.ParseDateTimeToUTC(dtEnd);
+
+                    // Use local time for console results.
+                    DateTime Start = this.iCalendar.ParseDateTimeToLocal(dtStart);
+                    DateTime End = this.iCalendar.ParseDateTimeToLocal(dtEnd);
+
+                    this.AddData(motorSport, GrandPrix, Location, Sponser, Series, Session, Start, End, StartUTC, EndUTC);
                 }
-
-                string Session = motorSport.CheckForExcludedWords(node.SelectSingleNode(motorSport.SessionNamePath).InnerText.Trim());
-
-                // This checks if the node contains any of the substrings in the excluded array.
-                if (motorSport.ExcludedEvents.Any(Session.Contains))
-                {
-                    continue;
-                }
-
-                string dtStart = node.SelectSingleNode(motorSport.StartDatePath)?.Attributes[motorSport.StartDateAttribute].Value;
-
-                // This checks if the node is null or empty, if it is the session is missing on the website and skips over it.
-                if (string.IsNullOrEmpty(dtStart))
-                {
-                    continue;
-                }
-
-                // To handle empty rows ? checks whether or not the returned HtmlNodeCollection is null.
-                string dtEndNullCheck = node.SelectSingleNode(motorSport.EndDatePath)?.Attributes[motorSport.EndDateAttribute].Value;
-
-                // Handles if the end time result is null (default to start time + 1 HR) or not (parse end time) using a ternary operator.
-                string dtEnd = string.IsNullOrEmpty(dtEndNullCheck)
-                    ? DateTime.Parse(dtStart).AddHours(1).ToString()
-                    : dtEndNullCheck;
-
-                // Formula1 handles the GMT offset differently (+0000) compared to MotoGP & WSBK (0000-00-00T00:00:00+0000").
-                if (motorSport.SportIdentifier.Equals(MotorSportID.Formula1))
-                {
-                    string dtOffset = node.SelectSingleNode(motorSport.StartDatePath).Attributes[motorSport.GMTOffset].Value;
-                    dtStart += dtOffset;
-                    dtEnd += dtOffset;
-                }
-
-                // Use UTC time for iCal event.
-                DateTime StartUTC = this.iCalendar.ParseDateTimeToUTC(dtStart);
-                DateTime EndUTC = this.iCalendar.ParseDateTimeToUTC(dtEnd);
-
-                // Use local time for console results.
-                DateTime Start = this.iCalendar.ParseDateTimeToLocal(dtStart);
-                DateTime End = this.iCalendar.ParseDateTimeToLocal(dtEnd);
-
-                this.AddData(motorSport, GrandPrix, Location, Sponser, Series, Session, Start, End, StartUTC, EndUTC);
+            }
+            else
+            {
+                Debug.WriteLine($"Event Missing: {url}");
             }
         }
 
