@@ -97,15 +97,18 @@ namespace MotoiCal.Models
             this.iCalendar.CloseCalendarEntry();
         }
 
-        public async Task<string> ScrapeEventsToiCalendar(IMotorSport motorSport)
+        public string ScrapeEventsToiCalendar(IMotorSport motorSport)
         {
+            Stopwatch stopWatch = Stopwatch.StartNew();
             this.raceData = new ObservableCollection<IRaceData>();
             // Checks list, Same as if list == null or motorSport.Count == 0
             if (motorSport.EventUrlList?.Any() != true)
             {
                 this.AddMotoSportEventsToList(motorSport);
             }
-            await this.ProcessMotorSportEvents(motorSport);
+            this.ProcessMotorSportEvents(motorSport);
+            stopWatch.Stop();
+            Debug.WriteLine($"Total Operation Time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
             return this.ProcessDisplayResults();
         }
 
