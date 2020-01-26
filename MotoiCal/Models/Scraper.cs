@@ -132,7 +132,7 @@ namespace MotoiCal.Models
             Debug.WriteLine($"URL Collection search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
         }
 
-        private async Task ProcessMotorSportEvents(IMotorSport motorSport)
+        private void ProcessMotorSportEvents(IMotorSport motorSport)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             //Parallel.ForEach(motorSport.EventUrlList, async url =>
@@ -143,7 +143,7 @@ namespace MotoiCal.Models
             //});
             foreach (string url in motorSport.EventUrlList)
             {
-                await this.FindMotorSportSessions(motorSport, url);
+                this.FindMotorSportSessions(motorSport, url);
                 Debug.WriteLine($"Thread No. {Thread.CurrentThread.ManagedThreadId} ^");
             }
             stopWatch.Stop();
