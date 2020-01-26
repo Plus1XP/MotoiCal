@@ -152,11 +152,11 @@ namespace MotoiCal.Models
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
-        private async Task FindMotorSportSessions(IMotorSport motorSport, string url)
+        private void FindMotorSportSessions(IMotorSport motorSport, string url)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             //this.doc.OptionEmptyCollection = true;
-            this.doc = await this.webGet.LoadFromWebAsync(url);
+            this.doc = this.webGet.Load(url);
             stopWatch.Stop();
             Debug.WriteLine($"Page scrape search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
 
