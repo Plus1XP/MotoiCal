@@ -193,7 +193,7 @@ namespace MotoiCal.ViewModels
         {
             this.IsSearching = true;
             string unalteredMainHeader = this.MainHeader;
-            this.ResultsOutput = await this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries);
+            await Task.Run(() => this.ResultsOutput = this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries));
             this.OnPropertyChanged("MainHeader");
             this.MainHeader += $" {this.scraper.RacesFound(this.MotorSportSeries)} Races";
             this.IsSearching = false;
