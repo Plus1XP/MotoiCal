@@ -127,6 +127,7 @@ namespace MotoiCal.Models
                     continue;
                 }
                 motorSport.EventUrlList.Add(url);
+                Debug.WriteLine(url);
             }
             stopWatch.Stop();
             Debug.WriteLine($"URL Collection search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
@@ -155,8 +156,13 @@ namespace MotoiCal.Models
         private void FindMotorSportSessions(IMotorSport motorSport, string url)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
+
+            // The HTMLWeb parameters set the encoding to the URL, otherwise special characters wont display correctly.
+            this.webGet.AutoDetectEncoding = false;
+            this.webGet.OverrideEncoding = Encoding.UTF8;
             //this.doc.OptionEmptyCollection = true;
             this.doc = this.webGet.Load(url);
+
             stopWatch.Stop();
             Debug.WriteLine($"Page scrape search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
 
@@ -166,6 +172,7 @@ namespace MotoiCal.Models
             string Sponser = this.doc.DocumentNode.SelectSingleNode(motorSport.SponserNamePath)?.InnerText ?? "No Data";
 
             //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
+            //Debug.Assert(!GrandPrix.Contains("Mexico"));
 
             // MotoGP are updated the schedule, eventsTable loads 404.
             if (this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
