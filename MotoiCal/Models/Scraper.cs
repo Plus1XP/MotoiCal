@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 namespace MotoiCal.Models
@@ -237,15 +236,15 @@ namespace MotoiCal.Models
         }
 
         private void AddData(
-            IMotorSport motorSport, 
-            string grandPrix, 
-            string location, 
-            string sponser, 
-            string series, 
-            string session, 
-            DateTime start, 
-            DateTime end, 
-            DateTime startUTC, 
+            IMotorSport motorSport,
+            string grandPrix,
+            string location,
+            string sponser,
+            string series,
+            string session,
+            DateTime start,
+            DateTime end,
+            DateTime startUTC,
             DateTime endUTC
             )
         {
