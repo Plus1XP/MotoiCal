@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using HtmlAgilityPack;
 
 namespace MotoiCal.Models
@@ -97,15 +96,18 @@ namespace MotoiCal.Models
             this.iCalendar.CloseCalendarEntry();
         }
 
-        public async Task<string> ScrapeEventsToiCalendar(IMotorSport motorSport)
+        public string ScrapeEventsToiCalendar(IMotorSport motorSport)
         {
+            Stopwatch stopWatch = Stopwatch.StartNew();
             this.raceData = new ObservableCollection<IRaceData>();
             // Checks list, Same as if list == null or motorSport.Count == 0
             if (motorSport.EventUrlList?.Any() != true)
             {
                 this.AddMotoSportEventsToList(motorSport);
             }
-            await this.ProcessMotorSportEvents(motorSport);
+            this.ProcessMotorSportEvents(motorSport);
+            stopWatch.Stop();
+            Debug.WriteLine($"Total Operation Time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
             return this.ProcessDisplayResults();
         }
 
@@ -124,12 +126,13 @@ namespace MotoiCal.Models
                     continue;
                 }
                 motorSport.EventUrlList.Add(url);
+                Debug.WriteLine(url);
             }
             stopWatch.Stop();
             Debug.WriteLine($"URL Collection search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
         }
 
-        private async Task ProcessMotorSportEvents(IMotorSport motorSport)
+        private void ProcessMotorSportEvents(IMotorSport motorSport)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             //Parallel.ForEach(motorSport.EventUrlList, async url =>
@@ -140,7 +143,7 @@ namespace MotoiCal.Models
             //});
             foreach (string url in motorSport.EventUrlList)
             {
-                await this.FindMotorSportSessions(motorSport, url);
+                this.FindMotorSportSessions(motorSport, url);
                 Debug.WriteLine($"Thread No. {Thread.CurrentThread.ManagedThreadId} ^");
             }
             stopWatch.Stop();
@@ -149,11 +152,16 @@ namespace MotoiCal.Models
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
-        private async Task FindMotorSportSessions(IMotorSport motorSport, string url)
+        private void FindMotorSportSessions(IMotorSport motorSport, string url)
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
+
+            // The HTMLWeb parameters set the encoding to the URL, otherwise special characters wont display correctly.
+            this.webGet.AutoDetectEncoding = false;
+            this.webGet.OverrideEncoding = Encoding.UTF8;
             //this.doc.OptionEmptyCollection = true;
-            this.doc = await this.webGet.LoadFromWebAsync(url);
+            this.doc = this.webGet.Load(url);
+
             stopWatch.Stop();
             Debug.WriteLine($"Page scrape search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
 
@@ -163,6 +171,7 @@ namespace MotoiCal.Models
             string Sponser = this.doc.DocumentNode.SelectSingleNode(motorSport.SponserNamePath)?.InnerText ?? "No Data";
 
             //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
+            //Debug.Assert(!GrandPrix.Contains("Mexico"));
 
             // MotoGP are updated the schedule, eventsTable loads 404.
             if (this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
@@ -227,15 +236,15 @@ namespace MotoiCal.Models
         }
 
         private void AddData(
-            IMotorSport motorSport, 
-            string grandPrix, 
-            string location, 
-            string sponser, 
-            string series, 
-            string session, 
-            DateTime start, 
-            DateTime end, 
-            DateTime startUTC, 
+            IMotorSport motorSport,
+            string grandPrix,
+            string location,
+            string sponser,
+            string series,
+            string session,
+            DateTime start,
+            DateTime end,
+            DateTime startUTC,
             DateTime endUTC
             )
         {
