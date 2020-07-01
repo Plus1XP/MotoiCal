@@ -44,6 +44,7 @@ namespace MotoiCal.Models
 
         public string[] ExcludedUrls => new string[]
         {
+            "Test"
         };
 
         public string[] ExcludedClasses => new string[]
