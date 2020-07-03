@@ -50,7 +50,8 @@ namespace MotoiCal.Models
         public string[] ExcludedClasses => new string[]
         {
             "Moto2",
-            "Moto3"
+            "Moto3",
+            "MotoE"
         };
 
         public string[] ExcludedEvents => new string[]
