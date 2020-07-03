@@ -167,13 +167,16 @@ namespace MotoiCal.Models
             Debug.WriteLine($"Page scrape search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
 
             string GrandPrix = this.doc.DocumentNode.SelectSingleNode(motorSport.GrandPrixNamePath)?.InnerText ?? "No Data";
-            // Location is empty in WSBK Catalunya
+            // Location is empty in WSBK Catalunya's URL.
             string Location = this.doc.DocumentNode.SelectSingleNode(motorSport.LocationNamePath)?.InnerText ?? "No Data";
             string Sponser = this.doc.DocumentNode.SelectSingleNode(motorSport.SponserNamePath)?.InnerText ?? "No Data";
 
+            // Adds location to empty WSBK Catalunya.
+            Location = this.WSBKCatalunyaLoctionFix(Sponser, Location);
+
             //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
             //Debug.Assert(!GrandPrix.Contains("Spain"));
-            //Debug.WriteIf(GrandPrix.Contains("Spain"), $"{motorSport.Url}");
+            //Debug.WriteIf(motorSport.Url.Contains("https://www.worldsbk.com/en/event/ESP3/2020"), $"{GrandPrix}");
 
             // MotoGP are updated the schedule, eventsTable loads 404.
             if (this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
@@ -294,6 +297,19 @@ namespace MotoiCal.Models
                         EndUTC = endUTC
                     });
                     break;
+            }
+        }
+
+        // Tempary fix to add WSBK Catalunya location untill WSBK update this.
+        private string WSBKCatalunyaLoctionFix(string sponser, string location)
+        {
+            if (sponser.Equals("Acerbis Catalunya Round") && location.Equals("No Data"))
+            {
+                return "Circuit de Barcelona-Catalunya";
+            }
+            else
+            {
+                return location;
             }
         }
     }
