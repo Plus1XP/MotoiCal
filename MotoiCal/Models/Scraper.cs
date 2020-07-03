@@ -62,23 +62,24 @@ namespace MotoiCal.Models
             return DateTime.Parse(easterEggDate) == DateTime.Now.Date ? true : false;
         }
 
-        // currentGrandPrix is initially set to null, then each loop is given the current GrandPRix value.
+        // currentSponser is initially set to null, then each loop is given the current Sponser value.
         // This allows the stringbuilder to check if it needs to update header.
+        // * This was changed from checking again the currentGrandPrix in the COVID update due to multiple races at the same GrandPrix.
         private string ProcessDisplayResults()
         {
             StringBuilder raceResults = new StringBuilder();
 
-            string currentGrandPrix = null;
+            string currentSponser = null;
 
             foreach (var race in this.raceData)
             {
-                string header = race.GrandPrix == currentGrandPrix ? string.Empty : race.DisplayHeader;
+                string header = race.Sponser == currentSponser ? string.Empty : race.DisplayHeader;
                 string body = race.DisplayBody;
 
                 raceResults.Append(header);
                 raceResults.AppendLine(body);
 
-                currentGrandPrix = race.GrandPrix;
+                currentSponser = race.Sponser;
             }
             return raceResults.ToString();
         }
@@ -166,12 +167,16 @@ namespace MotoiCal.Models
             Debug.WriteLine($"Page scrape search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
 
             string GrandPrix = this.doc.DocumentNode.SelectSingleNode(motorSport.GrandPrixNamePath)?.InnerText ?? "No Data";
-            // Location is empty in WSBK Catalunya
+            // Location is empty in WSBK Catalunya's URL.
             string Location = this.doc.DocumentNode.SelectSingleNode(motorSport.LocationNamePath)?.InnerText ?? "No Data";
             string Sponser = this.doc.DocumentNode.SelectSingleNode(motorSport.SponserNamePath)?.InnerText ?? "No Data";
 
+            // Adds location to empty WSBK Catalunya.
+            Location = this.WSBKCatalunyaLoctionFix(Sponser, Location);
+
             //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
-            //Debug.Assert(!GrandPrix.Contains("Mexico"));
+            //Debug.Assert(!GrandPrix.Contains("Spain"));
+            //Debug.WriteIf(motorSport.Url.Contains("https://www.worldsbk.com/en/event/ESP3/2020"), $"{GrandPrix}");
 
             // MotoGP are updated the schedule, eventsTable loads 404.
             if (this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
@@ -292,6 +297,19 @@ namespace MotoiCal.Models
                         EndUTC = endUTC
                     });
                     break;
+            }
+        }
+
+        // Tempary fix to add WSBK Catalunya location untill WSBK update this.
+        private string WSBKCatalunyaLoctionFix(string sponser, string location)
+        {
+            if (sponser.Equals("Acerbis Catalunya Round") && location.Equals("No Data"))
+            {
+                return "Circuit de Barcelona-Catalunya";
+            }
+            else
+            {
+                return location;
             }
         }
     }
