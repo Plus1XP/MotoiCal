@@ -62,23 +62,24 @@ namespace MotoiCal.Models
             return DateTime.Parse(easterEggDate) == DateTime.Now.Date ? true : false;
         }
 
-        // currentGrandPrix is initially set to null, then each loop is given the current GrandPRix value.
+        // currentSponser is initially set to null, then each loop is given the current Sponser value.
         // This allows the stringbuilder to check if it needs to update header.
+        // * This was changed from checking again the currentGrandPrix in the COVID update due to multiple races at the same GrandPrix.
         private string ProcessDisplayResults()
         {
             StringBuilder raceResults = new StringBuilder();
 
-            string currentGrandPrix = null;
+            string currentSponser = null;
 
             foreach (var race in this.raceData)
             {
-                string header = race.GrandPrix == currentGrandPrix ? string.Empty : race.DisplayHeader;
+                string header = race.Sponser == currentSponser ? string.Empty : race.DisplayHeader;
                 string body = race.DisplayBody;
 
                 raceResults.Append(header);
                 raceResults.AppendLine(body);
 
-                currentGrandPrix = race.GrandPrix;
+                currentSponser = race.Sponser;
             }
             return raceResults.ToString();
         }
@@ -171,7 +172,8 @@ namespace MotoiCal.Models
             string Sponser = this.doc.DocumentNode.SelectSingleNode(motorSport.SponserNamePath)?.InnerText ?? "No Data";
 
             //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
-            //Debug.Assert(!GrandPrix.Contains("Mexico"));
+            //Debug.Assert(!GrandPrix.Contains("Spain"));
+            //Debug.WriteIf(GrandPrix.Contains("Spain"), $"{motorSport.Url}");
 
             // MotoGP are updated the schedule, eventsTable loads 404.
             if (this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
