@@ -72,19 +72,24 @@ namespace MotoiCal.Models
             this.calendarEntry.AppendLine("SUMMARY:" + subject);
             this.calendarEntry.AppendLine("LOCATION:" + location);
             this.calendarEntry.AppendLine("DESCRIPTION:" + description);
-            this.calendarEntry.AppendLine("END:VEVENT");
         }
 
-        public void CreateCalendarAlarmEntry(int minsToTrigger, string subject)
+        public void CreateCalendarAlarmEntry(int eventTriggerMinutes, string subject)
         {
             // Add the alarm.
             this.calendarEntry.AppendLine("BEGIN: VALARM");
 
             // Sets a duration or time to trigger the arlarm (Mins or Hours).
-            this.calendarEntry.AppendLine("TRIGGER:-PT" + minsToTrigger + "M");
+            this.calendarEntry.AppendLine("TRIGGER:-PT" + eventTriggerMinutes + "M");
             this.calendarEntry.AppendLine("ACTION:DISPLAY");
             this.calendarEntry.AppendLine("DESCRIPTION:" + subject);
             this.calendarEntry.AppendLine("END:VALARM");
+        }
+
+        public void CloseEventEntry()
+        {
+            // Ends the icalendar event.
+            this.calendarEntry.AppendLine("END:VEVENT");
         }
 
         public void CloseCalendarEntry()
