@@ -8,6 +8,22 @@ using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels
 {
+    public enum EventTrigger
+    {
+        [Description("At Time of Event")] 
+        AtTimeOfEvent = 0,
+        [Description("5 Minutes Before Event")]
+        Minutes5 = 5,
+        [Description("15 Minutes Before Event")]
+        Minutes15 = 15,
+        [Description("30 Minutes Before Event")]
+        Minutes30 = 30,
+        [Description("1 Hour Before Event")]
+        Minutes60 = 60,
+        [Description("2 Hours Before Event")]
+        Minutes120 = 120
+    }
+
     public class MotoiCalViewModel : INotifyPropertyChanged
     {
         private readonly Scraper scraper;
@@ -16,9 +32,11 @@ namespace MotoiCal.ViewModels
         private string mainHeader;
         private string resultsOutput;
         private string subHeader;
+        private int eventTriggerMinutes;
         private bool isSearchingF1;
         private bool isSearchingMotoGP;
         private bool isSearchingWorldSBK;
+        private bool isReminderActive;
         private bool isSearching;
         private bool canExecuteEasterEgg;
 
@@ -32,6 +50,8 @@ namespace MotoiCal.ViewModels
         {
             this.scraper = new Scraper();
             this.IsSearching = false;
+            this.IsReminderActive = true;
+            this.EventTriggerMinutes = (int)EventTrigger.Minutes15;
             this.canExecuteEasterEgg = this.scraper.IsEasterEggActive(this.easterEggDate);
             this.PullDatesCmd = new AsynchronousRelayCommand(async () => await this.PullDates(), () => this.CanExecuteCmd(this.motorSportSeries));
             this.GenerateIcsCmd = new SynchronousRelayCommand(this.GenerateIcs, () => this.CanExecuteCmd(this.motorSportSeries));
@@ -116,6 +136,16 @@ namespace MotoiCal.ViewModels
             }
         }
 
+        public int EventTriggerMinutes
+        {
+            get => eventTriggerMinutes;
+            set
+            {
+                this.eventTriggerMinutes = value;
+                this.OnPropertyChanged("EventTriggerMinutes");
+            }
+        }
+
         public bool IsSearchingF1
         {
             get => this.isSearchingF1;
@@ -146,6 +176,16 @@ namespace MotoiCal.ViewModels
                 this.isSearchingWorldSBK = value;
                 this.SetWorldSBKInstance();
                 this.OnPropertyChanged("IsSearchingWorldSBK");
+            }
+        }
+
+        public bool IsReminderActive
+        {
+            get => isReminderActive;
+            set
+            {
+                this.isReminderActive = value;
+                this.OnPropertyChanged("IsReminderActive");
             }
         }
 
@@ -203,7 +243,7 @@ namespace MotoiCal.ViewModels
         private void GenerateIcs()
         {
             this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ICalendarResults = this.scraper.GenerateiCalendar(this.motorSportSeries);
+            this.ICalendarResults = this.scraper.GenerateiCalendar(this.motorSportSeries, this.IsReminderActive, this.EventTriggerMinutes);
         }
 
         private void ReadIcs()
