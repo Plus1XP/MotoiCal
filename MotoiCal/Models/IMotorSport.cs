@@ -25,7 +25,7 @@ namespace MotoiCal.Models
         List<string> EventUrlList { get; set; }
         string[] ExcludedUrls { get; }
         string[] ExcludedClasses { get; }
-        string[] ExcludedEvents { get; }
+        List<string> ExcludedEvents { get; set; }
         string[] ExcludedWords { get; }
 
         string CheckForExcludedWords(string stringToCheck);
