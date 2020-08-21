@@ -68,6 +68,12 @@ namespace MotoiCal.ViewModels
             set
             {
                 this.motorSportSeries = value;
+
+                //motorSportSeries.ExcludedEvents.Remove("group photo"); // Remove this *Testing*
+                //IsF1RaceEventEnabled = false;
+                //IsF1QualifyingEventEnabled = false;
+                //IsF1PracticeEventEnabled = false;
+
                 this.OnPropertyChanged("MotorSportSeries");
             }
         }
@@ -179,7 +185,7 @@ namespace MotoiCal.ViewModels
             }
         }
 
-        public bool IsReminderActive
+        public bool IsReminderActive //For Ical event reminder, use enum
         {
             get => isReminderActive;
             set
@@ -201,6 +207,123 @@ namespace MotoiCal.ViewModels
                     this.OnPropertyChanged("IsButtonEnabled");
                     this.OnPropertyChanged("ShowLoadingBar");
                 }
+            }
+        }
+
+        // Test events
+        public bool IsF1PracticeEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Practice");
+            }
+        }
+
+        public bool IsF1QualifyingEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Qualifying");
+            }
+        }
+
+        public bool IsF1RaceEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Race");
+            }
+        }
+
+        public bool IsMotoGPPracticeEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Practice");
+            }
+        }
+
+        public bool IsMotoGPQualifyingEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Qualifying");
+            }
+        }
+
+        public bool IsMotoGPWarmUpEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Warm Up");
+            }
+        }
+
+        public bool IsMotoGPRaceEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Race");
+            }
+        }
+
+        public bool IsMotoGPAfterTheFlagEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "After The Flag");
+            }
+        }
+
+        public bool IsMotoGPBehindTheScenesEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "behind the scenes");
+            }
+        }
+
+        public bool IsWSBKPracticeEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "FP");
+            }
+        }
+
+        public bool IsWSBKQualifyingEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Superpole");
+            }
+        }
+
+        public bool IsWSBKWarmUpEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "WUP");
+            }
+        }
+
+        public bool IsWSBKRaceEventEnabled
+        {
+            set
+            {
+                SetEvent(value, "Race");
+            }
+        }
+
+        public void SetEvent(bool isEventEnabled, string eventName)
+        {
+            if (!isEventEnabled)
+            {
+                motorSportSeries.ExcludedEvents.Add(eventName);
+            }
+            else
+            {
+                motorSportSeries.ExcludedEvents.Remove(eventName);
             }
         }
 
@@ -264,6 +387,10 @@ namespace MotoiCal.ViewModels
             {
                 this.MotorSportSeries = new Formula1();
                 this.mainHeader = "Formula 1 Calendar Results";
+
+                //IsF1RaceEventEnabled = false;
+                //IsF1QualifyingEventEnabled = false;                
+                //IsF1PracticeEventEnabled = false;
             }
         }
 
@@ -273,6 +400,13 @@ namespace MotoiCal.ViewModels
             {
                 this.MotorSportSeries = new MotoGP();
                 this.mainHeader = "MotoGP Calendar Results";
+
+                //IsMotoGPQualifyingEventEnabled = false;
+                //IsMotoGPPracticeEventEnabled = false;
+                //IsMotoGPWarmUpEventEnabled = false;
+                //IsMotoGPRaceEventEnabled = false;
+                //IsMotoGPBehindTheScenesEventEnabled = false;
+                //IsMotoGPAfterTheFlagEventEnabled = false;
             }
         }
 
@@ -282,6 +416,11 @@ namespace MotoiCal.ViewModels
             {
                 this.MotorSportSeries = new WorldSBK();
                 this.mainHeader = "WorldSBK Calendar Results";
+
+                //IsWSBKPracticeEventEnabled = false;
+                //IsWSBKQualifyingEventEnabled = false;
+                //IsWSBKRaceEventEnabled = false;
+                //IsWSBKWarmUpEventEnabled = false;
             }
         }
 
