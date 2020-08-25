@@ -51,9 +51,7 @@ namespace MotoiCal.Models
         {
         };
 
-        public string[] ExcludedEvents => new string[]
-        {
-        };
+        public List<string> ExcludedEvents { get; set; } = new List<string>();
 
         public string[] ExcludedWords => new string[]
         {

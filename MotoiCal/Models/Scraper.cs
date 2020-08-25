@@ -23,7 +23,7 @@ namespace MotoiCal.Models
             this.iCalendar = new CalendarManager();
         }
 
-        public string GenerateiCalendar(IMotorSport motorSport)
+        public string GenerateiCalendar(IMotorSport motorSport, bool isReminderActive, int eventTriggerMinutes)
         {
             // Checks if url list has a value, if not then it is assumed the dates have not been pulled.
             if (motorSport.EventUrlList?.Any() != true)
@@ -32,7 +32,7 @@ namespace MotoiCal.Models
             }
             else
             {
-                this.ProcessiCalendarResults();
+                this.ProcessiCalendarResults(isReminderActive, eventTriggerMinutes);
                 return this.iCalendar.CreateICSFile(motorSport.FilePath);
             }
         }
@@ -84,7 +84,7 @@ namespace MotoiCal.Models
             return raceResults.ToString();
         }
 
-        private void ProcessiCalendarResults()
+        private void ProcessiCalendarResults(bool isReminderActive, int eventTriggerMinutes)
         {
             this.iCalendar.CreateCalendarEntry();
             /*
@@ -93,6 +93,11 @@ namespace MotoiCal.Models
             foreach (var item in this.raceData)
             {
                 this.iCalendar.CreateCalendarEventEntry(item.StartUTC, item.EndUTC, item.IcalendarSubject, item.IcalendarLocation, item.IcalendarDescription);
+                if (isReminderActive)
+                {
+                    this.iCalendar.CreateCalendarAlarmEntry(eventTriggerMinutes, item.IcalendarSubject); // Change from 15
+                }
+                this.iCalendar.CloseEventEntry();
             }
             this.iCalendar.CloseCalendarEntry();
         }

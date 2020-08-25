@@ -54,11 +54,14 @@ namespace MotoiCal.Models
             "MotoE"
         };
 
-        public string[] ExcludedEvents => new string[]
+        public List<string> ExcludedEvents { get; set; } = new List<string>()
         {
-            "Class photo",
+            "group photo",
             "Press Conference",
-            "Ceremony"
+            "Ceremony",
+            "Marc Marquez"
+            //"After The Flag",
+            //"behind the scenes"
         };
 
         public string[] ExcludedWords => new string[]
