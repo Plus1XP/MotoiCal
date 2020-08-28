@@ -30,5 +30,34 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
+        <DockPanel Grid.Column="1" Grid.Row="0">            
+            <Button    Style="{StaticResource WindowButtonStyle}" 
+                       Content="Formula 1" 
+                       ToolTip="Pull Formula 1 Calendar"
+                       Command="{Binding Formula1TabCommand}"
+                       FontSize="24" 
+                       Margin="0,0,10,0"/>
+            <TextBlock Text="MotoGP" 
+                       ToolTip="Pull MotoGP Calendar"
+                       FontSize="24"
+                       Margin="0,0,10,0" 
+                       Foreground="DimGray"/>
+            <TextBlock Text="WorldSBK" 
+                       ToolTip="Pull WorldSBK Calendar"
+                       FontSize="24"
+                       Margin="0,0,10,0" 
+                       Foreground="DimGray"/>
+            <TextBlock Text="Settings" 
+                       ToolTip="Configure Parameters"
+                       FontSize="24"
+                       Margin="0,0,10,0" 
+                       Foreground="DimGray"/>
+        </DockPanel>
+
+        <DockPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+            <TabControl>
+                
+            </TabControl>
+        </DockPanel>
     </Grid>
 </Window>
