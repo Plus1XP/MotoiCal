@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:MotoiCal"
              StartupUri="Views\MotoiCalView.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="ResourceDictionaries/MotoiCalDictionary.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ResourceDictionaries/MotoiCalDictionary.xaml"/>
+                <ResourceDictionary Source="ResourceDictionaries/ModernUIDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

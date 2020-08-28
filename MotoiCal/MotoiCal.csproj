@@ -62,7 +62,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ResourceDictionaries\ModernUIDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MotoiCalView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MotoiCalView_Classic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -82,8 +90,12 @@
     <Compile Include="Models\SubstringExtentions.cs" />
     <Compile Include="Models\WorldSBK.cs" />
     <Compile Include="ViewModels\MotoiCalViewModel.cs" />
+    <Compile Include="ViewModels\MotoiCalViewModel_Classic.cs" />
     <Compile Include="Views\MotoiCalView.xaml.cs">
       <DependentUpon>MotoiCalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MotoiCalView_Classic.xaml.cs">
+      <DependentUpon>MotoiCalView_Classic.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

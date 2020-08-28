@@ -1,0 +1,117 @@
+﻿<Window x:Class="MotoiCal.MainWindow_Classic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MotoiCal"
+        xmlns:viewModels="clr-namespace:MotoiCal.ViewModels"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="550" Width="925" 
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewModels:MotoiCalViewModel_Classic/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="20"/>
+
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Content="?" 
+                Background="White" Foreground="White" BorderThickness="0" 
+                Command="{Binding EasterEggCmd}" Visibility="{Binding IsEasterEggHidden}"/>
+
+        <DockPanel Grid.Column="1" Grid.Row="1">
+            <RadioButton Style="{StaticResource MotorSportSeriesRadioButton}" 
+                         IsChecked="{Binding IsSearchingF1}"/>
+            <TextBlock Style="{StaticResource MotorSportSeriesRadioContent}" 
+                       Text="{Binding SearchingFormula1Content}"/>
+        </DockPanel>
+        
+        <DockPanel Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1">
+            <RadioButton Style="{StaticResource MotorSportSeriesRadioButton}" 
+                         IsChecked="{Binding IsSearchingMotoGP}"/>
+            <TextBlock Style="{StaticResource MotorSportSeriesRadioContent}" 
+                       Text="{Binding SearchingMotoGPContent}"/>
+        </DockPanel>
+
+        <DockPanel Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="1">
+            <RadioButton Style="{StaticResource MotorSportSeriesRadioButton}" 
+                         IsChecked="{Binding IsSearchingWorldSBK}"/>
+            <TextBlock Style="{StaticResource MotorSportSeriesRadioContent}" 
+                       Text="{Binding SearchingWorldSBKContent}"/>
+        </DockPanel>
+
+        <Button Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" 
+                Style="{StaticResource CalendarOptionsButton}" 
+                Content="{Binding PullDatesContent}" 
+                Command="{Binding PullDatesCmd}">
+        </Button>
+
+        <Button Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="1" 
+                Style="{StaticResource CalendarOptionsButton}" 
+                Content="{Binding GenerateIcsContent}" 
+                Command="{Binding GenerateIcsCmd}">
+        </Button>
+
+        <Button Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="1"
+                Style="{StaticResource CalendarOptionsButton}" 
+                Content="{Binding ReadIcsContent}" 
+                Command="{Binding ReadIcsCmd}">
+        </Button>
+
+        <Button Grid.Column="2" Grid.Row="5" Grid.ColumnSpan="1" 
+                Style="{StaticResource CalendarOptionsButton}" 
+                Content="{Binding DeleteIcsContent}" 
+                Command="{Binding DeleteIcsCmd}">
+        </Button>
+
+        <TextBlock Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="3" 
+                   Style="{StaticResource HeaderContent}"
+                   Text="{Binding SubHeader}">
+        </TextBlock>
+
+        <Grid Grid.Column="1" Grid.Row="7" Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <ScrollViewer MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}}"
+                          MaxWidth="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Grid}}}">
+                <TextBlock Style="{StaticResource ICalendarResultsContent}"/>
+            </ScrollViewer>
+        </Grid>
+
+        <TextBlock Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="3" 
+                   Style="{StaticResource HeaderContent}" 
+                   Text="{Binding MainHeader}">
+        </TextBlock>
+
+        <ScrollViewer Grid.Column="5" Grid.Row="3" Grid.RowSpan="6" Grid.ColumnSpan="2">
+            <TextBlock Style="{StaticResource ResultsOutputContent}"/>
+        </ScrollViewer>
+
+        <ProgressBar Grid.Column="1" Grid.Row="10" Grid.ColumnSpan="6"
+                     IsIndeterminate="True" Background="White" BorderThickness="0"
+                     Visibility="{Binding ShowLoadingBar}"/>
+    </Grid>
+</Window>
