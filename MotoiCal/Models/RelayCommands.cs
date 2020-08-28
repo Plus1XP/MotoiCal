@@ -56,6 +56,57 @@ namespace MotoiCal.Models
         }
     }
 
+    public class SynchronousRelayCommand<T> : ICommand
+    {
+        protected readonly Func<T, Boolean> canExecute;
+
+        protected readonly Action<T> execute;
+
+        public event EventHandler CanExecuteChanged
+        {
+            add
+            {
+                if (this.canExecute != null)
+                {
+                    CommandManager.RequerySuggested += value;
+                }
+            }
+
+            remove
+            {
+                if (this.canExecute != null)
+                {
+                    CommandManager.RequerySuggested -= value;
+                }
+            }
+        }
+
+        public SynchronousRelayCommand(Action<T> execute, Func<T, Boolean> canExecute)
+        {
+            if (execute == null)
+            {
+                throw new ArgumentNullException("execute");
+            }
+            this.execute = execute;
+            this.canExecute = canExecute;
+        }
+
+        public SynchronousRelayCommand(Action<T> execute)
+            : this(execute, null)
+        {
+        }
+
+        public virtual Boolean CanExecute(Object parameter)
+        {
+            return this.canExecute == null ? true : this.canExecute((T)parameter);
+        }
+
+        public virtual void Execute(Object parameter)
+        {
+            this.execute((T)parameter);
+        }
+    }
+
     public class AsynchronousRelayCommand : SynchronousRelayCommand
     {
         private bool isExecuting = false;
