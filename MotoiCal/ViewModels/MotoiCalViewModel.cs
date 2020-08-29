@@ -1,30 +1,90 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using MotoiCal.Models;
+using MotoiCal.Views;
 
 namespace MotoiCal.ViewModels
 {
-    public class MotoiCalViewModel
+    public class MotoiCalViewModel : INotifyPropertyChanged
     {
-        private bool canResizeWindow { get; set; } = true;
-        private bool canMinimizeWindow { get; set; } = true;
+        private FrameworkElement controlContentView;
+
+        private bool canResizeWindow { get; set; }
+        private bool canMinimizeWindow { get; set; }
 
         public MotoiCalViewModel()
         {
+            this.canResizeWindow = true;
+            this.canMinimizeWindow = true;
+
             this.CloseWindowCommand = new SynchronousRelayCommand<Window>(this.CloseWindow);
             this.MaximizeWindowCommand = new SynchronousRelayCommand<Window>(this.MaximizeWindow, o => this.canResizeWindow);
             this.MinimizeWindowCommand = new SynchronousRelayCommand<Window>(this.MinimizeWindow, o => this.canMinimizeWindow);
             this.RestoreWindowCommand = new SynchronousRelayCommand<Window>(this.RestoreWindow, o => this.canResizeWindow);
+
+            this.FormulaOneViewCommand = new SynchronousRelayCommand(this.Formula1Tab);
+            this.MotoGPViewCommand = new SynchronousRelayCommand(this.MotoGPTab);
+            this.WorldSBKViewCommand = new SynchronousRelayCommand(this.WorldSBKTab);
+            this.SettingsViewCommand = new SynchronousRelayCommand(this.SettingsTab);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public SynchronousRelayCommand<Window> CloseWindowCommand { get; set; }
         public SynchronousRelayCommand<Window> MaximizeWindowCommand { get; set; }
         public SynchronousRelayCommand<Window> MinimizeWindowCommand { get; set; }
         public SynchronousRelayCommand<Window> RestoreWindowCommand { get; set; }
+
+        public SynchronousRelayCommand FormulaOneViewCommand { get; }
+        public SynchronousRelayCommand MotoGPViewCommand { get; }
+        public SynchronousRelayCommand WorldSBKViewCommand { get; }
+        public SynchronousRelayCommand SettingsViewCommand { get; }
+
+        public FrameworkElement ContentControlView
+        {
+            get { return this.controlContentView; }
+            set
+            {
+                this.controlContentView = value;
+                this.OnPropertyChanged("ContentControlView");
+            }
+        }
+
+        private void OnPropertyChanged(string property)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        private void Formula1Tab()
+        {
+            this.ContentControlView = new FormulaOneView();
+            this.ContentControlView.DataContext = new FormulaOneViewModel();
+        }
+
+        private void MotoGPTab()
+        {
+            this.ContentControlView = new MotoGPView();
+            this.ContentControlView.DataContext = new MotoGPViewModel();
+        }
+        private void WorldSBKTab()
+        {
+            this.ContentControlView = new WorldSBKView();
+            this.ContentControlView.DataContext = new WorldSBKViewModel();
+        }
+        private void SettingsTab()
+        {
+            this.ContentControlView = new SettingsView();
+            this.ContentControlView.DataContext = new SettingsViewModel();
+        }
 
         private void CloseWindow(Window window)
         {
