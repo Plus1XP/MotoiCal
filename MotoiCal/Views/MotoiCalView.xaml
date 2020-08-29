@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MotoiCal"
         xmlns:viewModels="clr-namespace:MotoiCal.ViewModels"
+        xmlns:view="clr-namespace:MotoiCal.Views"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}" Height="550" Width="925" 
         WindowStartupLocation="CenterScreen"
@@ -14,6 +15,25 @@
     <Window.DataContext>
         <viewModels:MotoiCalViewModel/>
     </Window.DataContext>
+
+    <Window.Resources>
+        <!--<DataTemplate x:Name="MainTemplate" 
+                      DataType="{x:Type viewModels:MotoiCalViewModel}">
+            <view:MainView DataContext="{Binding}"/>
+        </DataTemplate>-->
+        <!--<DataTemplate x:Name="FormulaOneTemplate" 
+                      DataType="{x:Type viewModels:FormulaOneViewModel}">
+            <view:FormulaOneView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="MotoGPTemplate" 
+                      DataType="{x:Type viewModels:MotoGPViewModel}">
+            <view:MotoGPView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="WorldSBKTemplate" 
+                      DataType="{x:Type viewModels:WorldSBKViewModel}">
+            <view:WorldSBKView DataContext="{Binding}"/>
+        </DataTemplate>-->
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,34 +50,38 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Column="1" Grid.Row="0">            
-            <Button    Style="{StaticResource WindowButtonStyle}" 
-                       Content="Formula 1" 
-                       ToolTip="Pull Formula 1 Calendar"
-                       Command="{Binding Formula1TabCommand}"
-                       FontSize="24" 
-                       Margin="0,0,10,0"/>
-            <TextBlock Text="MotoGP" 
-                       ToolTip="Pull MotoGP Calendar"
-                       FontSize="24"
-                       Margin="0,0,10,0" 
-                       Foreground="DimGray"/>
-            <TextBlock Text="WorldSBK" 
-                       ToolTip="Pull WorldSBK Calendar"
-                       FontSize="24"
-                       Margin="0,0,10,0" 
-                       Foreground="DimGray"/>
-            <TextBlock Text="Settings" 
-                       ToolTip="Configure Parameters"
-                       FontSize="24"
-                       Margin="0,0,10,0" 
-                       Foreground="DimGray"/>
+        <DockPanel Grid.Column="1" Grid.Row="0">
+            <Button Style="{StaticResource WindowButtonStyle}" 
+                    Content="Formula 1" 
+                    ToolTip="Pull Formula 1 Calendar"
+                    Command="{Binding FormulaOneViewCommand}"
+                    FontSize="24" 
+                    Margin="0,0,10,0"/>
+            <Button Style="{StaticResource WindowButtonStyle}"
+                    Content="MotoGP" 
+                    ToolTip="Pull MotoGP Calendar"
+                    Command="{Binding MotoGPViewCommand}"
+                    FontSize="24"
+                    Margin="0,0,10,0" 
+                    Foreground="DimGray"/>
+            <Button Style="{StaticResource WindowButtonStyle}"
+                    Content="WorldSBK" 
+                    ToolTip="Pull WorldSBK Calendar"
+                    Command="{Binding WorldSBKViewCommand}"
+                    FontSize="24"
+                    Margin="0,0,10,0" 
+                    Foreground="DimGray"/>
+            <Button Style="{StaticResource WindowButtonStyle}"
+                    Content="Settings" 
+                    ToolTip="Configure Parameters"
+                    Command="{Binding SettingsViewCommand}"
+                    FontSize="24"
+                    Margin="0,0,10,0" 
+                    Foreground="DimGray"/>
         </DockPanel>
 
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
-            <TabControl>
-                
-            </TabControl>
+            <ContentControl Content="{Binding ContentControlView}"/>
         </DockPanel>
     </Grid>
 </Window>
