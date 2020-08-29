@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using MotoiCal.Models;
 using MotoiCal.Views;
@@ -14,6 +17,11 @@ namespace MotoiCal.ViewModels
     public class MotoiCalViewModel : INotifyPropertyChanged
     {
         private FrameworkElement controlContentView;
+
+        private bool isFormulaOneTabActive;
+        private bool isMotoGPTabActive;
+        private bool isWorldSBKTabActive;
+        private bool isSettingsTabActive;
 
         private bool canResizeWindow { get; set; }
         private bool canMinimizeWindow { get; set; }
@@ -56,6 +64,46 @@ namespace MotoiCal.ViewModels
             }
         }
 
+        public bool IsFormulaOneTabActive
+        {
+            get { return this.isFormulaOneTabActive; }
+            set
+            {
+                this.isFormulaOneTabActive = value;
+                this.OnPropertyChanged("IsFormulaOneTabActive");
+            }
+        }
+
+        public bool IsMotoGPTabActive
+        {
+            get { return this.isMotoGPTabActive; }
+            set
+            {
+                this.isMotoGPTabActive = value;
+                this.OnPropertyChanged("IsMotoGPTabActive");
+            }
+        }
+
+        public bool IsWorldSBKTabActive
+        {
+            get { return this.isWorldSBKTabActive; }
+            set
+            {
+                this.isWorldSBKTabActive = value;
+                this.OnPropertyChanged("IsWorldSBKTabActive");
+            }
+        }
+
+        public bool IsSettingsTabActive
+        {
+            get { return this.isSettingsTabActive; }
+            set
+            {
+                this.isSettingsTabActive = value;
+                this.OnPropertyChanged("IsSettingsTabActive");
+            }
+        }
+
         private void OnPropertyChanged(string property)
         {
             if (PropertyChanged != null)
@@ -66,22 +114,40 @@ namespace MotoiCal.ViewModels
 
         private void Formula1Tab()
         {
+            this.IsFormulaOneTabActive = true;
+            this.IsMotoGPTabActive = false;
+            this.IsWorldSBKTabActive = false;
+            this.IsSettingsTabActive = false;
             this.ContentControlView = new FormulaOneView();
             this.ContentControlView.DataContext = new FormulaOneViewModel();
         }
 
         private void MotoGPTab()
         {
+            this.IsFormulaOneTabActive = false;
+            this.IsMotoGPTabActive = true;
+            this.IsWorldSBKTabActive = false;
+            this.IsSettingsTabActive = false; 
             this.ContentControlView = new MotoGPView();
             this.ContentControlView.DataContext = new MotoGPViewModel();
         }
+
         private void WorldSBKTab()
         {
+            this.IsFormulaOneTabActive = false;
+            this.IsMotoGPTabActive = false;
+            this.IsWorldSBKTabActive = true;
+            this.IsSettingsTabActive = false; 
             this.ContentControlView = new WorldSBKView();
             this.ContentControlView.DataContext = new WorldSBKViewModel();
         }
+
         private void SettingsTab()
         {
+            this.IsFormulaOneTabActive = false;
+            this.IsMotoGPTabActive = false;
+            this.IsWorldSBKTabActive = false;
+            this.IsSettingsTabActive = true;
             this.ContentControlView = new SettingsView();
             this.ContentControlView.DataContext = new SettingsViewModel();
         }
