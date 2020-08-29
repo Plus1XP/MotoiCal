@@ -56,28 +56,29 @@
                     ToolTip="Pull Formula 1 Calendar"
                     Command="{Binding FormulaOneViewCommand}"
                     FontSize="24" 
-                    Margin="0,0,10,0"/>
+                    Margin="0,0,10,0"
+                    Foreground="{Binding IsFormulaOneTabActive, Converter={StaticResource bool2RGBConverter}}"/>
             <Button Style="{StaticResource WindowButtonStyle}"
                     Content="MotoGP" 
                     ToolTip="Pull MotoGP Calendar"
                     Command="{Binding MotoGPViewCommand}"
                     FontSize="24"
                     Margin="0,0,10,0" 
-                    Foreground="DimGray"/>
+                    Foreground="{Binding IsMotoGPTabActive, Converter={StaticResource bool2RGBConverter}}"/>
             <Button Style="{StaticResource WindowButtonStyle}"
                     Content="WorldSBK" 
                     ToolTip="Pull WorldSBK Calendar"
                     Command="{Binding WorldSBKViewCommand}"
                     FontSize="24"
                     Margin="0,0,10,0" 
-                    Foreground="DimGray"/>
+                    Foreground="{Binding IsWorldSBKTabActive, Converter={StaticResource bool2RGBConverter}}"/>
             <Button Style="{StaticResource WindowButtonStyle}"
                     Content="Settings" 
                     ToolTip="Configure Parameters"
                     Command="{Binding SettingsViewCommand}"
                     FontSize="24"
                     Margin="0,0,10,0" 
-                    Foreground="DimGray"/>
+                    Foreground="{Binding IsSettingsTabActive, Converter={StaticResource bool2RGBConverter}}"/>
         </DockPanel>
 
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
