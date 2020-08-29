@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:MotoiCal.ResourceDictionaries">
+                    xmlns:local="clr-namespace:MotoiCal.ResourceDictionaries"
+                    xmlns:viewModels="clr-namespace:MotoiCal.ViewModels">
 
     <BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />
+    <viewModels:BooleanToRGBConverter x:Key="bool2RGBConverter"/>
 
     <Color x:Key="WindowBackgroundColor">#FF2D2D30</Color>
     <Color x:Key="HighlightColor">#FF3F3F41</Color>
