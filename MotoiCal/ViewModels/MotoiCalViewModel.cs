@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,14 +15,15 @@ using MotoiCal.Views;
 
 namespace MotoiCal.ViewModels
 {
-    public class MotoiCalViewModel : INotifyPropertyChanged
+    public class MotoiCalViewModel : INotifyPropertyChanged //Rename this class
     {
         private FrameworkElement controlContentView;
 
-        private bool isFormulaOneTabActive;
-        private bool isMotoGPTabActive;
-        private bool isWorldSBKTabActive;
-        private bool isSettingsTabActive;
+        private SettingsContentViewModel settingsMotorSportContent;
+
+        private ButtonManagerModel buttonManagerModel;
+
+        private IMotorSport motorSportSeries;
 
         private bool canResizeWindow { get; set; }
         private bool canMinimizeWindow { get; set; }
@@ -40,6 +42,20 @@ namespace MotoiCal.ViewModels
             this.MotoGPViewCommand = new SynchronousRelayCommand(this.MotoGPTab);
             this.WorldSBKViewCommand = new SynchronousRelayCommand(this.WorldSBKTab);
             this.SettingsViewCommand = new SynchronousRelayCommand(this.SettingsTab);
+
+            this.buttonManagerModel = new ButtonManagerModel();
+
+            this.buttonManagerModel.AddButton(this.FormulaOneButtonStatus = new ButtonStatusModel("Formula 1", "Pull Formula 1 Calendar"));
+            this.buttonManagerModel.AddButton(this.MotoGPButtonStatus = new ButtonStatusModel("MotoGP", "Pull MotoGP Calendar"));
+            this.buttonManagerModel.AddButton(this.WorldSBKButtonStatus = new ButtonStatusModel("WorldSBK", "Pull WorldSBK Calendar"));
+            this.buttonManagerModel.AddButton(this.SettingsButtonStatus = new ButtonStatusModel("Settings", "Configure Parameters"));
+
+            this.FormulaOneButtonStatus.ButtonStatusChanged = new EventHandler(this.FormulaOneButtonActive);
+            this.MotoGPButtonStatus.ButtonStatusChanged = new EventHandler(this.MotoGPButtonActive);
+            this.WorldSBKButtonStatus.ButtonStatusChanged = new EventHandler(this.WorldSBKButtonActive);
+            this.SettingsButtonStatus.ButtonStatusChanged = new EventHandler(this.SettingsButtonActive);
+
+            this.settingsMotorSportContent = new SettingsContentViewModel();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,6 +70,11 @@ namespace MotoiCal.ViewModels
         public SynchronousRelayCommand WorldSBKViewCommand { get; }
         public SynchronousRelayCommand SettingsViewCommand { get; }
 
+        public ButtonStatusModel FormulaOneButtonStatus { get; set; }
+        public ButtonStatusModel MotoGPButtonStatus { get; set; }
+        public ButtonStatusModel WorldSBKButtonStatus { get; set; }
+        public ButtonStatusModel SettingsButtonStatus { get; set; }
+
         public FrameworkElement ContentControlView
         {
             get { return this.controlContentView; }
@@ -61,46 +82,6 @@ namespace MotoiCal.ViewModels
             {
                 this.controlContentView = value;
                 this.OnPropertyChanged("ContentControlView");
-            }
-        }
-
-        public bool IsFormulaOneTabActive
-        {
-            get { return this.isFormulaOneTabActive; }
-            set
-            {
-                this.isFormulaOneTabActive = value;
-                this.OnPropertyChanged("IsFormulaOneTabActive");
-            }
-        }
-
-        public bool IsMotoGPTabActive
-        {
-            get { return this.isMotoGPTabActive; }
-            set
-            {
-                this.isMotoGPTabActive = value;
-                this.OnPropertyChanged("IsMotoGPTabActive");
-            }
-        }
-
-        public bool IsWorldSBKTabActive
-        {
-            get { return this.isWorldSBKTabActive; }
-            set
-            {
-                this.isWorldSBKTabActive = value;
-                this.OnPropertyChanged("IsWorldSBKTabActive");
-            }
-        }
-
-        public bool IsSettingsTabActive
-        {
-            get { return this.isSettingsTabActive; }
-            set
-            {
-                this.isSettingsTabActive = value;
-                this.OnPropertyChanged("IsSettingsTabActive");
             }
         }
 
@@ -112,44 +93,52 @@ namespace MotoiCal.ViewModels
             }
         }
 
+        public void FormulaOneButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("FormulaOneButtonStatus");
+        }
+
+        public void MotoGPButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("MotoGPButtonStatus");
+        }
+
+        public void WorldSBKButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("WorldSBKButtonStatus");
+        }
+
+        public void SettingsButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("SettingsButtonStatus");
+        }
+
         private void Formula1Tab()
         {
-            this.IsFormulaOneTabActive = true;
-            this.IsMotoGPTabActive = false;
-            this.IsWorldSBKTabActive = false;
-            this.IsSettingsTabActive = false;
-            this.ContentControlView = new FormulaOneView();
-            this.ContentControlView.DataContext = new FormulaOneViewModel();
+            this.buttonManagerModel.SetActiveButton(this.FormulaOneButtonStatus);
+            this.ContentControlView = new MotorSportContentView();
+            this.ContentControlView.DataContext = new MotorSportContentViewModel(new Formula1());
         }
 
         private void MotoGPTab()
         {
-            this.IsFormulaOneTabActive = false;
-            this.IsMotoGPTabActive = true;
-            this.IsWorldSBKTabActive = false;
-            this.IsSettingsTabActive = false; 
-            this.ContentControlView = new MotoGPView();
-            this.ContentControlView.DataContext = new MotoGPViewModel();
+            this.buttonManagerModel.SetActiveButton(this.MotoGPButtonStatus);
+            this.ContentControlView = new MotorSportContentView();
+            this.ContentControlView.DataContext = new MotorSportContentViewModel(new MotoGP());
         }
 
         private void WorldSBKTab()
         {
-            this.IsFormulaOneTabActive = false;
-            this.IsMotoGPTabActive = false;
-            this.IsWorldSBKTabActive = true;
-            this.IsSettingsTabActive = false; 
-            this.ContentControlView = new WorldSBKView();
-            this.ContentControlView.DataContext = new WorldSBKViewModel();
+            this.buttonManagerModel.SetActiveButton(this.WorldSBKButtonStatus);
+            this.ContentControlView = new MotorSportContentView();
+            this.ContentControlView.DataContext = new MotorSportContentViewModel(new WorldSBK());
         }
 
         private void SettingsTab()
         {
-            this.IsFormulaOneTabActive = false;
-            this.IsMotoGPTabActive = false;
-            this.IsWorldSBKTabActive = false;
-            this.IsSettingsTabActive = true;
+            this.buttonManagerModel.SetActiveButton(this.SettingsButtonStatus);
             this.ContentControlView = new SettingsView();
-            this.ContentControlView.DataContext = new SettingsViewModel();
+            this.ContentControlView.DataContext = new SettingsContentViewModel();
         }
 
         private void CloseWindow(Window window)

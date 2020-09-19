@@ -45,40 +45,39 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Column="1" Grid.Row="0">
             <Button Style="{StaticResource WindowButtonStyle}" 
-                    Content="Formula 1" 
-                    ToolTip="Pull Formula 1 Calendar"
+                    Content="{Binding FormulaOneButtonStatus.Name}" 
+                    ToolTip="{Binding FormulaOneButtonStatus.ToolTip}"
                     Command="{Binding FormulaOneViewCommand}"
                     FontSize="24" 
                     Margin="0,0,10,0"
-                    Foreground="{Binding IsFormulaOneTabActive, Converter={StaticResource bool2RGBConverter}}"/>
+                    Foreground="{Binding FormulaOneButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"/>
             <Button Style="{StaticResource WindowButtonStyle}"
-                    Content="MotoGP" 
-                    ToolTip="Pull MotoGP Calendar"
+                    Content="{Binding MotoGPButtonStatus.Name}" 
+                    ToolTip="{Binding MotoGPButtonStatus.ToolTip}"
                     Command="{Binding MotoGPViewCommand}"
                     FontSize="24"
                     Margin="0,0,10,0" 
-                    Foreground="{Binding IsMotoGPTabActive, Converter={StaticResource bool2RGBConverter}}"/>
+                    Foreground="{Binding MotoGPButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"/>
             <Button Style="{StaticResource WindowButtonStyle}"
-                    Content="WorldSBK" 
-                    ToolTip="Pull WorldSBK Calendar"
+                    Content="{Binding WorldSBKButtonStatus.Name}" 
+                    ToolTip="{Binding WorldSBKButtonStatus.ToolTip}"
                     Command="{Binding WorldSBKViewCommand}"
                     FontSize="24"
                     Margin="0,0,10,0" 
-                    Foreground="{Binding IsWorldSBKTabActive, Converter={StaticResource bool2RGBConverter}}"/>
+                    Foreground="{Binding WorldSBKButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"/>
             <Button Style="{StaticResource WindowButtonStyle}"
-                    Content="Settings" 
-                    ToolTip="Configure Parameters"
+                    Content="{Binding SettingsButtonStatus.Name}" 
+                    ToolTip="{Binding SettingsButtonStatus.ToolTip}"
                     Command="{Binding SettingsViewCommand}"
                     FontSize="24"
                     Margin="0,0,10,0" 
-                    Foreground="{Binding IsSettingsTabActive, Converter={StaticResource bool2RGBConverter}}"/>
+                    Foreground="{Binding SettingsButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"/>
         </DockPanel>
 
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">

@@ -59,15 +59,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\BooleanToRGBConverter.cs" />
-    <Compile Include="ViewModels\FormulaOneViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\MotoGPViewModel.cs" />
-    <Compile Include="ViewModels\WorldSBKViewModel.cs" />
+    <Compile Include="Models\ButtonManagerModel.cs" />
+    <Compile Include="Models\ButtonStatusModel.cs" />
+    <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
+    <Compile Include="ViewModels\SettingsContentViewModel.cs" />
+    <Compile Include="Views\MotorSportContentView.xaml.cs">
+      <DependentUpon>MotorSportContentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\WorldSBKView.xaml.cs">
-      <DependentUpon>WorldSBKView.xaml</DependentUpon>
     </Compile>
     <Page Include="ResourceDictionaries\MotoiCalDictionary.xaml">
       <SubType>Designer</SubType>
@@ -77,15 +77,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FormulaOneView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Views\MotorSportContentView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MotoGPView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,12 +110,6 @@
     <Compile Include="Models\WorldSBK.cs" />
     <Compile Include="ViewModels\MotoiCalViewModel.cs" />
     <Compile Include="ViewModels\MotoiCalViewModel_Classic.cs" />
-    <Compile Include="Views\FormulaOneView.xaml.cs">
-      <DependentUpon>FormulaOneView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MotoGPView.xaml.cs">
-      <DependentUpon>MotoGPView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MotoiCalView.xaml.cs">
       <DependentUpon>MotoiCalView.xaml</DependentUpon>
     </Compile>
@@ -127,10 +117,6 @@
       <DependentUpon>MotoiCalView_Classic.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\WorldSBKView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

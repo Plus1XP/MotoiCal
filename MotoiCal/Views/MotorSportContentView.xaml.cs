@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace MotoiCal.Views
 {
     /// <summary>
-    /// Interaction logic for MotoGPView.xaml
+    /// Interaction logic for FormulaOneView.xaml
     /// </summary>
-    public partial class MotoGPView : UserControl
+    public partial class MotorSportContentView : UserControl
     {
-        public MotoGPView()
+        public MotorSportContentView()
         {
             InitializeComponent();
         }

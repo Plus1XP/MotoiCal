@@ -8,8 +8,11 @@ using System.Windows;
 
 namespace MotoiCal.ViewModels
 {
-    class SettingsViewModel
+    class SettingsContentViewModel
     {
-        public string Name { get; } = "WorldSBK Working!";
+        public SettingsContentViewModel()
+        {
+
+        }
     }
 }
