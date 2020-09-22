@@ -22,24 +22,28 @@
                         Orientation="Vertical"
                         Margin="0,0,0,0">
                 <Button Style="{StaticResource WindowButtonStyle}"
-                        Content="Formula One"
+                        Content="{Binding FormulaOneParametersButtonStatus.Name}"
+                        ToolTip="{Binding FormulaOneParametersButtonStatus.ToolTip}"
+                        Command="{Binding FormulaOneParametersCommand}"
                         FontSize="20"
                         Margin="0,0,0,5"
+                        Foreground="{Binding FormulaOneParametersButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
                         HorizontalAlignment="Left"/>
                 <Button Style="{StaticResource WindowButtonStyle}"
-                        Content="MotoGP"
+                        Content="{Binding MotoGPParametersButtonStatus.Name}"
+                        ToolTip="{Binding MotoGPParametersButtonStatus.ToolTip}"
+                        Command="{Binding MotoGPParametersCommand}"
                         FontSize="20"
                         Margin="0,5,0,5"
+                        Foreground="{Binding MotoGPParametersButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
                         HorizontalAlignment="Left"/>
                 <Button Style="{StaticResource WindowButtonStyle}"
-                        Content="World SBK"
+                        Content="{Binding WorldSBKParametersButtonStatus.Name}"
+                        ToolTip="{Binding WorldSBKParametersButtonStatus.ToolTip}"
+                        Command="{Binding WorldSBKParametersCommand}"
                         FontSize="20"
                         Margin="0,5,0,5"
-                        HorizontalAlignment="Left"/>
-                <Button Style="{StaticResource WindowButtonStyle}"
-                        Content="Something Else"
-                        FontSize="20"
-                        Margin="0,5,0,5"
+                        Foreground="{Binding WorldSBKParametersButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
                         HorizontalAlignment="Left"/>
             </StackPanel>
         </DockPanel>
@@ -49,7 +53,8 @@
                         DockPanel.Dock="Right"
                         Orientation="Vertical"
                         Margin="20,0,20,20">
-                <ScrollViewer Height="{Binding ElementName=ResultsPanel, Path=ActualHeight}">
+                <ScrollViewer Height="{Binding ElementName=ResultsPanel, Path=ActualHeight}"
+                              VerticalScrollBarVisibility="Auto">
                     <TextBlock TextWrapping="Wrap"                           
                            Text="{Binding TestText}" />
                 </ScrollViewer>
