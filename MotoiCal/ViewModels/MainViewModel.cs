@@ -15,7 +15,7 @@ using MotoiCal.Views;
 
 namespace MotoiCal.ViewModels
 {
-    public class MotoiCalViewModel : INotifyPropertyChanged //Rename this class
+    public class MainViewModel : INotifyPropertyChanged //Rename this class
     {
         private FrameworkElement controlContentView;
 
@@ -28,7 +28,7 @@ namespace MotoiCal.ViewModels
         private bool canResizeWindow { get; set; }
         private bool canMinimizeWindow { get; set; }
 
-        public MotoiCalViewModel()
+        public MainViewModel()
         {
             this.canResizeWindow = true;
             this.canMinimizeWindow = true;

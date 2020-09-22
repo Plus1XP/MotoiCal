@@ -13,7 +13,7 @@
         Style="{StaticResource ModernWindowStyle}">
 
     <Window.DataContext>
-        <viewModels:MotoiCalViewModel/>
+        <viewModels:MainViewModel/>
     </Window.DataContext>
 
     <Window.Resources>
