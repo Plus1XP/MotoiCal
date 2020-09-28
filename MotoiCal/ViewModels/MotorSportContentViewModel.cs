@@ -12,6 +12,8 @@ namespace MotoiCal.ViewModels
     {
         private ButtonManagerModel buttonManagerModel;
 
+        private Scraper scraper;
+
         private IMotorSport motorSportSeries;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -20,9 +22,11 @@ namespace MotoiCal.ViewModels
         {
             this.motorSportSeries = motorSportSeries;
 
+            this.scraper = new Scraper();
+
             this.buttonManagerModel = new ButtonManagerModel();
 
-            this.FindRacesCommand = new SynchronousRelayCommand(this.FindRaces);
+            this.FindRacesCommand = new AsynchronousRelayCommand(async () => await this.FindRaces());
             this.GenerateIcalCommand = new SynchronousRelayCommand(this.GenerateIcal);
             this.ReadIcalCommand = new SynchronousRelayCommand(this.ReadIcal);
             this.DeleteIcalCommand = new SynchronousRelayCommand(this.DeleteIcal);
@@ -47,6 +51,17 @@ namespace MotoiCal.ViewModels
         public ButtonStatusModel GenerateIcalButtonStatus { get; set; }
         public ButtonStatusModel ReadIcalButtonStatus { get; set; }
         public ButtonStatusModel DeleteIcalButtonStatus { get; set; }
+
+        private string resultsText;
+        public string ResultsText 
+        {
+            get {return resultsText; }
+            set 
+            {
+                this.resultsText = value;
+                this.OnPropertyChanged("ResultsText");
+            } 
+        }
 
         private void OnPropertyChanged(string property)
         {
@@ -76,9 +91,17 @@ namespace MotoiCal.ViewModels
             this.OnPropertyChanged("DeleteIcalButtonStatus");
         }
 
-        public void FindRaces()
+        public async Task FindRaces()
         {
             this.buttonManagerModel.SetActiveButton(this.FindRacesButtonStatus);
+            await Task.Run(() => this.ResultsText = this.scraper.ScrapeEventsToiCalendar(this.motorSportSeries));
+            //        this.IsSearching = true;
+            //        string unalteredMainHeader = this.MainHeader;
+            //        await Task.Run(() => this.ResultsOutput = this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries));
+            //        this.OnPropertyChanged("MainHeader");
+            //        this.MainHeader += $" {this.scraper.RacesFound(this.MotorSportSeries)} Races";
+            //        this.IsSearching = false;
+            //        MessageBox.Show($"DONE! \nScraped {this.scraper.RacesFound(this.MotorSportSeries)} Races \nScraped {this.scraper.EventsFound()} Events", $"{unalteredMainHeader}");
         }
 
         public void GenerateIcal()
