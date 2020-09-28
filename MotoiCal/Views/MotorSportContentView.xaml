@@ -6,6 +6,15 @@
              xmlns:local="clr-namespace:MotoiCal.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource WindowButtonStyle}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="IsEnabled" Value="{Binding IsButtonEnabled}"/>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -22,38 +31,26 @@
             <StackPanel DockPanel.Dock="Left"
                         Orientation="Vertical"
                         Margin="0,0,0,0">
-                <Button Style="{StaticResource WindowButtonStyle}"
-                        Content="{Binding FindRacesButtonStatus.Name}"
+                <Button Content="{Binding FindRacesButtonStatus.Name}"
                         ToolTip="{Binding FindRacesButtonStatus.ToolTip}"
-                        Command="{Binding FindRacesCommand}"
-                        FontSize="20"
-                        Margin="0,0,0,5"
+                        Command="{Binding FindRacesCommand}"                        
                         Foreground="{Binding FindRacesButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
-                        HorizontalAlignment="Left"/>
-                <Button Style="{StaticResource WindowButtonStyle}"
-                        Content="{Binding GenerateIcalButtonStatus.Name}"
+                        Margin="0,0,0,5"/>
+                <Button Content="{Binding GenerateIcalButtonStatus.Name}"
                         ToolTip="{Binding GenerateIcalButtonStatus.ToolTip}"
-                        Command="{Binding GenerateIcalCommand}"
-                        FontSize="20"
-                        Margin="0,5,0,5"
+                        Command="{Binding GenerateIcalCommand}"                        
                         Foreground="{Binding GenerateIcalButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
-                        HorizontalAlignment="Left"/>
-                <Button Style="{StaticResource WindowButtonStyle}"
-                        Content="{Binding ReadIcalButtonStatus.Name}"
+                        Margin="0,5,0,5"/>
+                <Button Content="{Binding ReadIcalButtonStatus.Name}"
                         ToolTip="{Binding ReadIcalButtonStatus.ToolTip}"
-                        Command="{Binding ReadIcalCommand}"
-                        FontSize="20"
-                        Margin="0,5,0,5"
+                        Command="{Binding ReadIcalCommand}"                        
                         Foreground="{Binding ReadIcalButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
-                        HorizontalAlignment="Left"/>
-                <Button Style="{StaticResource WindowButtonStyle}"
-                        Content="{Binding DeleteIcalButtonStatus.Name}"
+                        Margin="0,5,0,5"/>
+                <Button Content="{Binding DeleteIcalButtonStatus.Name}"
                         ToolTip="{Binding DeleteIcalButtonStatus.ToolTip}"
-                        Command="{Binding DeleteIcalCommand}"
-                        FontSize="20"
-                        Margin="0,5,0,5"
+                        Command="{Binding DeleteIcalCommand}"                        
                         Foreground="{Binding DeleteIcalButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
-                        HorizontalAlignment="Left"/>
+                        Margin="0,5,0,5"/>
             </StackPanel>            
         </DockPanel>
 
