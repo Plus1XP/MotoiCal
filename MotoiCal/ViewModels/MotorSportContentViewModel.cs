@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MotoiCal.ViewModels
 {
@@ -16,6 +17,10 @@ namespace MotoiCal.ViewModels
 
         private IMotorSport motorSportSeries;
 
+        private string resultsText;
+
+        private bool isSearching;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public MotorSportContentViewModel(IMotorSport motorSportSeries)
@@ -25,6 +30,8 @@ namespace MotoiCal.ViewModels
             this.scraper = new Scraper();
 
             this.buttonManagerModel = new ButtonManagerModel();
+
+            IsSearching = false;
 
             this.FindRacesCommand = new AsynchronousRelayCommand(async () => await this.FindRaces());
             this.GenerateIcalCommand = new SynchronousRelayCommand(this.GenerateIcal);
@@ -52,7 +59,23 @@ namespace MotoiCal.ViewModels
         public ButtonStatusModel ReadIcalButtonStatus { get; set; }
         public ButtonStatusModel DeleteIcalButtonStatus { get; set; }
 
-        private string resultsText;
+        public Visibility ShowLoadingBar => IsSearching ? Visibility.Visible : Visibility.Hidden;
+
+        public bool IsSearching
+        {
+            get => this.isSearching;
+            set
+            {
+                if (this.isSearching != value)
+                {
+                    this.isSearching = value;
+                    this.OnPropertyChanged("IsSearching");
+                    this.OnPropertyChanged("IsButtonEnabled");
+                    this.OnPropertyChanged("ShowLoadingBar");
+                }
+            }
+        }
+
         public string ResultsText 
         {
             get {return resultsText; }
@@ -94,13 +117,12 @@ namespace MotoiCal.ViewModels
         public async Task FindRaces()
         {
             this.buttonManagerModel.SetActiveButton(this.FindRacesButtonStatus);
-            await Task.Run(() => this.ResultsText = this.scraper.ScrapeEventsToiCalendar(this.motorSportSeries));
-            //        this.IsSearching = true;
+            this.IsSearching = true;
             //        string unalteredMainHeader = this.MainHeader;
-            //        await Task.Run(() => this.ResultsOutput = this.scraper.ScrapeEventsToiCalendar(this.MotorSportSeries));
+            await Task.Run(() => this.ResultsText = this.scraper.ScrapeEventsToiCalendar(this.motorSportSeries));
             //        this.OnPropertyChanged("MainHeader");
             //        this.MainHeader += $" {this.scraper.RacesFound(this.MotorSportSeries)} Races";
-            //        this.IsSearching = false;
+            this.IsSearching = false;
             //        MessageBox.Show($"DONE! \nScraped {this.scraper.RacesFound(this.MotorSportSeries)} Races \nScraped {this.scraper.EventsFound()} Events", $"{unalteredMainHeader}");
         }
 

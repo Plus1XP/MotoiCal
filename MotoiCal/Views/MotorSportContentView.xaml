@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Column="0" Grid.Row="1">
@@ -60,7 +61,7 @@
             <StackPanel Name="ResultsPanel"                        
                         DockPanel.Dock="Right"
                         Orientation="Vertical"
-                        Margin="20,0,20,20">
+                        Margin="20,0,20,10">
                 <ScrollViewer Height="{Binding ElementName=ResultsPanel, Path=ActualHeight}"
                               VerticalScrollBarVisibility="Auto">
                     <TextBlock TextWrapping="Wrap"                           
@@ -69,5 +70,13 @@
                 </ScrollViewer>
             </StackPanel>
         </DockPanel>
+
+        <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
+                     IsIndeterminate="True" 
+                     BorderThickness="0"
+                     Background="{StaticResource WindowBackgroundColorBrush}" 
+                     Foreground="{StaticResource BlueColorBrush}"                     
+                     Visibility="{Binding ShowLoadingBar}">
+        </ProgressBar>
     </Grid>
 </UserControl>
