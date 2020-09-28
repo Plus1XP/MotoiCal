@@ -19,6 +19,9 @@ namespace MotoiCal.ViewModels
     {
         private FrameworkElement controlContentView;
 
+        private MotorSportContentViewModel formulaOneMotorSportContent;
+        private MotorSportContentViewModel motoGPMotorSportContent;
+        private MotorSportContentViewModel worldSBKMotorSportContent;
         private SettingsContentViewModel settingsMotorSportContent;
 
         private ButtonManagerModel buttonManagerModel;
@@ -55,6 +58,9 @@ namespace MotoiCal.ViewModels
             this.WorldSBKButtonStatus.ButtonStatusChanged = new EventHandler(this.WorldSBKButtonActive);
             this.SettingsButtonStatus.ButtonStatusChanged = new EventHandler(this.SettingsButtonActive);
 
+            this.formulaOneMotorSportContent = new MotorSportContentViewModel(new Formula1());
+            this.motoGPMotorSportContent = new MotorSportContentViewModel(new MotoGP());
+            this.worldSBKMotorSportContent = new MotorSportContentViewModel(new WorldSBK());
             this.settingsMotorSportContent = new SettingsContentViewModel();
         }
 
@@ -117,21 +123,21 @@ namespace MotoiCal.ViewModels
         {
             this.buttonManagerModel.SetActiveButton(this.FormulaOneButtonStatus);
             this.ContentControlView = new MotorSportContentView();
-            this.ContentControlView.DataContext = new MotorSportContentViewModel(new Formula1());
+            this.ContentControlView.DataContext = this.formulaOneMotorSportContent;
         }
 
         private void MotoGPTab()
         {
             this.buttonManagerModel.SetActiveButton(this.MotoGPButtonStatus);
             this.ContentControlView = new MotorSportContentView();
-            this.ContentControlView.DataContext = new MotorSportContentViewModel(new MotoGP());
+            this.ContentControlView.DataContext = this.motoGPMotorSportContent;
         }
 
         private void WorldSBKTab()
         {
             this.buttonManagerModel.SetActiveButton(this.WorldSBKButtonStatus);
             this.ContentControlView = new MotorSportContentView();
-            this.ContentControlView.DataContext = new MotorSportContentViewModel(new WorldSBK());
+            this.ContentControlView.DataContext = this.worldSBKMotorSportContent;
         }
 
         private void SettingsTab()
