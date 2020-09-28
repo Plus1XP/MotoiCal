@@ -31,7 +31,7 @@ namespace MotoiCal.ViewModels
 
             this.buttonManagerModel = new ButtonManagerModel();
 
-            IsSearching = false;
+            this.IsSearching = false;
 
             this.FindRacesCommand = new AsynchronousRelayCommand(async () => await this.FindRaces());
             this.GenerateIcalCommand = new SynchronousRelayCommand(this.GenerateIcal);
@@ -59,7 +59,9 @@ namespace MotoiCal.ViewModels
         public ButtonStatusModel ReadIcalButtonStatus { get; set; }
         public ButtonStatusModel DeleteIcalButtonStatus { get; set; }
 
-        public Visibility ShowLoadingBar => IsSearching ? Visibility.Visible : Visibility.Hidden;
+        public Visibility ShowLoadingBar => this.IsSearching ? Visibility.Visible : Visibility.Hidden;
+
+        public bool IsButtonEnabled => !this.IsSearching;
 
         public bool IsSearching
         {
