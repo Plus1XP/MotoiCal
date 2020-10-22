@@ -138,6 +138,8 @@ namespace MotoiCal.ViewModels
         public void ReadIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.ReadIcalButtonStatus);
+            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
+            this.ResultsText = this.scraper.ReadiCalendar(this.motorSportSeries);
         }
 
         public void DeleteIcal()
