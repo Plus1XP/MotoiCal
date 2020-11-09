@@ -18,6 +18,8 @@ namespace MotoiCal.ViewModels
         Minutes15 = 15,
         [Description("30 Minutes Before Event")]
         Minutes30 = 30,
+        [Description("45 Minutes Before Event")]
+        Minutes45 = 45,
         [Description("1 Hour Before Event")]
         Minutes60 = 60,
         [Description("2 Hours Before Event")]
