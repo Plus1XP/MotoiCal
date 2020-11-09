@@ -63,15 +63,14 @@
     <Compile Include="Models\ButtonStatusModel.cs" />
     <Compile Include="ViewModels\BooleanToVisibilityConveter.cs" />
     <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
-    <Compile Include="ViewModels\SettingsContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsContentViewModel.cs" />
     <Compile Include="Views\Settings\SettingsContentView.xaml.cs">
       <DependentUpon>SettingsContentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MotorSportContentView.xaml.cs">
       <DependentUpon>MotorSportContentView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsView.xaml.cs">
     <Compile Include="Views\Settings\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
@@ -91,7 +90,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsView.xaml">
     <Page Include="Views\Settings\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
