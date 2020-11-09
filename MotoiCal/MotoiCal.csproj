@@ -65,6 +65,7 @@
     <Compile Include="ViewModels\Settings\Formula1SettingsContentViewModel.cs" />
     <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\MotoGPSettingsContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsContentViewModel.cs" />
     <Compile Include="Views\Settings\SettingsContentView.xaml.cs">
       <DependentUpon>SettingsContentView.xaml</DependentUpon>
