@@ -64,6 +64,7 @@
     <Compile Include="ViewModels\BooleanToVisibilityConveter.cs" />
     <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
     <Compile Include="ViewModels\SettingsContentViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
     <Compile Include="Views\Settings\SettingsContentView.xaml.cs">
       <DependentUpon>SettingsContentView.xaml</DependentUpon>
     </Compile>
