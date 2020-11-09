@@ -61,6 +61,7 @@
     <Compile Include="ViewModels\BooleanToRGBConverter.cs" />
     <Compile Include="Models\ButtonManagerModel.cs" />
     <Compile Include="Models\ButtonStatusModel.cs" />
+    <Compile Include="ViewModels\BooleanToVisibilityConveter.cs" />
     <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
     <Compile Include="ViewModels\SettingsContentViewModel.cs" />
     <Compile Include="Views\MotorSportContentView.xaml.cs">
