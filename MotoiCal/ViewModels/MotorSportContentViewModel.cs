@@ -21,17 +21,15 @@ namespace MotoiCal.ViewModels
 
         private bool isSearching;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public MotorSportContentViewModel(IMotorSport motorSportSeries)
         {
             this.motorSportSeries = motorSportSeries;
 
+            this.IsSearching = false;
+
             this.scraper = new Scraper();
 
             this.buttonManagerModel = new ButtonManagerModel();
-
-            this.IsSearching = false;
 
             this.FindRacesCommand = new AsynchronousRelayCommand(async () => await this.FindRaces());
             this.GenerateIcalCommand = new SynchronousRelayCommand(this.GenerateIcal);
@@ -48,6 +46,8 @@ namespace MotoiCal.ViewModels
             this.ReadIcalButtonStatus.ButtonStatusChanged = new EventHandler(this.ReadIcalButtonActive);
             this.DeleteIcalButtonStatus.ButtonStatusChanged = new EventHandler(this.DeleteButtonActive);
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public SynchronousRelayCommand FindRacesCommand { get; }
         public SynchronousRelayCommand GenerateIcalCommand { get; }
@@ -96,27 +96,27 @@ namespace MotoiCal.ViewModels
             }
         }
 
-        public void FindRacesButtonActive(object sender, EventArgs e)
+        private void FindRacesButtonActive(object sender, EventArgs e)
         {
             this.OnPropertyChanged("FindRacesButtonStatus");
         }
 
-        public void GenerateIcalButtonActive(object sender, EventArgs e)
+        private void GenerateIcalButtonActive(object sender, EventArgs e)
         {
             this.OnPropertyChanged("GenerateIcalButtonStatus");
         }
 
-        public void ReadIcalButtonActive(object sender, EventArgs e)
+        private void ReadIcalButtonActive(object sender, EventArgs e)
         {
             this.OnPropertyChanged("ReadIcalButtonStatus");
         }
 
-        public void DeleteButtonActive(object sender, EventArgs e)
+        private void DeleteButtonActive(object sender, EventArgs e)
         {
             this.OnPropertyChanged("DeleteIcalButtonStatus");
         }
 
-        public async Task FindRaces()
+        private async Task FindRaces()
         {
             this.buttonManagerModel.SetActiveButton(this.FindRacesButtonStatus);
             this.IsSearching = true;
@@ -128,21 +128,21 @@ namespace MotoiCal.ViewModels
             //        MessageBox.Show($"DONE! \nScraped {this.scraper.RacesFound(this.MotorSportSeries)} Races \nScraped {this.scraper.EventsFound()} Events", $"{unalteredMainHeader}");
         }
 
-        public void GenerateIcal()
+        private void GenerateIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.GenerateIcalButtonStatus);
             //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.GenerateiCalendar(this.motorSportSeries, true, 15);
+            this.ResultsText = this.scraper.GenerateiCalendar(this.motorSportSeries, true, 15); // Pass in event reminders
         }
 
-        public void ReadIcal()
+        private void ReadIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.ReadIcalButtonStatus);
             //this.SubHeader = $"{this.motorSportSeries.FilePath}";
             this.ResultsText = this.scraper.ReadiCalendar(this.motorSportSeries);
         }
 
-        public void DeleteIcal()
+        private void DeleteIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.DeleteIcalButtonStatus);
             //this.SubHeader = $"{this.motorSportSeries.FilePath}";
