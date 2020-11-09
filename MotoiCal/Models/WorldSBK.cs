@@ -25,14 +25,18 @@ namespace MotoiCal.Models
         public MotorSportID SportIdentifier => MotorSportID.WorldSBK;
         public string FilePath => "WorldSBK.ics";
         public string Url => "http://www.worldsbk.com/en/calendar";
+        public string UrlPartial => "http://www.worldsbk.com";
+        public string UrlPath => "//li[@class='col-xs-12 col-sm-6 col-md-3 col-lg-3']//a";
+        public string UrlAttribute => "href";
+
         // Alternative Paths, not needed atm.
-        //public string UrlPartial => "http://www.worldsbk.com";
         //public string UrlPath => "//a[@class='track-link']";
         //public string UrlPartial => "";
         //public string UrlPath => "//li[@class='col-lg-3 col-md-3 col-sm-4'][3]//a";
-        public string UrlPartial => "";
-        public string UrlPath => "//a[contains(text(),'Round')]";
-        public string UrlAttribute => "href";
+        //public string UrlPartial => "";
+        //public string UrlPath => "//a[contains(text(),'Round')]";
+        //public string UrlPartial => "";
+
         public string EventTablePath => "//div[@class='timeIso']";
         public string SeriesNamePath => "//title";
         public string SessionNamePath => ".//div[contains (@class, 'cat-session')]";
