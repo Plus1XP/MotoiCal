@@ -64,6 +64,9 @@
     <Compile Include="ViewModels\BooleanToVisibilityConveter.cs" />
     <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
     <Compile Include="ViewModels\SettingsContentViewModel.cs" />
+    <Compile Include="Views\Settings\SettingsContentView.xaml.cs">
+      <DependentUpon>SettingsContentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MotorSportContentView.xaml.cs">
       <DependentUpon>MotorSportContentView.xaml</DependentUpon>
     </Compile>
@@ -76,6 +79,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceDictionaries\ModernUIDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\SettingsContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
