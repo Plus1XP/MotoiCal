@@ -68,6 +68,9 @@
     <Compile Include="ViewModels\Settings\MotoGPSettingsContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\WorldSBKSettingsContentViewModel.cs" />
+    <Compile Include="Views\Settings\AboutContentView.xaml.cs">
+      <DependentUpon>AboutContentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\SettingsContentView.xaml.cs">
       <DependentUpon>SettingsContentView.xaml</DependentUpon>
     </Compile>
@@ -82,6 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ResourceDictionaries\ModernUIDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\AboutContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
