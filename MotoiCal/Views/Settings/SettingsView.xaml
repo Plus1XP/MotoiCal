@@ -45,6 +45,14 @@
                         Margin="0,5,0,5"
                         Foreground="{Binding WorldSBKParametersButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
                         HorizontalAlignment="Left"/>
+                <Button Style="{StaticResource WindowButtonStyle}"
+                        Content="{Binding AboutButtonStatus.Name}"
+                        ToolTip="{Binding AboutButtonStatus.ToolTip}"
+                        Command="{Binding AboutCommand}"
+                        FontSize="20"
+                        Margin="0,5,0,5"
+                        Foreground="{Binding AboutButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
+                        HorizontalAlignment="Left"/>
             </StackPanel>
         </DockPanel>
 
