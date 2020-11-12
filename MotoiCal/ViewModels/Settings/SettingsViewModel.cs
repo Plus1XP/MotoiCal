@@ -22,6 +22,8 @@ namespace MotoiCal.ViewModels.Settings
         private MotoGPSettingsContentViewModel motoGPSettingsContent;
         private WorldSBKSettingsContentViewModel worldSBKSettingsContent;
 
+        private AboutContentViewModel aboutContentViewModel;
+
         private IMotorSport formula1;
         private IMotorSport motoGP;
         private IMotorSport worldSBK;
@@ -37,14 +39,17 @@ namespace MotoiCal.ViewModels.Settings
             this.FormulaOneParametersCommand = new SynchronousRelayCommand(this.FormulaOneParameters);
             this.MotoGPParametersCommand = new SynchronousRelayCommand(this.MotoGPParameters);
             this.WorldSBKParametersCommand = new SynchronousRelayCommand(this.WorldSBKParameters);
+            this.AboutCommand = new SynchronousRelayCommand(this.About);
 
             this.buttonManagerModel.AddButton(this.FormulaOneParametersButtonStatus = new ButtonStatusModel("Formula One", "Configure Formula One Search Settings"));
             this.buttonManagerModel.AddButton(this.MotoGPParametersButtonStatus = new ButtonStatusModel("MotoGP", "Configure MotoGP Search Settings"));
             this.buttonManagerModel.AddButton(this.WorldSBKParametersButtonStatus = new ButtonStatusModel("World SBK", "Configure World SBK Search Settings"));
+            this.buttonManagerModel.AddButton(this.AboutButtonStatus = new ButtonStatusModel("About", ""));
 
             this.FormulaOneParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.FormulaOneButtonActive);
             this.MotoGPParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.MotoGPButtonActive);
             this.WorldSBKParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.WorldSBKButtonActive);
+            this.AboutButtonStatus.ButtonStatusChanged = new EventHandler(this.AboutButtonActive);
 
             this.formula1SettingsContent = new Formula1SettingsContentViewModel(this.formula1);
             this.motoGPSettingsContent = new MotoGPSettingsContentViewModel(this.motoGP);
@@ -56,10 +61,12 @@ namespace MotoiCal.ViewModels.Settings
         public SynchronousRelayCommand FormulaOneParametersCommand { get; }
         public SynchronousRelayCommand MotoGPParametersCommand { get; }
         public SynchronousRelayCommand WorldSBKParametersCommand { get; }
+        public SynchronousRelayCommand AboutCommand { get; }
 
         public ButtonStatusModel FormulaOneParametersButtonStatus { get; set; }
         public ButtonStatusModel MotoGPParametersButtonStatus { get; set; }
         public ButtonStatusModel WorldSBKParametersButtonStatus { get; set; }
+        public ButtonStatusModel AboutButtonStatus { get; set; }
 
         public FrameworkElement SettingsContentView
         {
@@ -94,6 +101,11 @@ namespace MotoiCal.ViewModels.Settings
             this.OnPropertyChanged("WorldSBKParametersButtonStatus");
         }
 
+        private void AboutButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("AboutButtonStatus");
+        }
+
         private void FormulaOneParameters()
         {
             this.buttonManagerModel.SetActiveButton(this.FormulaOneParametersButtonStatus);
@@ -113,6 +125,13 @@ namespace MotoiCal.ViewModels.Settings
             this.buttonManagerModel.SetActiveButton(this.WorldSBKParametersButtonStatus);
             this.SettingsContentView = new SettingsContentView();
             this.SettingsContentView.DataContext = this.worldSBKSettingsContent;
+        }
+
+        private void About()
+        {
+            this.buttonManagerModel.SetActiveButton(this.AboutButtonStatus);
+            this.settingsContentView = new AboutContentView();
+            this.settingsContentView.DataContext = this.aboutContentViewModel;
         }
     }
 }
