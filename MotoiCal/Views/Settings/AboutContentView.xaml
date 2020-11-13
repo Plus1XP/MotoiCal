@@ -11,9 +11,18 @@
                      Background="Transparent"
                      BorderThickness="0"
                      VerticalAlignment="Center">
-            <FlowDocument>
-                <Paragraph TextAlignment="Center">
-                    <Run Text="{Binding AboutText, Mode=OneWay}"/>
+            <FlowDocument TextAlignment="Center">
+                <Paragraph>
+                    <Run Text="{Binding AppTitle, Mode=OneWay}"
+                         FontSize="24" />
+                    <LineBreak/>
+                    <Run Text="{Binding AppVersion, Mode=OneWay}"/>
+                    <LineBreak/>
+                    <Run Text="{Binding VersionName, Mode=OneWay}"/>
+                    <LineBreak/>
+                    <Run Text="{Binding ReleaseDate, Mode=OneWay}"/>
+                    <LineBreak/>
+                    <Run Text="{Binding AppURL, Mode=OneWay}"/>
                     <LineBreak/>
                     <Run Text="{Binding EasterEggText, Mode=OneWay}"
                          Foreground="Gray"/>
