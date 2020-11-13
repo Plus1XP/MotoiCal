@@ -44,7 +44,7 @@ namespace MotoiCal.ViewModels.Settings
             this.buttonManagerModel.AddButton(this.FormulaOneParametersButtonStatus = new ButtonStatusModel("Formula One", "Configure Formula One Search Settings"));
             this.buttonManagerModel.AddButton(this.MotoGPParametersButtonStatus = new ButtonStatusModel("MotoGP", "Configure MotoGP Search Settings"));
             this.buttonManagerModel.AddButton(this.WorldSBKParametersButtonStatus = new ButtonStatusModel("World SBK", "Configure World SBK Search Settings"));
-            this.buttonManagerModel.AddButton(this.AboutButtonStatus = new ButtonStatusModel("About", ""));
+            this.buttonManagerModel.AddButton(this.AboutButtonStatus = new ButtonStatusModel("About", "Display information about this program"));
 
             this.FormulaOneParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.FormulaOneButtonActive);
             this.MotoGPParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.MotoGPButtonActive);
