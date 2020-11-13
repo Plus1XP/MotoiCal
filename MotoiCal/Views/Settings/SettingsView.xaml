@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:MotoiCal.Views"
+             xmlns:local="clr-namespace:MotoiCal.Views.Settings"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -14,7 +14,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Column="0" Grid.Row="1">
@@ -57,13 +57,11 @@
         </DockPanel>
 
         <DockPanel Grid.Column="1" Grid.Row="1">
-            <StackPanel Name="SettingsContentView"                        
-                        DockPanel.Dock="Right"
-                        Orientation="Vertical"
-                        Margin="40,0,20,20">
-                <ContentControl Content="{Binding SettingsContentView}">
-                </ContentControl>
-            </StackPanel>
+            <ContentControl Content="{Binding SettingsContentView}"
+                            VerticalAlignment="Stretch"
+                            DockPanel.Dock="Right"
+                            Margin="40,0,20,20">
+            </ContentControl>
         </DockPanel>
     </Grid>
 </UserControl>
