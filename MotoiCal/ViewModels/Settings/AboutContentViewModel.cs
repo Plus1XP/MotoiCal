@@ -29,13 +29,13 @@ namespace MotoiCal.ViewModels.Settings
 
         public string AppTitle => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductName;
 
-        public string AppVersion => FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion;
+        public string AppVersion => $" Version {FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).ProductVersion}";
 
         public string ReleaseDate => File.GetLastWriteTime(Assembly.GetExecutingAssembly().Location).ToString("dd MMMM yyyy"); //12 November 2020
 
         public string WindowTitle => $"{this.AppTitle} v{this.AppVersion}";
 
-        public string VersionName => this.versionName;
+        public string VersionName => $"\"{this.versionName}\"";
 
         public string AppURL => $"https://www.github.com/aleuts";
 
@@ -74,6 +74,10 @@ namespace MotoiCal.ViewModels.Settings
             else
             {
                 this.easterEggText.Clear();
+                //this.easterEggText.AppendLine("");
+                //this.easterEggText.AppendLine("");
+                //this.easterEggText.AppendLine("");
+                //this.easterEggText.AppendLine("");
             } 
 
             return this.easterEggText.ToString();
