@@ -61,8 +61,8 @@
                         Margin="20,0,20,10">
                 <ScrollViewer Height="{Binding ElementName=ResultsPanel, Path=ActualHeight}"
                               VerticalScrollBarVisibility="Auto">
-                    <TextBlock TextWrapping="Wrap"                           
-                               Text="{Binding ResultsText}" 
+                    <TextBlock Text="{Binding ResultsText}" 
+                               TextWrapping="Wrap"
                                TextAlignment="Center"/>
                 </ScrollViewer>
             </StackPanel>
