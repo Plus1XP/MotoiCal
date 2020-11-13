@@ -18,13 +18,15 @@ namespace MotoiCal.ViewModels
         Minutes15 = 15,
         [Description("30 Minutes Before Event")]
         Minutes30 = 30,
+        [Description("45 Minutes Before Event")]
+        Minutes45 = 45,
         [Description("1 Hour Before Event")]
         Minutes60 = 60,
         [Description("2 Hours Before Event")]
         Minutes120 = 120
     }
 
-    public class MotoiCalViewModel : INotifyPropertyChanged
+    public class MotoiCalViewModel_Classic : INotifyPropertyChanged
     {
         private readonly Scraper scraper;
         private IMotorSport motorSportSeries;
@@ -46,7 +48,7 @@ namespace MotoiCal.ViewModels
                                                     "It was the second qualifying day for the 2002 125cc Spanish Grand Prix.\n" + 
                                                      "He missed Friday practice as he was not old enough to race!";
 
-        public MotoiCalViewModel()
+        public MotoiCalViewModel_Classic()
         {
             this.scraper = new Scraper();
             this.IsSearching = false;
