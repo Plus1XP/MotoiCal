@@ -22,7 +22,7 @@ namespace MotoiCal.ViewModels.Settings
         private MotoGPSettingsContentViewModel motoGPSettingsContent;
         private WorldSBKSettingsContentViewModel worldSBKSettingsContent;
 
-        private AboutContentViewModel aboutContentViewModel;
+        private AboutContentViewModel aboutContent;
 
         private IMotorSport formula1;
         private IMotorSport motoGP;
@@ -54,6 +54,7 @@ namespace MotoiCal.ViewModels.Settings
             this.formula1SettingsContent = new Formula1SettingsContentViewModel(this.formula1);
             this.motoGPSettingsContent = new MotoGPSettingsContentViewModel(this.motoGP);
             this.worldSBKSettingsContent = new WorldSBKSettingsContentViewModel(this.worldSBK);
+            this.aboutContent = new AboutContentViewModel();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -130,8 +131,8 @@ namespace MotoiCal.ViewModels.Settings
         private void About()
         {
             this.buttonManagerModel.SetActiveButton(this.AboutButtonStatus);
-            this.settingsContentView = new AboutContentView();
-            this.settingsContentView.DataContext = this.aboutContentViewModel;
+            this.SettingsContentView = new AboutContentView();
+            this.SettingsContentView.DataContext = new AboutContentViewModel(); //this.aboutContent;
         }
     }
 }
