@@ -6,6 +6,19 @@
              xmlns:local="clr-namespace:MotoiCal.Views.Settings"
              mc:Ignorable="d">
     <Grid>
-            
+        <RichTextBox FontSize="14"
+                     Foreground="White"
+                     Background="Transparent"
+                     BorderThickness="0"
+                     VerticalAlignment="Center">
+            <FlowDocument>
+                <Paragraph TextAlignment="Center">
+                    <Run Text="{Binding AboutText, Mode=OneWay}"/>
+                    <LineBreak/>
+                    <Run Text="{Binding EasterEggText, Mode=OneWay}"
+                         Foreground="Gray"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
     </Grid>
 </UserControl>
