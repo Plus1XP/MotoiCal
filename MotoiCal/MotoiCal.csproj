@@ -62,6 +62,7 @@
     <Compile Include="Models\ButtonManagerModel.cs" />
     <Compile Include="Models\ButtonStatusModel.cs" />
     <Compile Include="ViewModels\BooleanToVisibilityConveter.cs" />
+    <Compile Include="ViewModels\Settings\AboutContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\Formula1SettingsContentViewModel.cs" />
     <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
