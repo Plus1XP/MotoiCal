@@ -18,9 +18,6 @@ namespace MotoiCal.ViewModels.Settings
         private bool isPracticeSaved;
         private bool isQualifyingSaved;
         private bool isRaceSaved;
-        private bool isEventReminderActive;
-
-        //private int triggerAtTimeOfEvent;
 
         public SettingsContentViewModel(IMotorSport motorSportSeries)
         {
@@ -111,18 +108,29 @@ namespace MotoiCal.ViewModels.Settings
         {
             get
             {
-                return this.isEventReminderActive;
+                return this.GetIMotorSportEventTriggerStatus();
             }
             set
             {
-                this.isEventReminderActive = value;
+                this.SetIMotorSportEventTriggerStatus(value);
                 this.OnPropertyChanged("IsEventReminderActive");
                 this.OnPropertyChanged("IsEventIntervalButtonEnabled");
             }
         }
-        public int EventTriggerInterval { get; set; }
+        public int EventTriggerInterval
+        {
+            get
+            {
+                return this.GetIMotorSportEventTriggerMins();
+            }
+            set
+            {
+                this.SetIMotorSportEventTriggerMins(value);
+                this.OnPropertyChanged("EventTriggerInterval");
+            }
+        }
 
-        public bool IsEventIntervalButtonEnabled => this.IsEventReminderActive;
+        public bool IsEventIntervalButtonEnabled => this.GetIMotorSportEventTriggerStatus();
 
         public SynchronousRelayCommand AtEventCommand { get; }
         public SynchronousRelayCommand Minutes5EventCommand { get; }
@@ -178,46 +186,67 @@ namespace MotoiCal.ViewModels.Settings
         private void AtEvent()
         {
             this.buttonManager.SetActiveButton(this.AtEventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.AtTimeOfEvent;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.AtTimeOfEvent;
         }
 
         private void Minutes5Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes5EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes5;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes5;
         }
 
         private void Minutes15Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes15EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes15;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes15;
         }
 
         private void Minutes30Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes30EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes30;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes30;
         }
 
         private void Minutes45Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes45EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes45;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes45;
         }
 
         private void Minutes60Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes60EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes60;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes60;
         }
 
         private void Minutes120Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes120EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes120;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes120;
         }
 
-        public void SetEvent(bool isEventEnabled, string eventName)
+        private bool GetIMotorSportEventTriggerStatus()
+        {
+            return this.motorSportSeries.IsEventReminderActive;
+        }
+
+        private void SetIMotorSportEventTriggerStatus(bool isEventTriggerActive)
+        {
+            this.motorSportSeries.IsEventReminderActive = isEventTriggerActive;
+        }
+
+        private int GetIMotorSportEventTriggerMins()
+        {
+            return this.motorSportSeries.EventReminderMins;
+        }
+
+        private void SetIMotorSportEventTriggerMins(int minsToTrigger)
+        {
+            this.motorSportSeries.EventReminderMins = minsToTrigger;
+        }
+
+        // Sets if the event is scraped or not depending on bool value.
+        public void UpdateIMotorSportEvenList(bool isEventEnabled, string eventName)
         {
             if (!isEventEnabled)
             {
