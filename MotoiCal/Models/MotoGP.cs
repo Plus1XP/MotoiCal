@@ -40,6 +40,9 @@ namespace MotoiCal.Models
         public string EndDateAttribute => "data-end";
         public string GMTOffset => string.Empty;
 
+        public bool IsEventReminderActive { get; set; }
+        public int EventReminderMins { get; set; }
+
         List<string> IMotorSport.EventUrlList { get; set; }
 
         public string[] ExcludedUrls => new string[]

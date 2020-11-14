@@ -40,6 +40,9 @@ namespace MotoiCal.Models
         public string EndDateAttribute => "data-end-time";
         public string GMTOffset => "data-gmt-offset";
 
+        public bool IsEventReminderActive { get; set; }
+        public int EventReminderMins { get; set; }
+
         public List<string> EventUrlList { get; set; }
 
         public string[] ExcludedUrls => new string[]
