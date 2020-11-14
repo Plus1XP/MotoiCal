@@ -8,23 +8,23 @@ using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels
 {
-    public enum EventTrigger
-    {
-        [Description("At Time of Event")] 
-        AtTimeOfEvent = 0,
-        [Description("5 Minutes Before Event")]
-        Minutes5 = 5,
-        [Description("15 Minutes Before Event")]
-        Minutes15 = 15,
-        [Description("30 Minutes Before Event")]
-        Minutes30 = 30,
-        [Description("45 Minutes Before Event")]
-        Minutes45 = 45,
-        [Description("1 Hour Before Event")]
-        Minutes60 = 60,
-        [Description("2 Hours Before Event")]
-        Minutes120 = 120
-    }
+//    public enum EventTrigger
+//    {
+//        [Description("At Time of Event")] 
+//        AtTimeOfEvent = 0,
+//        [Description("5 Minutes Before Event")]
+//        Minutes5 = 5,
+//        [Description("15 Minutes Before Event")]
+//        Minutes15 = 15,
+//        [Description("30 Minutes Before Event")]
+//        Minutes30 = 30,
+//        [Description("45 Minutes Before Event")]
+//        Minutes45 = 45,
+//        [Description("1 Hour Before Event")]
+//        Minutes60 = 60,
+//        [Description("2 Hours Before Event")]
+//        Minutes120 = 120
+//    }
 
     public class MotoiCalViewModel_Classic : INotifyPropertyChanged
     {
@@ -53,7 +53,7 @@ namespace MotoiCal.ViewModels
             this.scraper = new Scraper();
             this.IsSearching = false;
             this.IsReminderActive = true;
-            this.EventTriggerMinutes = (int)EventTrigger.Minutes15;
+            this.EventTriggerMinutes = (int)CalendarEventTrigger.Minutes15;
             this.canExecuteEasterEgg = this.scraper.IsEasterEggActive(this.easterEggDate);
             this.PullDatesCmd = new AsynchronousRelayCommand(async () => await this.PullDates(), () => this.CanExecuteCmd(this.motorSportSeries));
             this.GenerateIcsCmd = new SynchronousRelayCommand(this.GenerateIcs, () => this.CanExecuteCmd(this.motorSportSeries));
