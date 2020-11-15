@@ -23,9 +23,9 @@ namespace MotoiCal.ViewModels.Settings
         {
             this.motorSportSeries = motorSportSeries;
 
-            this.IsPracticeSaved = false;
-            this.IsQualifyingSaved = false;
-            this.IsRaceSaved = false;
+            this.IsPracticeSaved = true;
+            this.IsQualifyingSaved = true;
+            this.IsRaceSaved = true;
 
             this.buttonManager = new ButtonManagerModel();
 

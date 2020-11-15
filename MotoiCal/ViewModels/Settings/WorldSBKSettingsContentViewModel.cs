@@ -22,7 +22,7 @@ namespace MotoiCal.ViewModels.Settings
             this.IsAfterTheFlagVisible = false;
 
             this.IsWarmUpSaved = false;
-            this.IsSuperpoleSaved = false;
+            this.IsSuperpoleSaved = true;
         }
 
         public override bool IsQualifyingVisible { get; }
