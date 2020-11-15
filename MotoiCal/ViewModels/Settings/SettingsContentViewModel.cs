@@ -71,7 +71,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isPracticeSaved = value;
-                this.SetEvent(value, "Practice");
+                this.UpdateIMotorSportEvenList(value, "Practice");
                 this.OnPropertyChanged("IsPracticeSaved");
             }
         }
@@ -85,7 +85,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isQualifyingSaved = value;
-                this.SetEvent(value, "Qualifying");
+                this.UpdateIMotorSportEvenList(value, "Qualifying");
                 this.OnPropertyChanged("IsQualifyingSaved");
             }
         }
@@ -99,7 +99,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isRaceSaved = value;
-                this.SetEvent(value, "Race");
+                this.UpdateIMotorSportEvenList(value, "Race");
                 this.OnPropertyChanged("IsRaceSaved");
             }
         }

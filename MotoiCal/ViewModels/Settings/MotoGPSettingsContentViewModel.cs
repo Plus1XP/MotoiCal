@@ -41,7 +41,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isWarmUpSaved = value;
-                this.SetEvent(value, "Warm Up");
+                this.UpdateIMotorSportEvenList(value, "Warm Up");
                 this.OnPropertyChanged("IsWarmUpSaved");
             }
         }
@@ -55,7 +55,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isBehindTheScenesSaved = value;
-                this.SetEvent(value, "behind the scenes");
+                this.UpdateIMotorSportEvenList(value, "behind the scenes");
                 this.OnPropertyChanged("IsBehindTheScenesSaved");
             }
         }
@@ -69,7 +69,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isAfterTheFlagSaved = value;
-                this.SetEvent(value, "After The Flag");
+                this.UpdateIMotorSportEvenList(value, "After The Flag");
                 this.OnPropertyChanged("IsAfterTheFlagSaved");
             }
         }

@@ -40,7 +40,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isPracticeSaved = value;
-                this.SetEvent(value, "FP");
+                this.UpdateIMotorSportEvenList(value, "FP");
                 this.OnPropertyChanged("IsPracticeSaved");
             }
         }
@@ -54,7 +54,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isSuperpoleSaved = value;
-                this.SetEvent(value, "Superpole");
+                this.UpdateIMotorSportEvenList(value, "Superpole");
                 this.OnPropertyChanged("IsSuperpoleSaved");
             }
         }
@@ -68,7 +68,7 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isWarmUpSaved = value;
-                this.SetEvent(value, "WUP");
+                this.UpdateIMotorSportEvenList(value, "WUP");
                 this.OnPropertyChanged("IsWarmUpSaved");
             }
         }
