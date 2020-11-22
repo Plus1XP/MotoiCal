@@ -21,9 +21,9 @@ namespace MotoiCal.ViewModels.Settings
             this.IsBehindTheScenesVisible = true;
             this.IsAfterTheFlagVisible = true;
 
-            this.IsBehindTheScenesSaved = false;
-            this.IsWarmUpSaved = false; 
-            this.IsAfterTheFlagSaved = false;
+            this.IsBehindTheScenesSaved = this.SettingsData.GetToggleSwitchValue("BehindTheScenes");
+            this.IsWarmUpSaved = this.SettingsData.GetToggleSwitchValue("Warmup");
+            this.IsAfterTheFlagSaved = this.SettingsData.GetToggleSwitchValue("AfterTheFlag");
         }
 
         public override bool IsQualifyingVisible { get; }
@@ -42,6 +42,7 @@ namespace MotoiCal.ViewModels.Settings
             {
                 this.isWarmUpSaved = value;
                 this.UpdateIMotorSportEvenList(value, "Warm Up");
+                this.SettingsData.SetToggleSwitchValue("Warmup", value);
                 this.OnPropertyChanged("IsWarmUpSaved");
             }
         }
@@ -56,6 +57,7 @@ namespace MotoiCal.ViewModels.Settings
             {
                 this.isBehindTheScenesSaved = value;
                 this.UpdateIMotorSportEvenList(value, "behind the scenes");
+                this.SettingsData.SetToggleSwitchValue("BehindTheScenes", value);
                 this.OnPropertyChanged("IsBehindTheScenesSaved");
             }
         }
@@ -70,6 +72,7 @@ namespace MotoiCal.ViewModels.Settings
             {
                 this.isAfterTheFlagSaved = value;
                 this.UpdateIMotorSportEvenList(value, "After The Flag");
+                this.SettingsData.SetToggleSwitchValue("AfterTheFlag", value);
                 this.OnPropertyChanged("IsAfterTheFlagSaved");
             }
         }
