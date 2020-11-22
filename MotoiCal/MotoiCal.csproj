@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\CalendarEventTrigger.cs" />
+    <Compile Include="Models\XMLManager.cs" />
     <Compile Include="ViewModels\BooleanToRGBConverter.cs" />
     <Compile Include="Models\ButtonManagerModel.cs" />
     <Compile Include="Models\ButtonStatusModel.cs" />
