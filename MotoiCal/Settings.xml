@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Settings>
+  <Formula1>
+    <Event Name="Practice" Saved="True"/>
+    <Event Name="Qualifying" Saved="True"/>
+    <Event Name="Race" Saved="True"/>
+    <Event Name="Reminder" Saved="True"/>
+    <Event Name="Trigger" Saved="15"/>
+  </Formula1>
+  <MotoGP>
+    <Event Name="Practice" Saved="True"/>
+    <Event Name="Qualifying" Saved="True"/>
+    <Event Name="Warmup" Saved="False"/>
+    <Event Name="Race" Saved="True"/>
+    <Event Name="BehindTheScenes" Saved="False"/>
+    <Event Name="AfterTheFlag" Saved="False"/>
+    <Event Name="Reminder" Saved="True"/>
+    <Event Name="Trigger" Saved="15"/>
+  </MotoGP>
+  <WorldSBK>
+    <Event Name="Practice" Saved="True"/>
+    <Event Name="Superpole" Saved="True"/>
+    <Event Name="Warmup" Saved="False"/>
+    <Event Name="Race" Saved="True"/>
+    <Event Name="Reminder" Saved="True"/>
+    <Event Name="Trigger" Saved="15"/>
+  </WorldSBK>
+</Settings>
