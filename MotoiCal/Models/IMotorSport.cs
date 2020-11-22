@@ -22,6 +22,9 @@ namespace MotoiCal.Models
         string EndDateAttribute { get; }
         string GMTOffset { get; }
 
+        bool IsEventReminderActive { get; set; }
+        int EventReminderMins { get; set; }
+
         List<string> EventUrlList { get; set; }
         string[] ExcludedUrls { get; }
         string[] ExcludedClasses { get; }

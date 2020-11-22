@@ -21,8 +21,8 @@ namespace MotoiCal.ViewModels.Settings
             this.IsBehindTheScenesVisible = false;
             this.IsAfterTheFlagVisible = false;
 
-            this.IsWarmUpSaved = false;
-            this.IsSuperpoleSaved = false;
+            this.IsWarmUpSaved = this.SettingsData.GetToggleSwitchValue("Warmup");
+            this.IsSuperpoleSaved = this.SettingsData.GetToggleSwitchValue("Superpole");
         }
 
         public override bool IsQualifyingVisible { get; }
@@ -40,7 +40,8 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isPracticeSaved = value;
-                this.SetEvent(value, "FP");
+                this.UpdateIMotorSportEvenList(value, "FP");
+                this.SettingsData.SetToggleSwitchValue("Practice", value);
                 this.OnPropertyChanged("IsPracticeSaved");
             }
         }
@@ -54,7 +55,8 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isSuperpoleSaved = value;
-                this.SetEvent(value, "Superpole");
+                this.UpdateIMotorSportEvenList(value, "Superpole");
+                this.SettingsData.SetToggleSwitchValue("Superpole", value);
                 this.OnPropertyChanged("IsSuperpoleSaved");
             }
         }
@@ -68,7 +70,8 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isWarmUpSaved = value;
-                this.SetEvent(value, "WUP");
+                this.UpdateIMotorSportEvenList(value, "WUP");
+                this.SettingsData.SetToggleSwitchValue("Warmup", value);
                 this.OnPropertyChanged("IsWarmUpSaved");
             }
         }

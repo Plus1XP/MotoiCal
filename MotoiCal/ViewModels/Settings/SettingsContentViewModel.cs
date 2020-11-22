@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Xml;
 
 namespace MotoiCal.ViewModels.Settings
 {
@@ -13,22 +15,21 @@ namespace MotoiCal.ViewModels.Settings
     {
         private ButtonManagerModel buttonManager;
 
+        public XMLSettingsDataModel SettingsData;
+
         private IMotorSport motorSportSeries;
+
+        //private const string Settings_Data = ".\\Settings.xml";
 
         private bool isPracticeSaved;
         private bool isQualifyingSaved;
         private bool isRaceSaved;
-        private bool isEventReminderActive;
-
-        //private int triggerAtTimeOfEvent;
 
         public SettingsContentViewModel(IMotorSport motorSportSeries)
         {
             this.motorSportSeries = motorSportSeries;
 
-            this.IsPracticeSaved = false;
-            this.IsQualifyingSaved = false;
-            this.IsRaceSaved = false;
+            this.SettingsData = new XMLSettingsDataModel(motorSportSeries);
 
             this.buttonManager = new ButtonManagerModel();
 
@@ -55,6 +56,13 @@ namespace MotoiCal.ViewModels.Settings
             this.Minutes45EventButtonStatus.ButtonStatusChanged = new EventHandler(this.Minutes45EventButtonActive);
             this.Minutes60EventButtonStatus.ButtonStatusChanged = new EventHandler(this.Minutes60EventButtonActive);
             this.Minutes120EventButtonStatus.ButtonStatusChanged = new EventHandler(this.Minutes120EventButtonActive);
+
+            this.IsPracticeSaved = this.SettingsData.GetToggleSwitchValue("Practice");
+            this.IsQualifyingSaved = this.SettingsData.GetToggleSwitchValue("Qualifying");
+            this.IsRaceSaved = this.SettingsData.GetToggleSwitchValue("Race");
+            this.IsEventReminderActive = this.SettingsData.GetToggleSwitchValue("Reminder");
+            this.SetEventTriggerInterval(this.SettingsData.GetToggleSwitchValueAsInt("Trigger"));
+            //this.EventTriggerInterval = this.SettingsData.GetToggleSwitchValueAsInt("Trigger");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -74,7 +82,8 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isPracticeSaved = value;
-                this.SetEvent(value, "Practice");
+                this.UpdateIMotorSportEvenList(value, "Practice");
+                this.SettingsData.SetToggleSwitchValue("Practice", value);
                 this.OnPropertyChanged("IsPracticeSaved");
             }
         }
@@ -88,7 +97,8 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isQualifyingSaved = value;
-                this.SetEvent(value, "Qualifying");
+                this.UpdateIMotorSportEvenList(value, "Qualifying");
+                this.SettingsData.SetToggleSwitchValue("Qualifying", value);
                 this.OnPropertyChanged("IsQualifyingSaved");
             }
         }
@@ -102,27 +112,41 @@ namespace MotoiCal.ViewModels.Settings
             set
             {
                 this.isRaceSaved = value;
-                this.SetEvent(value, "Race");
+                this.UpdateIMotorSportEvenList(value, "Race");
+                this.SettingsData.SetToggleSwitchValue("Race", value);
                 this.OnPropertyChanged("IsRaceSaved");
             }
         }
 
-        public bool IsEventReminderActive
+        public bool IsEventReminderActive // Add Reminder
         {
             get
             {
-                return this.isEventReminderActive;
+                return this.GetIMotorSportEventTriggerStatus();
             }
             set
             {
-                this.isEventReminderActive = value;
+                this.SetIMotorSportEventTriggerStatus(value);
+                this.SettingsData.SetToggleSwitchValue("Reminder", value);
                 this.OnPropertyChanged("IsEventReminderActive");
                 this.OnPropertyChanged("IsEventIntervalButtonEnabled");
             }
         }
-        public int EventTriggerInterval { get; set; }
+        public int EventTriggerInterval
+        {
+            get
+            {
+                return this.GetIMotorSportEventTriggerMins();
+            }
+            set
+            {
+                this.SetIMotorSportEventTriggerMins(value);
+                this.SettingsData.SetToggleSwitchValueAsInt("Trigger", value);
+                this.OnPropertyChanged("EventTriggerInterval");
+            }
+        }
 
-        public bool IsEventIntervalButtonEnabled => this.IsEventReminderActive;
+        public bool IsEventIntervalButtonEnabled => this.GetIMotorSportEventTriggerStatus();
 
         public SynchronousRelayCommand AtEventCommand { get; }
         public SynchronousRelayCommand Minutes5EventCommand { get; }
@@ -178,46 +202,67 @@ namespace MotoiCal.ViewModels.Settings
         private void AtEvent()
         {
             this.buttonManager.SetActiveButton(this.AtEventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.AtTimeOfEvent;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.AtTimeOfEvent;
         }
 
         private void Minutes5Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes5EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes5;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes5;
         }
 
         private void Minutes15Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes15EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes15;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes15;
         }
 
         private void Minutes30Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes30EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes30;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes30;
         }
 
         private void Minutes45Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes45EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes45;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes45;
         }
 
         private void Minutes60Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes60EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes60;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes60;
         }
 
         private void Minutes120Event()
         {
             this.buttonManager.SetActiveButton(this.Minutes120EventButtonStatus);
-            this.EventTriggerInterval = (int)EventTrigger.Minutes120;
+            this.EventTriggerInterval = (int)CalendarEventTrigger.Minutes120;
         }
 
-        public void SetEvent(bool isEventEnabled, string eventName)
+        private bool GetIMotorSportEventTriggerStatus()
+        {
+            return this.motorSportSeries.IsEventReminderActive;
+        }
+
+        private void SetIMotorSportEventTriggerStatus(bool isEventTriggerActive)
+        {
+            this.motorSportSeries.IsEventReminderActive = isEventTriggerActive;
+        }
+
+        private int GetIMotorSportEventTriggerMins()
+        {
+            return this.motorSportSeries.EventReminderMins;
+        }
+
+        private void SetIMotorSportEventTriggerMins(int minsToTrigger)
+        {
+            this.motorSportSeries.EventReminderMins = minsToTrigger;
+        }
+
+        // Sets if the event is scraped or not depending on bool value.
+        public void UpdateIMotorSportEvenList(bool isEventEnabled, string eventName)
         {
             if (!isEventEnabled)
             {
@@ -234,6 +279,37 @@ namespace MotoiCal.ViewModels.Settings
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        private void SetEventTriggerInterval(int interval)
+        {
+            switch (interval)
+            {
+                case 0:
+                    this.AtEvent();
+                    break;
+                case 5:
+                    this.Minutes5Event();
+                    break;
+                case 15:
+                    this.Minutes15Event();
+                    break;
+                case 30:
+                    this.Minutes30Event();
+                    break;
+                case 45:
+                    this.Minutes45Event();
+                    break;
+                case 60:
+                    this.Minutes60Event();
+                    break;
+                case 120:
+                    this.Minutes120Event();
+                    break;
+                default:
+                    this.Minutes15Event();
+                    break;
             }
         }
     }
