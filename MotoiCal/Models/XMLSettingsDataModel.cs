@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace MotoiCal.Models
@@ -33,7 +29,7 @@ namespace MotoiCal.Models
 
         public bool GetToggleSwitchValue(string eventName)
         {
-            return this.xmlManager.GetNodeAttributeValueAsBool(settings_Data_Location, motorSportChildElementPath, "Name", eventName, "Saved");
+            return this.xmlManager.GetNodeAttributeValueAsBool(settings_Data_Location, this.motorSportChildElementPath, "Name", eventName, "Saved");
         }
 
         public void SetToggleSwitchValue(string eventName, bool eventValue)
@@ -43,7 +39,7 @@ namespace MotoiCal.Models
 
         public int GetToggleSwitchValueAsInt(string eventName)
         {
-            return this.xmlManager.GetNodeAttributeValueAsInt(settings_Data_Location, motorSportChildElementPath, "Name", eventName, "Tirgger");
+            return this.xmlManager.GetNodeAttributeValueAsInt(settings_Data_Location, this.motorSportChildElementPath, "Name", eventName, "Tirgger");
         }
 
         public void SetToggleSwitchValueAsInt(string eventName, int eventValue)

@@ -1,11 +1,9 @@
-﻿using MotoiCal.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+
+using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels
 {
@@ -78,14 +76,14 @@ namespace MotoiCal.ViewModels
             }
         }
 
-        public string ResultsText 
+        public string ResultsText
         {
-            get {return resultsText; }
-            set 
+            get { return this.resultsText; }
+            set
             {
                 this.resultsText = value;
                 this.OnPropertyChanged("ResultsText");
-            } 
+            }
         }
 
         private void OnPropertyChanged(string property)

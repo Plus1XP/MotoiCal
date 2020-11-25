@@ -19,8 +19,8 @@ namespace MotoiCal.Models
         public string DisplayHeader => $"\n{this.Series} {this.GrandPrix} \n{this.Sponser} \n{this.Location} \n";
         public string DisplayBody => $"{this.Series} {this.GrandPrix} {this.Session} : {this.Start} - {this.End}";
         public string IcalendarSubject => $"{this.Series} {this.GrandPrix} {this.Session}";
-        public string IcalendarLocation => $"{Location}";
-        public string IcalendarDescription => $"{Sponser}";
+        public string IcalendarLocation => $"{this.Location}";
+        public string IcalendarDescription => $"{this.Sponser}";
 
         public MotorSportID SportIdentifier => MotorSportID.MotoGP;
         public string FilePath => "MotoGP.ics";

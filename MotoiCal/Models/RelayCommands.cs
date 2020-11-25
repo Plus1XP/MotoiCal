@@ -7,7 +7,7 @@ namespace MotoiCal.Models
 {
     public class SynchronousRelayCommand : ICommand
     {
-        protected readonly Func<Boolean> canExecute;
+        protected readonly Func<bool> canExecute;
 
         protected readonly Action execute;
 
@@ -30,7 +30,7 @@ namespace MotoiCal.Models
             }
         }
 
-        public SynchronousRelayCommand(Action execute, Func<Boolean> canExecute)
+        public SynchronousRelayCommand(Action execute, Func<bool> canExecute)
         {
             if (execute == null)
             {
@@ -45,12 +45,12 @@ namespace MotoiCal.Models
         {
         }
 
-        public virtual Boolean CanExecute(Object parameter)
+        public virtual bool CanExecute(object parameter)
         {
             return this.canExecute == null ? true : this.canExecute();
         }
 
-        public virtual void Execute(Object parameter)
+        public virtual void Execute(object parameter)
         {
             this.execute();
         }
@@ -58,7 +58,7 @@ namespace MotoiCal.Models
 
     public class SynchronousRelayCommand<T> : ICommand
     {
-        protected readonly Func<T, Boolean> canExecute;
+        protected readonly Func<T, bool> canExecute;
 
         protected readonly Action<T> execute;
 
@@ -81,7 +81,7 @@ namespace MotoiCal.Models
             }
         }
 
-        public SynchronousRelayCommand(Action<T> execute, Func<T, Boolean> canExecute)
+        public SynchronousRelayCommand(Action<T> execute, Func<T, bool> canExecute)
         {
             if (execute == null)
             {
@@ -96,12 +96,12 @@ namespace MotoiCal.Models
         {
         }
 
-        public virtual Boolean CanExecute(Object parameter)
+        public virtual bool CanExecute(object parameter)
         {
             return this.canExecute == null ? true : this.canExecute((T)parameter);
         }
 
-        public virtual void Execute(Object parameter)
+        public virtual void Execute(object parameter)
         {
             this.execute((T)parameter);
         }
@@ -120,7 +120,7 @@ namespace MotoiCal.Models
             get { return this.isExecuting; }
         }
 
-        public AsynchronousRelayCommand(Action execute, Func<Boolean> canExecute)
+        public AsynchronousRelayCommand(Action execute, Func<bool> canExecute)
             : base(execute, canExecute)
         {
         }
@@ -130,7 +130,7 @@ namespace MotoiCal.Models
         {
         }
 
-        public override Boolean CanExecute(Object parameter)
+        public override bool CanExecute(object parameter)
         {
             return ((base.CanExecute(parameter)) && (!this.isExecuting));
         }

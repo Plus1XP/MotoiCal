@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+
 using HtmlAgilityPack;
 
 namespace MotoiCal.Models
@@ -71,7 +72,7 @@ namespace MotoiCal.Models
 
             string currentSponser = null;
 
-            foreach (var race in this.raceData)
+            foreach (IRaceData race in this.raceData)
             {
                 string header = race.Sponser == currentSponser ? string.Empty : race.DisplayHeader;
                 string body = race.DisplayBody;
@@ -90,7 +91,7 @@ namespace MotoiCal.Models
             /*
             this.iCal.CreateTimeZone();
             */
-            foreach (var item in this.raceData)
+            foreach (IRaceData item in this.raceData)
             {
                 this.iCalendar.CreateCalendarEventEntry(item.StartUTC, item.EndUTC, item.IcalendarSubject, item.IcalendarLocation, item.IcalendarDescription);
                 if (isReminderActive)
@@ -123,7 +124,7 @@ namespace MotoiCal.Models
             this.doc = this.webGet.Load(motorSport.Url);
             motorSport.EventUrlList = new List<string>();
 
-            foreach (var node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
+            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
             {
                 string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
                 string url = string.IsNullOrEmpty(scrapedUrl) ? url = "URL not found" : url = $"{motorSport.UrlPartial}{scrapedUrl}";

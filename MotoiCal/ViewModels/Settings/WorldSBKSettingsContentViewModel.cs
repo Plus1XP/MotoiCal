@@ -1,16 +1,11 @@
 ﻿using MotoiCal.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MotoiCal.ViewModels.Settings
 {
     class WorldSBKSettingsContentViewModel : SettingsContentViewModel
     {
         private bool isPracticeSaved;
-        private bool isSuperpoleSaved; 
+        private bool isSuperpoleSaved;
         private bool isWarmUpSaved;
 
         public WorldSBKSettingsContentViewModel(IMotorSport motorSport) : base(motorSport)

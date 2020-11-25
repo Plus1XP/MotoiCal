@@ -1,13 +1,7 @@
-﻿using MotoiCal.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Xml;
+
+using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels.Settings
 {
@@ -18,8 +12,6 @@ namespace MotoiCal.ViewModels.Settings
         public XMLSettingsDataModel SettingsData;
 
         private IMotorSport motorSportSeries;
-
-        //private const string Settings_Data = ".\\Settings.xml";
 
         private bool isPracticeSaved;
         private bool isQualifyingSaved;
@@ -62,7 +54,6 @@ namespace MotoiCal.ViewModels.Settings
             this.IsRaceSaved = this.SettingsData.GetToggleSwitchValue("Race");
             this.IsEventReminderActive = this.SettingsData.GetToggleSwitchValue("Reminder");
             this.SetEventTriggerInterval(this.SettingsData.GetToggleSwitchValueAsInt("Trigger"));
-            //this.EventTriggerInterval = this.SettingsData.GetToggleSwitchValueAsInt("Trigger");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -118,7 +109,7 @@ namespace MotoiCal.ViewModels.Settings
             }
         }
 
-        public bool IsEventReminderActive // Add Reminder
+        public bool IsEventReminderActive
         {
             get
             {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MotoiCal.Models;
+﻿using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels.Settings
 {

@@ -1,12 +1,5 @@
-﻿using MotoiCal.ViewModels.Settings;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace MotoiCal.Models
 {
@@ -93,7 +86,7 @@ namespace MotoiCal.Models
 
             foreach (XmlNode node in nodeList)
             {
-                if (this.GetNodeAttributeValueAsString(node, nodeName).Equals(nodeValue)) 
+                if (this.GetNodeAttributeValueAsString(node, nodeName).Equals(nodeValue))
                 {
                     elementAttribute = this.GetNodeAttribute(node, attributeName);
                 }
