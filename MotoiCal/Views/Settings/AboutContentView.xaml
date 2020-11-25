@@ -25,7 +25,7 @@
                     <Run Text="{Binding AppURL, Mode=OneWay}"/>
                     <LineBreak/>
                     <Run Text="{Binding EasterEggText, Mode=OneWay}"
-                         Foreground="Gray"/>
+                         Foreground="{Binding Converter={StaticResource date2RGBConverter}}"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
