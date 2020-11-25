@@ -1,11 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:MotoiCal.ResourceDictionaries"
-                    xmlns:viewModels="clr-namespace:MotoiCal.ViewModels">
+                    xmlns:viewModels="clr-namespace:MotoiCal.ViewModels.Converters">
 
     <!--<BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />-->
     <viewModels:BooleanToRGBConverter x:Key="bool2RGBConverter"/>
     <viewModels:BooleanToVisibilityConveter x:Key="bool2VisibilityConverter"/>
+    <viewModels:DateToRGBConverter x:Key="date2RGBConverter"/>
 
 
     <Color x:Key="WindowBackgroundColor">#FF2D2D30</Color>

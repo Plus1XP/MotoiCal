@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using MotoiCal.ViewModels;
 
-namespace MotoiCal.ViewModels
+namespace MotoiCal.ViewModels.Converters
 {
     class DateToRGBConverter : IValueConverter
     {
