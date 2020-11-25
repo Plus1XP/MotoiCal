@@ -19,8 +19,8 @@ namespace MotoiCal.Models
         public string DisplayHeader => $"\n{this.Series} {this.GrandPrix} \n{this.Sponser} \n{this.Location} \n";
         public string DisplayBody => $"{this.Series} {this.GrandPrix} {this.Session} : {this.Start} - {this.End}";
         public string IcalendarSubject => $"{this.Series} {this.GrandPrix} {this.Session}";
-        public string IcalendarLocation => $"{Location}";
-        public string IcalendarDescription => $"{Sponser}";
+        public string IcalendarLocation => $"{this.Location}";
+        public string IcalendarDescription => $"{this.Sponser}";
 
         public MotorSportID SportIdentifier => MotorSportID.MotoGP;
         public string FilePath => "MotoGP.ics";
@@ -40,6 +40,9 @@ namespace MotoiCal.Models
         public string EndDateAttribute => "data-end";
         public string GMTOffset => string.Empty;
 
+        public bool IsEventReminderActive { get; set; }
+        public int EventReminderMins { get; set; }
+
         List<string> IMotorSport.EventUrlList { get; set; }
 
         public string[] ExcludedUrls => new string[]
@@ -54,11 +57,14 @@ namespace MotoiCal.Models
             "MotoE"
         };
 
-        public string[] ExcludedEvents => new string[]
+        public List<string> ExcludedEvents { get; set; } = new List<string>()
         {
-            "Class photo",
+            "group photo",
             "Press Conference",
-            "Ceremony"
+            "Ceremony",
+            "Marc Marquez"
+            //"After The Flag",
+            //"behind the scenes"
         };
 
         public string[] ExcludedWords => new string[]

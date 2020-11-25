@@ -58,11 +58,54 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="ResourceDictionaries\MotoiCalDictionary.xaml">
+    <Compile Include="Models\CalendarEventTrigger.cs" />
+    <Compile Include="Models\XMLManager.cs" />
+    <Compile Include="Models\XMLSettingsDataModel.cs" />
+    <Compile Include="ViewModels\Converters\BooleanToRGBConverter.cs" />
+    <Compile Include="Models\ButtonManagerModel.cs" />
+    <Compile Include="Models\ButtonStatusModel.cs" />
+    <Compile Include="ViewModels\Converters\BooleanToVisibilityConveter.cs" />
+    <Compile Include="ViewModels\Converters\DateToRGBConverter.cs" />
+    <Compile Include="ViewModels\Settings\AboutContentViewModel.cs" />
+    <Compile Include="ViewModels\Settings\Formula1SettingsContentViewModel.cs" />
+    <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\MotoGPSettingsContentViewModel.cs" />
+    <Compile Include="ViewModels\Settings\SettingsContentViewModel.cs" />
+    <Compile Include="ViewModels\Settings\WorldSBKSettingsContentViewModel.cs" />
+    <Compile Include="Views\Settings\AboutContentView.xaml.cs">
+      <DependentUpon>AboutContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsContentView.xaml.cs">
+      <DependentUpon>SettingsContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MotorSportContentView.xaml.cs">
+      <DependentUpon>MotorSportContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="ResourceDictionaries\ModernUIDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MotoiCalView.xaml">
+    <Page Include="Views\Settings\AboutContentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\SettingsContentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MotorSportContentView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Settings\SettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -81,10 +124,9 @@
     <Compile Include="Models\Scraper.cs" />
     <Compile Include="Models\SubstringExtentions.cs" />
     <Compile Include="Models\WorldSBK.cs" />
-    <Compile Include="ViewModels\MotoiCalViewModel.cs" />
-    <Compile Include="Views\MotoiCalView.xaml.cs">
-      <DependentUpon>MotoiCalView.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +156,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Settings.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

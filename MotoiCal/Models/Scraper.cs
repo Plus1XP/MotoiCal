@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+
 using HtmlAgilityPack;
 
 namespace MotoiCal.Models
@@ -23,7 +24,7 @@ namespace MotoiCal.Models
             this.iCalendar = new CalendarManager();
         }
 
-        public string GenerateiCalendar(IMotorSport motorSport)
+        public string GenerateiCalendar(IMotorSport motorSport, bool isReminderActive, int eventTriggerMinutes)
         {
             // Checks if url list has a value, if not then it is assumed the dates have not been pulled.
             if (motorSport.EventUrlList?.Any() != true)
@@ -32,7 +33,7 @@ namespace MotoiCal.Models
             }
             else
             {
-                this.ProcessiCalendarResults();
+                this.ProcessiCalendarResults(isReminderActive, eventTriggerMinutes);
                 return this.iCalendar.CreateICSFile(motorSport.FilePath);
             }
         }
@@ -71,7 +72,7 @@ namespace MotoiCal.Models
 
             string currentSponser = null;
 
-            foreach (var race in this.raceData)
+            foreach (IRaceData race in this.raceData)
             {
                 string header = race.Sponser == currentSponser ? string.Empty : race.DisplayHeader;
                 string body = race.DisplayBody;
@@ -84,15 +85,20 @@ namespace MotoiCal.Models
             return raceResults.ToString();
         }
 
-        private void ProcessiCalendarResults()
+        private void ProcessiCalendarResults(bool isReminderActive, int eventTriggerMinutes)
         {
             this.iCalendar.CreateCalendarEntry();
             /*
             this.iCal.CreateTimeZone();
             */
-            foreach (var item in this.raceData)
+            foreach (IRaceData item in this.raceData)
             {
                 this.iCalendar.CreateCalendarEventEntry(item.StartUTC, item.EndUTC, item.IcalendarSubject, item.IcalendarLocation, item.IcalendarDescription);
+                if (isReminderActive)
+                {
+                    this.iCalendar.CreateCalendarAlarmEntry(eventTriggerMinutes, item.IcalendarSubject); // Change from 15
+                }
+                this.iCalendar.CloseEventEntry();
             }
             this.iCalendar.CloseCalendarEntry();
         }
@@ -118,7 +124,7 @@ namespace MotoiCal.Models
             this.doc = this.webGet.Load(motorSport.Url);
             motorSport.EventUrlList = new List<string>();
 
-            foreach (var node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
+            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
             {
                 string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
                 string url = string.IsNullOrEmpty(scrapedUrl) ? url = "URL not found" : url = $"{motorSport.UrlPartial}{scrapedUrl}";

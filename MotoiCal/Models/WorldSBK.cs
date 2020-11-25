@@ -21,6 +21,8 @@ namespace MotoiCal.Models
         public string IcalendarSubject => $"{this.Series} {this.CheckForExcludedWords(this.Sponser.Before("Round"))} {this.Session}";
         public string IcalendarLocation => $"{this.Location}";
         public string IcalendarDescription => $"{this.Sponser.Before("Round")}{this.GrandPrix}";
+        public bool IsIcalendarEventTriggerActive { get; }
+        public int IcalendarEventTriggerMins { get; }
 
         public MotorSportID SportIdentifier => MotorSportID.WorldSBK;
         public string FilePath => "WorldSBK.ics";
@@ -51,6 +53,9 @@ namespace MotoiCal.Models
         public string EndDateAttribute => "data_end";
         public string GMTOffset => string.Empty;
 
+        public bool IsEventReminderActive { get; set; }
+        public int EventReminderMins { get; set; }
+
         List<string> IMotorSport.EventUrlList { get; set; }
 
         public string[] ExcludedUrls => new string[]
@@ -61,7 +66,7 @@ namespace MotoiCal.Models
         {
         };
 
-        public string[] ExcludedEvents => new string[]
+        public List<string> ExcludedEvents { get; set; } = new List<string>()
         {
             "WorldSSP",
             "WorldSSP200"

@@ -41,7 +41,7 @@ namespace MotoiCal.Models
             StringBuilder text = new StringBuilder();
             foreach (string line in File.ReadLines(filePath))
             {
-                text.Append(line);
+                text.AppendLine(line);
             }
             return text.ToString();
         }

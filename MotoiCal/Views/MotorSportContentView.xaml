@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="MotoiCal.Views.MotorSportContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MotoiCal.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource WindowButtonStyle}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="IsEnabled" Value="{Binding IsButtonEnabled}"/>
+        </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="{StaticResource WindowBackgroundColorBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Column="0" Grid.Row="1">
+            <StackPanel DockPanel.Dock="Left"
+                        Orientation="Vertical"
+                        Margin="0,0,0,0">
+                <Button Content="{Binding FindRacesButtonStatus.Name}"
+                        ToolTip="{Binding FindRacesButtonStatus.ToolTip}"
+                        Command="{Binding FindRacesCommand}"                        
+                        Foreground="{Binding FindRacesButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
+                        Margin="0,0,0,5"/>
+                <Button Content="{Binding GenerateIcalButtonStatus.Name}"
+                        ToolTip="{Binding GenerateIcalButtonStatus.ToolTip}"
+                        Command="{Binding GenerateIcalCommand}"                        
+                        Foreground="{Binding GenerateIcalButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
+                        Margin="0,5,0,5"/>
+                <Button Content="{Binding ReadIcalButtonStatus.Name}"
+                        ToolTip="{Binding ReadIcalButtonStatus.ToolTip}"
+                        Command="{Binding ReadIcalCommand}"                        
+                        Foreground="{Binding ReadIcalButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
+                        Margin="0,5,0,5"/>
+                <Button Content="{Binding DeleteIcalButtonStatus.Name}"
+                        ToolTip="{Binding DeleteIcalButtonStatus.ToolTip}"
+                        Command="{Binding DeleteIcalCommand}"                        
+                        Foreground="{Binding DeleteIcalButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
+                        Margin="0,5,0,5"/>
+            </StackPanel>            
+        </DockPanel>
+
+        <DockPanel Grid.Column="1" Grid.Row="1">
+            <StackPanel Name="ResultsPanel"                        
+                        DockPanel.Dock="Right"
+                        Orientation="Vertical"
+                        Margin="20,0,20,10">
+                <ScrollViewer Height="{Binding ElementName=ResultsPanel, Path=ActualHeight}"
+                              VerticalScrollBarVisibility="Auto">
+                    <TextBlock Text="{Binding ResultsText}" 
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"/>
+                </ScrollViewer>
+            </StackPanel>
+        </DockPanel>
+
+        <ProgressBar Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
+                     IsIndeterminate="True" 
+                     BorderThickness="0"
+                     Background="{StaticResource WindowBackgroundColorBrush}" 
+                     Foreground="{StaticResource AccentColorBrush}"                     
+                     Visibility="{Binding ShowLoadingBar}">
+        </ProgressBar>
+    </Grid>
+</UserControl>
