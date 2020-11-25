@@ -1,6 +1,6 @@
 # Moto-iCal
 
-Scrapes motorsport event dates and creates an ics file (Now with a shiny new GUI)
+Scrapes motorsport event dates and creates an ics file (Now with a shinier newer GUI)
 
 **Current events include**
 
@@ -8,4 +8,6 @@ Scrapes motorsport event dates and creates an ics file (Now with a shiny new GUI
 - MotoGP
 - WSBK
 
-![](Images/Moto_iCal.png)
+![](Images/Moto_iCal_1.png)
+
+![](Images/Moto_iCal_2.png)
