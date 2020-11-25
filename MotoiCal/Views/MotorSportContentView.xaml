@@ -13,6 +13,10 @@
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="IsEnabled" Value="{Binding IsButtonEnabled}"/>
         </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="{StaticResource WindowBackgroundColorBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
     </UserControl.Resources>
     
     <Grid>
@@ -72,7 +76,7 @@
                      IsIndeterminate="True" 
                      BorderThickness="0"
                      Background="{StaticResource WindowBackgroundColorBrush}" 
-                     Foreground="{StaticResource BlueColorBrush}"                     
+                     Foreground="{StaticResource AccentColorBrush}"                     
                      Visibility="{Binding ShowLoadingBar}">
         </ProgressBar>
     </Grid>
