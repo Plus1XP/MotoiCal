@@ -82,7 +82,7 @@ namespace MotoiCal.Models
             formula1ChildElement.AppendChild(formula1PracticeEventSubChildElement);
 
             XmlNode formula1QualifyingEventSubChildElement = settingsDoc.CreateElement("Event");
-            formula1QualifyingEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Qualyfying";
+            formula1QualifyingEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Qualifying";
             formula1QualifyingEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "True";
             formula1ChildElement.AppendChild(formula1QualifyingEventSubChildElement);
 
@@ -111,7 +111,7 @@ namespace MotoiCal.Models
             motoGPChildElement.AppendChild(motoGPPracticeEventSubChildElement);
 
             XmlNode motoGPQualifyingEventSubChildElement = settingsDoc.CreateElement("Event");
-            motoGPQualifyingEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Qualyfying";
+            motoGPQualifyingEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Qualifying";
             motoGPQualifyingEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "True";
             motoGPChildElement.AppendChild(motoGPQualifyingEventSubChildElement);
 
