@@ -16,8 +16,8 @@ namespace MotoiCal.ViewModels.Settings
             this.IsBehindTheScenesVisible = true;
             this.IsAfterTheFlagVisible = true;
 
-            this.IsBehindTheScenesSaved = this.SettingsData.GetToggleSwitchValue("BehindTheScenes");
             this.IsWarmUpSaved = this.SettingsData.GetToggleSwitchValue("Warmup");
+            this.IsBehindTheScenesSaved = this.SettingsData.GetToggleSwitchValue("BehindTheScenes");
             this.IsAfterTheFlagSaved = this.SettingsData.GetToggleSwitchValue("AfterTheFlag");
         }
 

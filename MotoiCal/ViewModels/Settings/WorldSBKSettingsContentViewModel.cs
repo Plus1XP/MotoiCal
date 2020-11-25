@@ -16,8 +16,8 @@ namespace MotoiCal.ViewModels.Settings
             this.IsBehindTheScenesVisible = false;
             this.IsAfterTheFlagVisible = false;
 
-            this.IsWarmUpSaved = this.SettingsData.GetToggleSwitchValue("Warmup");
             this.IsSuperpoleSaved = this.SettingsData.GetToggleSwitchValue("Superpole");
+            this.IsWarmUpSaved = this.SettingsData.GetToggleSwitchValue("Warmup");
         }
 
         public override bool IsQualifyingVisible { get; }
