@@ -52,8 +52,8 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.1")]
-[assembly: AssemblyInformationalVersion("1.1.2")]
-[assembly: AssemblyFileVersion("1.1.2.0")]
+[assembly: AssemblyInformationalVersion("2.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 
 // For Driver's nicknames please use the link below.
 // https://en.wikipedia.org/wiki/List_of_motorsports_people_by_nickname
