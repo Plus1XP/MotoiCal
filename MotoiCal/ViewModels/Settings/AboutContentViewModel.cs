@@ -14,13 +14,15 @@ namespace MotoiCal.ViewModels.Settings
         private StringBuilder aboutText;
         private StringBuilder easterEggText;
 
-        private readonly string versionName = "Bazooka";
+        private readonly string versionName = "Hammertime";
 
-        private readonly string easterEggDate = "04 May"; //DD MMM, YYYY
-        private readonly string easterEggTitle = "Did you know?";
-        private readonly string easterEggMessage = "On this day, Lorenzo made his championship debut.\n" +
-                                                    "It was the second qualifying day for the 2002 125cc Spanish Grand Prix.\n" +
-                                                     "He missed Friday practice as he was not old enough to race!";
+        private readonly string easterEggDate = "15 Nov"; //DD MMM, YYYY
+        private readonly string easterEggTitle = "\nDid you know?\n";
+        private readonly string easterEggMessage = "On this day, Lewis Hamilton became the joint most successful driver of all time with seven titles.\n" +
+                                                    "His famous catchphrase came from his engineer's need to circumvent the heavy radio restrictions of the time.\n" +
+                                                     "\"You can’t just say, push, because, you don’t know how hard, do you want to put a number on it?\n" +
+                                                      "Let’s just use a different language. So, for an all-out lap it turned out to be Hammertime.\n" +
+                                                       "Lewis suggested ‘put the hammer down’ but I thought that doesn’t sound right..\"";
 
         public AboutContentViewModel()
         {
@@ -43,7 +45,7 @@ namespace MotoiCal.ViewModels.Settings
 
         public string EasterEggText => this.GetEasterEggText();
 
-        private bool IsEasterEggActive()
+        public bool IsEasterEggActive()
         {
             return DateTime.Parse(this.easterEggDate) == DateTime.Now.Date ? true : false;
         }
@@ -78,7 +80,7 @@ namespace MotoiCal.ViewModels.Settings
                 //this.easterEggText.AppendLine("");
                 //this.easterEggText.AppendLine("");
                 //this.easterEggText.AppendLine("");
-            } 
+            }
 
             return this.easterEggText.ToString();
         }
