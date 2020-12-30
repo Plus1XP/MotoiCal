@@ -11,7 +11,7 @@ namespace MotoiCal.Models
 
         public bool IsFileCreated(string filePath)
         {
-            return File.Exists(filePath) ? true : false;
+            return File.Exists(filePath);
         }
 
         public void CreateFile(string filePath)
