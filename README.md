@@ -1,6 +1,7 @@
 # Moto-iCal
 
 Scrapes motorsport event dates and creates an ics file using WPF.
+
 (Now with a shinier newer GUI)
 
 **Current events include**
