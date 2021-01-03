@@ -38,12 +38,6 @@ namespace MotoiCal.Models
 
         public string ReadFromFile(string filePath)
         {
-            StringBuilder text = new StringBuilder();
-            foreach (string line in File.ReadLines(filePath))
-            {
-                text.AppendLine(line);
-            }
-            return text.ToString();
-        }
+            return File.ReadAllText(filePath);
     }
 }
