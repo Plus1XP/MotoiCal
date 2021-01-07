@@ -9,7 +9,7 @@ namespace MotoiCal.Models
         {
         }
 
-        public bool isFolderCreated(string folderPath)
+        public bool IsFolderCreated(string folderPath)
         {
             return Directory.Exists(folderPath);
         }
