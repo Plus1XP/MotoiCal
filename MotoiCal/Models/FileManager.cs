@@ -34,6 +34,11 @@ namespace MotoiCal.Models
             File.WriteAllText(filePath, string.Empty);
         }
 
+        public void DeleteFolder(string folderPath)
+        {
+            Directory.Delete(folderPath);
+        }
+
         public void DeleteFile(string filePath)
         {
             File.Delete(filePath);
