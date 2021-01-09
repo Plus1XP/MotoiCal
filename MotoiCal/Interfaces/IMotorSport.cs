@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using MotoiCal.Enums;
 
-namespace MotoiCal.Models
+using System.Collections.Generic;
+
+namespace MotoiCal.Interfaces
 {
     public interface IMotorSport
     {

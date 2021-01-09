@@ -1,7 +1,6 @@
 ﻿using System.IO;
-using System.Text;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Models.FileManagement
 {
     public class FileManager
     {
@@ -54,5 +53,6 @@ namespace MotoiCal.Models
         public string ReadFromFile(string filePath)
         {
             return File.ReadAllText(filePath);
+        }
     }
 }

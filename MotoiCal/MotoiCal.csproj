@@ -58,14 +58,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\CalendarEventTrigger.cs" />
-    <Compile Include="Models\XMLManager.cs" />
+    <Compile Include="Enums\CalendarEventTrigger.cs" />
+    <Compile Include="Models\FileManagement\XMLManager.cs" />
     <Compile Include="Models\XMLSettingsDataModel.cs" />
-    <Compile Include="ViewModels\Converters\BooleanToRGBConverter.cs" />
-    <Compile Include="Models\ButtonManagerModel.cs" />
-    <Compile Include="Models\ButtonStatusModel.cs" />
-    <Compile Include="ViewModels\Converters\BooleanToVisibilityConveter.cs" />
-    <Compile Include="ViewModels\Converters\DateToRGBConverter.cs" />
+    <Compile Include="Utilities\Converters\BooleanToRGBConverter.cs" />
+    <Compile Include="Models\ButtonManagement\ButtonManagerModel.cs" />
+    <Compile Include="Models\ButtonManagement\ButtonStatusModel.cs" />
+    <Compile Include="Utilities\Converters\BooleanToVisibilityConveter.cs" />
+    <Compile Include="Utilities\Converters\DateToRGBConverter.cs" />
     <Compile Include="ViewModels\Settings\AboutContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\Formula1SettingsContentViewModel.cs" />
     <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
@@ -113,16 +113,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Models\CalendarManager.cs" />
-    <Compile Include="Models\FileManager.cs" />
+    <Compile Include="Models\FileManagement\CalendarManager.cs" />
+    <Compile Include="Models\FileManagement\FileManager.cs" />
     <Compile Include="Models\Formula1.cs" />
-    <Compile Include="Models\IMotorSport.cs" />
-    <Compile Include="Models\IRaceData.cs" />
+    <Compile Include="Interfaces\IMotorSport.cs" />
+    <Compile Include="Interfaces\IRaceData.cs" />
     <Compile Include="Models\MotoGP.cs" />
-    <Compile Include="Models\RelayCommands.cs" />
-    <Compile Include="Models\MotorSportID.cs" />
-    <Compile Include="Models\Scraper.cs" />
-    <Compile Include="Models\SubstringExtentions.cs" />
+    <Compile Include="Utilities\Commands\RelayCommands.cs" />
+    <Compile Include="Enums\MotorSportID.cs" />
+    <Compile Include="Services\Scraper.cs" />
+    <Compile Include="Utilities\Helpers\SubstringExtentions.cs" />
     <Compile Include="Models\WorldSBK.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="Views\MainView.xaml.cs">
@@ -161,5 +161,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

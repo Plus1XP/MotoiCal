@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MotoiCal.ViewModels
+namespace MotoiCal.Models.ButtonManagement
 {
     class ButtonManagerModel
     {

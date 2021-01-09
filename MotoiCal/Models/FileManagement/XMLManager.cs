@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Models.FileManagement
 {
     public class XMLManager : FileManager
     {

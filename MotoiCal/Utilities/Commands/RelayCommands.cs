@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Utilites.Commands
 {
     public class SynchronousRelayCommand : ICommand
     {

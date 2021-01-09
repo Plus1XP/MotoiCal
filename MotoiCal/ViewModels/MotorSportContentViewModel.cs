@@ -1,9 +1,12 @@
-﻿using System;
+﻿using MotoiCal.Interfaces;
+using MotoiCal.Models.ButtonManagement;
+using MotoiCal.Services;
+using MotoiCal.Utilites.Commands;
+
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
-
-using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels
 {

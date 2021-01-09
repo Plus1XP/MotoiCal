@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MotoiCal.Enums;
+using MotoiCal.Interfaces;
+
+using System;
 using System.Collections.Generic;
 
 namespace MotoiCal.Models

@@ -1,4 +1,4 @@
-﻿namespace MotoiCal.Models
+﻿namespace MotoiCal.Enums
 {
     public enum MotorSportID
     {

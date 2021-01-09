@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace MotoiCal.ViewModels.Converters
+namespace MotoiCal.Utilites.Converters
 {
     class DateToRGBConverter : IValueConverter
     {
