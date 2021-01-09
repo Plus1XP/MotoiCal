@@ -1,4 +1,4 @@
-﻿using MotoiCal.Models;
+﻿using MotoiCal.Interfaces;
 
 namespace MotoiCal.ViewModels.Settings
 {

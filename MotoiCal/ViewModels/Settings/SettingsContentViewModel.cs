@@ -1,7 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-
+﻿using MotoiCal.Enums;
+using MotoiCal.Interfaces;
 using MotoiCal.Models;
+using MotoiCal.Models.ButtonManagement;
+using MotoiCal.Utilities.Commands;
+
+using System;
+using System.ComponentModel;
 
 namespace MotoiCal.ViewModels.Settings
 {
@@ -25,13 +29,13 @@ namespace MotoiCal.ViewModels.Settings
 
             this.buttonManager = new ButtonManagerModel();
 
-            this.AtEventCommand = new SynchronousRelayCommand(this.AtEvent);
-            this.Minutes5EventCommand = new SynchronousRelayCommand(this.Minutes5Event);
-            this.Minutes15EventCommand = new SynchronousRelayCommand(this.Minutes15Event);
-            this.Minutes30EventCommand = new SynchronousRelayCommand(this.Minutes30Event);
-            this.Minutes45EventCommand = new SynchronousRelayCommand(this.Minutes45Event);
-            this.Minutes60EventCommand = new SynchronousRelayCommand(this.Minutes60Event);
-            this.Minutes120EventCommand = new SynchronousRelayCommand(this.Minutes120Event);
+            this.AtEventCommand = new SyncCommand(this.AtEvent);
+            this.Minutes5EventCommand = new SyncCommand(this.Minutes5Event);
+            this.Minutes15EventCommand = new SyncCommand(this.Minutes15Event);
+            this.Minutes30EventCommand = new SyncCommand(this.Minutes30Event);
+            this.Minutes45EventCommand = new SyncCommand(this.Minutes45Event);
+            this.Minutes60EventCommand = new SyncCommand(this.Minutes60Event);
+            this.Minutes120EventCommand = new SyncCommand(this.Minutes120Event);
 
             this.buttonManager.AddButton(this.AtEventButtonStatus = new ButtonStatusModel("At Event", "Set event to remind you at the time of event"));
             this.buttonManager.AddButton(this.Minutes5EventButtonStatus = new ButtonStatusModel("5 Mins", "Set event to remind you 5 Minutes before the time of event"));
@@ -139,13 +143,13 @@ namespace MotoiCal.ViewModels.Settings
 
         public bool IsEventIntervalButtonEnabled => this.GetIMotorSportEventTriggerStatus();
 
-        public SynchronousRelayCommand AtEventCommand { get; }
-        public SynchronousRelayCommand Minutes5EventCommand { get; }
-        public SynchronousRelayCommand Minutes15EventCommand { get; }
-        public SynchronousRelayCommand Minutes30EventCommand { get; }
-        public SynchronousRelayCommand Minutes45EventCommand { get; }
-        public SynchronousRelayCommand Minutes60EventCommand { get; }
-        public SynchronousRelayCommand Minutes120EventCommand { get; }
+        public SyncCommand AtEventCommand { get; }
+        public SyncCommand Minutes5EventCommand { get; }
+        public SyncCommand Minutes15EventCommand { get; }
+        public SyncCommand Minutes30EventCommand { get; }
+        public SyncCommand Minutes45EventCommand { get; }
+        public SyncCommand Minutes60EventCommand { get; }
+        public SyncCommand Minutes120EventCommand { get; }
 
         public ButtonStatusModel AtEventButtonStatus { get; set; }
         public ButtonStatusModel Minutes5EventButtonStatus { get; set; }

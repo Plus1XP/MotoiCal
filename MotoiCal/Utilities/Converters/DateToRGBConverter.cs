@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MotoiCal.ViewModels.Settings;
+
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace MotoiCal.ViewModels.Converters
+namespace MotoiCal.Utilities.Converters
 {
     class DateToRGBConverter : IValueConverter
     {
@@ -15,7 +17,7 @@ namespace MotoiCal.ViewModels.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Settings.AboutContentViewModel about = new Settings.AboutContentViewModel();
+            AboutContentViewModel about = new AboutContentViewModel();
 
             if (about.IsEasterEggActive() && about.VersionName == this.SpecialVersion)
             {

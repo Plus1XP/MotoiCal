@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Interfaces
 {
     public interface IRaceData
     {

@@ -1,4 +1,4 @@
-﻿namespace MotoiCal.Models
+﻿namespace MotoiCal.Utilities.Helpers
 {
     static class SubstringExtensions
     {

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MotoiCal.Interfaces;
+using MotoiCal.Models.ButtonManagement;
+using MotoiCal.Utilities.Commands;
+using MotoiCal.Views.Settings;
+
+using System;
 using System.ComponentModel;
 using System.Windows;
-
-using MotoiCal.Models;
-using MotoiCal.Views.Settings;
 
 namespace MotoiCal.ViewModels.Settings
 {
@@ -31,10 +33,10 @@ namespace MotoiCal.ViewModels.Settings
 
             this.buttonManagerModel = new ButtonManagerModel();
 
-            this.FormulaOneParametersCommand = new SynchronousRelayCommand(this.FormulaOneParameters);
-            this.MotoGPParametersCommand = new SynchronousRelayCommand(this.MotoGPParameters);
-            this.WorldSBKParametersCommand = new SynchronousRelayCommand(this.WorldSBKParameters);
-            this.AboutCommand = new SynchronousRelayCommand(this.About);
+            this.FormulaOneParametersCommand = new SyncCommand(this.FormulaOneParameters);
+            this.MotoGPParametersCommand = new SyncCommand(this.MotoGPParameters);
+            this.WorldSBKParametersCommand = new SyncCommand(this.WorldSBKParameters);
+            this.AboutCommand = new SyncCommand(this.About);
 
             this.buttonManagerModel.AddButton(this.FormulaOneParametersButtonStatus = new ButtonStatusModel("Formula One", "Configure Formula One Search Settings"));
             this.buttonManagerModel.AddButton(this.MotoGPParametersButtonStatus = new ButtonStatusModel("MotoGP", "Configure MotoGP Search Settings"));
@@ -54,10 +56,10 @@ namespace MotoiCal.ViewModels.Settings
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SynchronousRelayCommand FormulaOneParametersCommand { get; }
-        public SynchronousRelayCommand MotoGPParametersCommand { get; }
-        public SynchronousRelayCommand WorldSBKParametersCommand { get; }
-        public SynchronousRelayCommand AboutCommand { get; }
+        public SyncCommand FormulaOneParametersCommand { get; }
+        public SyncCommand MotoGPParametersCommand { get; }
+        public SyncCommand WorldSBKParametersCommand { get; }
+        public SyncCommand AboutCommand { get; }
 
         public ButtonStatusModel FormulaOneParametersButtonStatus { get; set; }
         public ButtonStatusModel MotoGPParametersButtonStatus { get; set; }

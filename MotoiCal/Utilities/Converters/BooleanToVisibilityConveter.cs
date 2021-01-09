@@ -1,28 +1,25 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media;
 
-namespace MotoiCal.ViewModels.Converters
+namespace MotoiCal.Utilities.Converters
 {
-    class BooleanToRGBConverter : IValueConverter
+    class BooleanToVisibilityConveter : IValueConverter
     {
-        private readonly Brush AccentActive = new SolidColorBrush(Color.FromRgb(255, 255, 255));
-        private readonly Brush AccentInactive = new SolidColorBrush(Color.FromRgb(105, 105, 105));
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? this.AccentActive : this.AccentInactive;
+            return (bool)value ? Visibility.Visible : Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((Brush)value == this.AccentActive)
+            if ((Visibility)value == Visibility.Visible)
             {
                 return true;
             }
 
-            if ((Brush)value == this.AccentInactive)
+            if ((Visibility)value == Visibility.Hidden)
             {
                 return false;
             }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MotoiCal.ViewModels
+namespace MotoiCal.Models.ButtonManagement
 {
     public class ButtonStatusModel
     {
