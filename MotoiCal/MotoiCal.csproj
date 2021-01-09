@@ -59,7 +59,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Enums\CalendarEventTrigger.cs" />
+    <Compile Include="Interfaces\ICalendarEvent.cs" />
+    <Compile Include="Interfaces\IRaceTimeTable.cs" />
+    <Compile Include="Interfaces\IDocExclusionList.cs" />
+    <Compile Include="Interfaces\IDocNodePath.cs" />
     <Compile Include="Models\FileManagement\XMLManager.cs" />
+    <Compile Include="Models\MotorSport.cs" />
     <Compile Include="Models\XMLSettingsDataModel.cs" />
     <Compile Include="Utilities\Commands\AsyncCommand.cs" />
     <Compile Include="Utilities\Commands\SyncCommand.cs" />
