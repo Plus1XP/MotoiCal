@@ -2,7 +2,7 @@
 using MotoiCal.Interfaces;
 using MotoiCal.Models;
 using MotoiCal.Models.ButtonManagement;
-using MotoiCal.Utilites.Commands;
+using MotoiCal.Utilities.Commands;
 
 using System;
 using System.ComponentModel;

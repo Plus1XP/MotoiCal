@@ -1,6 +1,6 @@
 ﻿using MotoiCal.Models;
 using MotoiCal.Models.ButtonManagement;
-using MotoiCal.Utilites.Commands;
+using MotoiCal.Utilities.Commands;
 using MotoiCal.ViewModels.Settings;
 using MotoiCal.Views;
 using MotoiCal.Views.Settings;

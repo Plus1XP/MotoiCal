@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace MotoiCal.Utilites.Converters
+namespace MotoiCal.Utilities.Converters
 {
     class BooleanToRGBConverter : IValueConverter
     {

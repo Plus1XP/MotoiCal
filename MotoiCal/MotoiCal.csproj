@@ -61,6 +61,8 @@
     <Compile Include="Enums\CalendarEventTrigger.cs" />
     <Compile Include="Models\FileManagement\XMLManager.cs" />
     <Compile Include="Models\XMLSettingsDataModel.cs" />
+    <Compile Include="Utilities\Commands\AsyncCommand.cs" />
+    <Compile Include="Utilities\Commands\SyncCommand.cs" />
     <Compile Include="Utilities\Converters\BooleanToRGBConverter.cs" />
     <Compile Include="Models\ButtonManagement\ButtonManagerModel.cs" />
     <Compile Include="Models\ButtonManagement\ButtonStatusModel.cs" />
@@ -119,7 +121,6 @@
     <Compile Include="Interfaces\IMotorSport.cs" />
     <Compile Include="Interfaces\IRaceData.cs" />
     <Compile Include="Models\MotoGP.cs" />
-    <Compile Include="Utilities\Commands\RelayCommands.cs" />
     <Compile Include="Enums\MotorSportID.cs" />
     <Compile Include="Services\Scraper.cs" />
     <Compile Include="Utilities\Helpers\SubstringExtentions.cs" />
