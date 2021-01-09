@@ -85,6 +85,8 @@ namespace MotoiCal.ViewModels
         public ButtonStatusModel WorldSBKButtonStatus { get; set; }
         public ButtonStatusModel SettingsButtonStatus { get; set; }
 
+        public string WindowTitle => string.Empty;
+
         public FrameworkElement ContentControlView
         {
             get { return this.controlContentView; }
