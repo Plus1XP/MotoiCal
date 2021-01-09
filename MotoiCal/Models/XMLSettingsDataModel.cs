@@ -18,7 +18,7 @@ namespace MotoiCal.Models
 
         private XMLManager xmlManager;
 
-        public XMLSettingsDataModel(IMotorSport motorSportSeries)
+        public XMLSettingsDataModel(IRaceTimeTable motorSportSeries)
         {
             this.xmlManager = new XMLManager();
 
@@ -51,7 +51,7 @@ namespace MotoiCal.Models
             this.xmlManager.SetNodeAttributeValueFromInt(settings_Data_Location, this.motorSportChildElementPath, "Name", eventName, "Saved", eventValue);
         }
 
-        private string GetMotorSportSeriesChildElementPath(IMotorSport motorSportSeries)
+        private string GetMotorSportSeriesChildElementPath(IRaceTimeTable motorSportSeries)
         {
             switch (motorSportSeries.SportIdentifier)
             {
