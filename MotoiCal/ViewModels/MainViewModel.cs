@@ -33,15 +33,15 @@ namespace MotoiCal.ViewModels
             this.canResizeWindow = true;
             this.canMinimizeWindow = true;
 
-            this.CloseWindowCommand = new SynchronousRelayCommand<Window>(this.CloseWindow);
-            this.MaximizeWindowCommand = new SynchronousRelayCommand<Window>(this.MaximizeWindow, o => this.canResizeWindow);
-            this.MinimizeWindowCommand = new SynchronousRelayCommand<Window>(this.MinimizeWindow, o => this.canMinimizeWindow);
-            this.RestoreWindowCommand = new SynchronousRelayCommand<Window>(this.RestoreWindow, o => this.canResizeWindow);
+            this.CloseWindowCommand = new SyncCommand<Window>(this.CloseWindow);
+            this.MaximizeWindowCommand = new SyncCommand<Window>(this.MaximizeWindow, o => this.canResizeWindow);
+            this.MinimizeWindowCommand = new SyncCommand<Window>(this.MinimizeWindow, o => this.canMinimizeWindow);
+            this.RestoreWindowCommand = new SyncCommand<Window>(this.RestoreWindow, o => this.canResizeWindow);
 
-            this.FormulaOneViewCommand = new SynchronousRelayCommand(this.Formula1Tab);
-            this.MotoGPViewCommand = new SynchronousRelayCommand(this.MotoGPTab);
-            this.WorldSBKViewCommand = new SynchronousRelayCommand(this.WorldSBKTab);
-            this.SettingsViewCommand = new SynchronousRelayCommand(this.SettingsTab);
+            this.FormulaOneViewCommand = new SyncCommand(this.Formula1Tab);
+            this.MotoGPViewCommand = new SyncCommand(this.MotoGPTab);
+            this.WorldSBKViewCommand = new SyncCommand(this.WorldSBKTab);
+            this.SettingsViewCommand = new SyncCommand(this.SettingsTab);
 
             this.buttonManagerModel = new ButtonManagerModel();
 
@@ -70,15 +70,15 @@ namespace MotoiCal.ViewModels
         private bool canResizeWindow { get; set; }
         private bool canMinimizeWindow { get; set; }
 
-        public SynchronousRelayCommand<Window> CloseWindowCommand { get; set; }
-        public SynchronousRelayCommand<Window> MaximizeWindowCommand { get; set; }
-        public SynchronousRelayCommand<Window> MinimizeWindowCommand { get; set; }
-        public SynchronousRelayCommand<Window> RestoreWindowCommand { get; set; }
+        public SyncCommand<Window> CloseWindowCommand { get; set; }
+        public SyncCommand<Window> MaximizeWindowCommand { get; set; }
+        public SyncCommand<Window> MinimizeWindowCommand { get; set; }
+        public SyncCommand<Window> RestoreWindowCommand { get; set; }
 
-        public SynchronousRelayCommand FormulaOneViewCommand { get; }
-        public SynchronousRelayCommand MotoGPViewCommand { get; }
-        public SynchronousRelayCommand WorldSBKViewCommand { get; }
-        public SynchronousRelayCommand SettingsViewCommand { get; }
+        public SyncCommand FormulaOneViewCommand { get; }
+        public SyncCommand MotoGPViewCommand { get; }
+        public SyncCommand WorldSBKViewCommand { get; }
+        public SyncCommand SettingsViewCommand { get; }
 
         public ButtonStatusModel FormulaOneButtonStatus { get; set; }
         public ButtonStatusModel MotoGPButtonStatus { get; set; }

@@ -32,10 +32,10 @@ namespace MotoiCal.ViewModels
 
             this.buttonManagerModel = new ButtonManagerModel();
 
-            this.FindRacesCommand = new AsynchronousRelayCommand(async () => await this.FindRaces());
-            this.GenerateIcalCommand = new SynchronousRelayCommand(this.GenerateIcal);
-            this.ReadIcalCommand = new SynchronousRelayCommand(this.ReadIcal);
-            this.DeleteIcalCommand = new SynchronousRelayCommand(this.DeleteIcal);
+            this.FindRacesCommand = new AsyncCommand(async () => await this.FindRaces());
+            this.GenerateIcalCommand = new SyncCommand(this.GenerateIcal);
+            this.ReadIcalCommand = new SyncCommand(this.ReadIcal);
+            this.DeleteIcalCommand = new SyncCommand(this.DeleteIcal);
 
             this.buttonManagerModel.AddButton(this.FindRacesButtonStatus = new ButtonStatusModel("Find Races", "Find Available Races"));
             this.buttonManagerModel.AddButton(this.GenerateIcalButtonStatus = new ButtonStatusModel("Generate Ical", "Generate a ICS File"));
@@ -50,10 +50,10 @@ namespace MotoiCal.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SynchronousRelayCommand FindRacesCommand { get; }
-        public SynchronousRelayCommand GenerateIcalCommand { get; }
-        public SynchronousRelayCommand ReadIcalCommand { get; }
-        public SynchronousRelayCommand DeleteIcalCommand { get; }
+        public AsyncCommand FindRacesCommand { get; }
+        public SyncCommand GenerateIcalCommand { get; }
+        public SyncCommand ReadIcalCommand { get; }
+        public SyncCommand DeleteIcalCommand { get; }
 
         public ButtonStatusModel FindRacesButtonStatus { get; set; }
         public ButtonStatusModel GenerateIcalButtonStatus { get; set; }
