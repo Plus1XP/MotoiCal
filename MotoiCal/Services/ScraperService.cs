@@ -75,7 +75,7 @@ namespace MotoiCal.Services
         private void AddURLToEventList<T>(T motorSport) where T : IDocNodePath, IDocExclusionList
         {
             Stopwatch stopWatch3 = Stopwatch.StartNew();
-            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
+            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath)) // Add a check here!
             {
                 string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
                 string url = string.IsNullOrEmpty(scrapedUrl) ? "URL not found" : $"{motorSport.UrlPartial}{scrapedUrl}";
@@ -120,6 +120,7 @@ namespace MotoiCal.Services
                     motorSport.StartUTC = this.ParseDateTimeUTC(dateTime).Item1;
                     motorSport.EndUTC = this.ParseDateTimeUTC(dateTime).Item2;
 
+                    this.AddTimeTableToCollection(motorSport, timeTable);
                 }
             }
             else
@@ -128,11 +129,26 @@ namespace MotoiCal.Services
             }
         }
 
-        private void AddTimeTableToCollection(IRaceTimeTable motorSport, ObservableCollection<IRaceTimeTable> timeTable, bool isEventSkipped)
+        private void AddTimeTableToCollection(IRaceTimeTable motorSport, ObservableCollection<IRaceTimeTable> timeTable)
         {
-            if (!isEventSkipped)
+            if (!this.isEventSkipped)
             {
-                timeTable.Add(motorSport);
+                switch (motorSport.SportIdentifier)
+                {
+                    case MotorSportID.None:
+                        break;
+                    case MotorSportID.Formula1:
+                        timeTable.Add(new Formula1(motorSport));
+                        break;
+                    case MotorSportID.MotoGP:
+                        timeTable.Add(new MotoGP(motorSport));
+                        break;
+                    case MotorSportID.WorldSBK:
+                        timeTable.Add(new WorldSBK(motorSport));
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
