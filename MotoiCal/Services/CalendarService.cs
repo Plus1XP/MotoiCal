@@ -48,5 +48,10 @@ namespace MotoiCal.Services
             this.iCalendar.CloseCalendarEntry();
         }
 
+        public string ReadiCalendar(ICalendarEvent motorSport)
+        {
+            return this.iCalendar.ReadICSFile(motorSport.FilePath);
+        }
+
     }
 }
