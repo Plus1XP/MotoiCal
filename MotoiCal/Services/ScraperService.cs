@@ -70,7 +70,7 @@ namespace MotoiCal.Services
             }           
         }
 
-        private void GetUrlList<T>(T motorSport) where T : IDocNodePath, IDocExclusionList
+        private void AddURLToEventList<T>(T motorSport) where T : IDocNodePath, IDocExclusionList
         {
             Stopwatch stopWatch3 = Stopwatch.StartNew();
             foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
