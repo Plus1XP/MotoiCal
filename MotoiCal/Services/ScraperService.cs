@@ -21,6 +21,8 @@ namespace MotoiCal.Services
         private readonly HtmlWeb webGet;
         private readonly CalendarManager iCalendar;
 
+        private bool isEventSkipped;
+
         public ScraperService()
         {
             this.doc = new HtmlDocument();
@@ -36,11 +38,11 @@ namespace MotoiCal.Services
             foreach (string url in motorSport.EventUrlList)
             {
                 Stopwatch stopWatch2 = Stopwatch.StartNew();
-                bool isEventSkipped = false;
+                isEventSkipped = false;
                 this.GetHTMLDoc(url);
                 this.PopulateTimeTableHeader(motorSport);
-                this.PopulateTimeTableBody(motorSport, isEventSkipped);
-                this.AddTimeTableToCollection(motorSport, timeTable, isEventSkipped);
+                this.PopulateTimeTableBody(motorSport, timeTable);
+                //this.AddTimeTableToCollection(motorSport, timeTable, isEventSkipped);
                 stopWatch2.Stop();
                 Debug.WriteLine($"Page scrape search time: {stopWatch2.Elapsed.Seconds}.{stopWatch2.Elapsed.Milliseconds / 10}");
             }
@@ -99,7 +101,7 @@ namespace MotoiCal.Services
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
-        private void PopulateTimeTableBody<T>(T motorSport, bool isEventSkipped) where T : IRaceTimeTable, IDocNodePath, IDocExclusionList
+        private void PopulateTimeTableBody<T>(T motorSport, ObservableCollection<IRaceTimeTable> timeTable) where T : IRaceTimeTable, IDocNodePath, IDocExclusionList
         {
             //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
             //Debug.Assert(!GrandPrix.Contains("Spain"));
@@ -110,9 +112,9 @@ namespace MotoiCal.Services
             {
                 foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath))
                 {
-                    motorSport.Series = this.GetSeries(motorSport, node, isEventSkipped);
-                    motorSport.Session = this.GetSession(motorSport, node, isEventSkipped);
-                    Tuple<string, string> dateTime = this.GetDateTime(motorSport, node, isEventSkipped);
+                    motorSport.Series = this.GetSeries(motorSport, node);
+                    motorSport.Session = this.GetSession(motorSport, node);
+                    Tuple<string, string> dateTime = this.GetDateTime(motorSport, node);
                     motorSport.Start = this.ParseDateTimeLocal(dateTime).Item1;
                     motorSport.End = this.ParseDateTimeLocal(dateTime).Item2;
                     motorSport.StartUTC = this.ParseDateTimeUTC(dateTime).Item1;
@@ -166,36 +168,40 @@ namespace MotoiCal.Services
             }
         }
 
-        private string GetSeries<T>(T motorSport, HtmlNode node, bool isEventSkipped) where T : IDocNodePath, IDocExclusionList
+        private string GetSeries<T>(T motorSport, HtmlNode node) where T : IDocNodePath, IDocExclusionList
         {
             string Series = node.SelectSingleNode(motorSport.SeriesNamePath).InnerText.Trim();
 
-            // This checks if the node contains any of the substrings in the excluded array.
-            isEventSkipped = this.ChecExcludedClasses(motorSport, Series);
+            if (!isEventSkipped)
+            {
+                // This checks if the node contains any of the substrings in the excluded array.
+                this.isEventSkipped = this.ChecExcludedClasses(motorSport, Series);
+            }            
 
             return Series;
         }
 
-        private string GetSession<T>(T motorSport, HtmlNode node, bool isEventSkipped) where T : IDocNodePath, IDocExclusionList
+        private string GetSession<T>(T motorSport, HtmlNode node) where T : IDocNodePath, IDocExclusionList
         {
-            //string Session = motorSport.CheckForExcludedWords(node.SelectSingleNode(motorSport.SessionNamePath).InnerText.Trim());
-            string Session = string.Empty;
-            Session.CheckForExcludedWords(node.SelectSingleNode(motorSport.SessionNamePath).InnerText.Trim(), motorSport.ExcludedWords);
+            string Session = node.SelectSingleNode(motorSport.SessionNamePath).InnerText.Trim().CheckForExcludedWords(motorSport.ExcludedWords);
 
-            // This checks if the node contains any of the substrings in the excluded array.
-            isEventSkipped = this.CheckExcludedEvents(motorSport, Session);
+            if (!isEventSkipped)
+            {
+                // This checks if the node contains any of the substrings in the excluded array.
+                this.isEventSkipped = this.CheckExcludedEvents(motorSport, Session);
+            }
 
             return Session;
         }
 
-        private Tuple<string, string> GetDateTime<T>(T motorSport, HtmlNode node, bool isEventSkipped) where T : IRaceTimeTable, IDocNodePath
+        private Tuple<string, string> GetDateTime<T>(T motorSport, HtmlNode node) where T : IRaceTimeTable, IDocNodePath
         {
             string dtStart = node.SelectSingleNode(motorSport.StartDatePath)?.Attributes[motorSport.StartDateAttribute].Value;
 
             // This checks if the node is null or empty, if it is the session is missing on the website and skips over it.
             if (string.IsNullOrEmpty(dtStart))
             {
-                isEventSkipped = true;
+                this.isEventSkipped = true;
             }
 
             // To handle empty rows ? checks whether or not the returned HtmlNodeCollection is null.
