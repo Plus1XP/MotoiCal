@@ -1,4 +1,5 @@
 ﻿using MotoiCal.Interfaces;
+using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels.Settings
 {
@@ -8,7 +9,7 @@ namespace MotoiCal.ViewModels.Settings
         private bool isSuperpoleSaved;
         private bool isWarmUpSaved;
 
-        public WorldSBKSettingsContentViewModel(IMotorSport motorSport) : base(motorSport)
+        public WorldSBKSettingsContentViewModel(MotorSport motorSport) : base(motorSport)
         {
             this.IsQualifyingVisible = false;
             this.IsSuperpoleVisible = true;
