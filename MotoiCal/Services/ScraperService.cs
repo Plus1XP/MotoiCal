@@ -59,14 +59,14 @@ namespace MotoiCal.Services
             this.doc = this.webGet.Load(url);
         }
 
-        private void PopulateRaceURL<T>(T motorSport) where T : IDocNodePath, IDocExclusionList
+        private void PopulateEventURLList<T>(T motorSport) where T : IDocNodePath, IDocExclusionList
         {
             // Checks list, Same as if list == null or motorSport.Count == 0
             if (motorSport.EventUrlList?.Any() != true)
             {
                 motorSport.EventUrlList = new List<string>();
                 this.GetHTMLDoc(motorSport.Url);
-                this.GetUrlList(motorSport);
+                this.AddURLToEventList(motorSport);
             }           
         }
 
