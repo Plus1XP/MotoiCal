@@ -90,7 +90,7 @@ namespace MotoiCal.Services
             Debug.WriteLine($"URL Collection search time: {stopWatch3.Elapsed.Seconds}.{stopWatch3.Elapsed.Milliseconds / 10}");
         }
 
-        private void GetRaceHeaders<T>(T motorSport) where T : IRaceTimeTable, IDocNodePath
+        private void PopulateTimeTableHeader<T>(T motorSport) where T : IRaceTimeTable, IDocNodePath
         {
             motorSport.GrandPrix = this.GetGrandPrix(motorSport);
             motorSport.Sponser = this.GetSponser(motorSport);
