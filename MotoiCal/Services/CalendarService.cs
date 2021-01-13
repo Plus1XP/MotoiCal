@@ -53,5 +53,9 @@ namespace MotoiCal.Services
             return this.iCalendar.ReadICSFile(motorSport.FilePath);
         }
 
+        public string DeleteiCalendar(ICalendarEvent motorSport)
+        {
+            return this.iCalendar.DeleteICSFile(motorSport.FilePath);
+        }        
     }
 }
