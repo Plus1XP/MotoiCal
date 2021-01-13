@@ -66,6 +66,8 @@
     <Compile Include="Models\FileManagement\XMLManager.cs" />
     <Compile Include="Models\MotorSport.cs" />
     <Compile Include="Models\XMLSettingsDataModel.cs" />
+    <Compile Include="Services\CalendarService.cs" />
+    <Compile Include="Services\ScraperService.cs" />
     <Compile Include="Utilities\Commands\AsyncCommand.cs" />
     <Compile Include="Utilities\Commands\SyncCommand.cs" />
     <Compile Include="Utilities\Converters\BooleanToRGBConverter.cs" />

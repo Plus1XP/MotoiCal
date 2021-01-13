@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotoiCal", "MotoiCal\MotoiCal.csproj", "{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MotoiCal.UnitTests", "MotoiCalTests\MotoiCal.UnitTests.csproj", "{375207F3-1D3E-45F0-9707-B9DE7C0660EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2B8C93C-DC6E-4256-AB85-2A63E91C07E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{375207F3-1D3E-45F0-9707-B9DE7C0660EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375207F3-1D3E-45F0-9707-B9DE7C0660EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375207F3-1D3E-45F0-9707-B9DE7C0660EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375207F3-1D3E-45F0-9707-B9DE7C0660EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
