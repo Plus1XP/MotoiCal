@@ -99,7 +99,7 @@ namespace MotoiCal.Services
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
-        private void GetEventTimeTable<T>(T motorSport, bool isEventSkipped) where T : IRaceTimeTable, IDocNodePath, IDocExclusionList
+        private void PopulateTimeTableBody<T>(T motorSport, bool isEventSkipped) where T : IRaceTimeTable, IDocNodePath, IDocExclusionList
         {
             //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
             //Debug.Assert(!GrandPrix.Contains("Spain"));
@@ -123,6 +123,14 @@ namespace MotoiCal.Services
             else
             {
                 Debug.WriteLine($"Event Missing: {motorSport.GrandPrix}");
+            }
+        }
+
+        private void AddTimeTableToCollection(IRaceTimeTable motorSport, ObservableCollection<IRaceTimeTable> timeTable, bool isEventSkipped)
+        {
+            if (!isEventSkipped)
+            {
+                timeTable.Add(motorSport);
             }
         }
 
@@ -223,14 +231,6 @@ namespace MotoiCal.Services
             DateTime EndUTC = this.iCalendar.ParseDateTimeToUTC(dateTime.Item2);
 
             return Tuple.Create(StartUTC, EndUTC);
-        }
-
-        private void AddTimeTableToList(IRaceTimeTable motorSport, ObservableCollection<IRaceTimeTable> timeTable, bool isEventSkipped)
-        {
-            if (!isEventSkipped)
-            {
-                timeTable.Add(motorSport);
-            }
         }
 
         private bool CheckExcludedURL(IDocExclusionList motorSport, string url)
