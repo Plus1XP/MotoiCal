@@ -29,5 +29,24 @@ namespace MotoiCal.Services
                 return this.iCalendar.CreateICSFile(motorSport.FilePath);
             }
         }
+
+        private void ProcessiCalendarResults(ObservableCollection<IRaceTimeTable> timeTable, bool isReminderActive, int eventTriggerMinutes)
+        {
+            this.iCalendar.CreateCalendarEntry();
+            /*
+            this.iCalendar.CreateTimeZone();
+            */
+            foreach (MotorSport item in timeTable)
+            {
+                this.iCalendar.CreateCalendarEventEntry(item.StartUTC, item.EndUTC, item.IcalendarSubject, item.IcalendarLocation, item.IcalendarDescription);
+                if (isReminderActive)
+                {
+                    this.iCalendar.CreateCalendarAlarmEntry(eventTriggerMinutes, item.IcalendarSubject);
+                }
+                this.iCalendar.CloseEventEntry();
+            }
+            this.iCalendar.CloseCalendarEntry();
+        }
+
     }
 }
