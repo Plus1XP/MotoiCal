@@ -28,19 +28,19 @@ namespace MotoiCal.Services
             this.iCalendar = new CalendarManager();
         }
 
-        public ObservableCollection<IRaceTimeTable> ScrapeSeries(MotorSport motorSport)
+        public ObservableCollection<IRaceTimeTable> GetSeriesCollection(MotorSport motorSport)
         {
             Stopwatch stopWatch1 = Stopwatch.StartNew();
             ObservableCollection<IRaceTimeTable> timeTable = new ObservableCollection<IRaceTimeTable>();
-            this.PopulateRaceURL(motorSport);
+            this.PopulateEventURLList(motorSport);
             foreach (string url in motorSport.EventUrlList)
             {
                 Stopwatch stopWatch2 = Stopwatch.StartNew();
                 bool isEventSkipped = false;
                 this.GetHTMLDoc(url);
-                this.GetRaceHeaders(motorSport);
-                this.GetEventTimeTable(motorSport, isEventSkipped);
-                this.AddTimeTableToList(motorSport, timeTable, isEventSkipped);
+                this.PopulateTimeTableHeader(motorSport);
+                this.PopulateTimeTableBody(motorSport, isEventSkipped);
+                this.AddTimeTableToCollection(motorSport, timeTable, isEventSkipped);
                 stopWatch2.Stop();
                 Debug.WriteLine($"Page scrape search time: {stopWatch2.Elapsed.Seconds}.{stopWatch2.Elapsed.Milliseconds / 10}");
             }
