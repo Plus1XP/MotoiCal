@@ -63,15 +63,5 @@ namespace MotoiCal.Models
         public virtual string[] ExcludedWords => new string[]
         {
         };
-
-        // Removes unwanted strings from the Formula1 circuit names.
-        public string CheckForExcludedWords(string stringToCheck)
-        {
-            foreach (string word in this.ExcludedWords)
-            {
-                stringToCheck = stringToCheck.Replace(word, string.Empty);
-            }
-            return stringToCheck.Trim();
-        }
     }
 }

@@ -55,5 +55,15 @@
             }
             return value.Substring(adjustedPosA);
         }
+
+        // Removes unwanted strings from the Formula1 circuit names.
+        public static string CheckForExcludedWords(this string value, string stringToCheck, string[] excludedWords)
+        {
+            foreach (string word in excludedWords)
+            {
+                stringToCheck = stringToCheck.Replace(word, string.Empty);
+            }
+            return value = stringToCheck.Trim();
+        }
     }
 }
