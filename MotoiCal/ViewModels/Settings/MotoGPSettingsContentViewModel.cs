@@ -1,4 +1,5 @@
 ﻿using MotoiCal.Interfaces;
+using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels.Settings
 {
@@ -8,7 +9,7 @@ namespace MotoiCal.ViewModels.Settings
         private bool isBehindTheScenesSaved;
         private bool isAfterTheFlagSaved;
 
-        public MotoGPSettingsContentViewModel(IMotorSport motorSport) : base(motorSport)
+        public MotoGPSettingsContentViewModel(MotorSport motorSport) : base(motorSport)
         {
             this.IsQualifyingVisible = true;
             this.IsSuperpoleVisible = false;
