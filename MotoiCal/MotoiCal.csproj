@@ -123,8 +123,6 @@
     <Compile Include="Models\FileManagement\CalendarManager.cs" />
     <Compile Include="Models\FileManagement\FileManager.cs" />
     <Compile Include="Models\Formula1.cs" />
-    <Compile Include="Interfaces\IMotorSport.cs" />
-    <Compile Include="Interfaces\IRaceData.cs" />
     <Compile Include="Models\MotoGP.cs" />
     <Compile Include="Enums\MotorSportID.cs" />
     <Compile Include="Services\Scraper.cs" />

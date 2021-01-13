@@ -20,7 +20,7 @@ namespace MotoiCal.Services
         private HtmlDocument doc;
         private readonly HtmlWeb webGet;
         private readonly CalendarManager iCalendar;
-        private ObservableCollection<IRaceData> raceData;
+        private ObservableCollection<IRaceTimeTable> raceData;  //REFACTOR THIS
 
         public Scraper()
         {
@@ -29,26 +29,27 @@ namespace MotoiCal.Services
             this.iCalendar = new CalendarManager();
         }
 
-        public string GenerateiCalendar(IMotorSport motorSport, bool isReminderActive, int eventTriggerMinutes)
+        public string GenerateiCalendar(ICalendarEvent motorSport)//, bool isReminderActive, int eventTriggerMinutes) //REFACTOR THIS
         {
             // Checks if url list has a value, if not then it is assumed the dates have not been pulled.
-            if (motorSport.EventUrlList?.Any() != true)
+            //if (motorSport.EventUrlList?.Any() != true)
+            if (string.IsNullOrEmpty(motorSport.IcalendarLocation))
             {
                 return "Can not generate ICS file without first showing dates";
             }
             else
             {
-                this.ProcessiCalendarResults(isReminderActive, eventTriggerMinutes);
+                this.ProcessiCalendarResults(motorSport.IsEventReminderActive, motorSport.EventReminderMins);
                 return this.iCalendar.CreateICSFile(motorSport.FilePath);
             }
         }
 
-        public string ReadiCalendar(IMotorSport motorSport)
+        public string ReadiCalendar(ICalendarEvent motorSport) //REFACTOR THIS
         {
             return this.iCalendar.ReadICSFile(motorSport.FilePath);
         }
 
-        public string DeleteiCalendar(IMotorSport motorSport)
+        public string DeleteiCalendar(ICalendarEvent motorSport) //REFACTOR THIS
         {
             return this.iCalendar.DeleteICSFile(motorSport.FilePath);
         }
@@ -58,7 +59,7 @@ namespace MotoiCal.Services
             return this.raceData.Count;
         }
 
-        public int RacesFound(IMotorSport motorSport)
+        public int RacesFound(IDocNodePath motorSport) //REFACTOR THIS
         {
             return motorSport.EventUrlList.Count;
         }
@@ -77,7 +78,7 @@ namespace MotoiCal.Services
 
             string currentSponser = null;
 
-            foreach (IRaceData race in this.raceData)
+            foreach (MotorSport race in this.raceData) //REFACTOR THIS
             {
                 string header = race.Sponser == currentSponser ? string.Empty : race.DisplayHeader;
                 string body = race.DisplayBody;
@@ -96,7 +97,7 @@ namespace MotoiCal.Services
             /*
             this.iCal.CreateTimeZone();
             */
-            foreach (IRaceData item in this.raceData)
+            foreach (MotorSport item in this.raceData) //REFACTOR THIS
             {
                 this.iCalendar.CreateCalendarEventEntry(item.StartUTC, item.EndUTC, item.IcalendarSubject, item.IcalendarLocation, item.IcalendarDescription);
                 if (isReminderActive)
@@ -108,10 +109,10 @@ namespace MotoiCal.Services
             this.iCalendar.CloseCalendarEntry();
         }
 
-        public string ScrapeEventsToiCalendar(IMotorSport motorSport)
+        public string ScrapeEventsToiCalendar(MotorSport motorSport) //REFACTOR THIS
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
-            this.raceData = new ObservableCollection<IRaceData>();
+            this.raceData = new ObservableCollection<IRaceTimeTable>();
             // Checks list, Same as if list == null or motorSport.Count == 0
             if (motorSport.EventUrlList?.Any() != true)
             {
@@ -123,13 +124,13 @@ namespace MotoiCal.Services
             return this.ProcessDisplayResults();
         }
 
-        private void AddMotoSportEventsToList(IMotorSport motorSport)
+        private void AddMotoSportEventsToList(MotorSport motorSport) //REFACTOR THIS
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             this.doc = this.webGet.Load(motorSport.Url);
             motorSport.EventUrlList = new List<string>();
 
-            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath))
+            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath)) //Check URL
             {
                 string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
                 string url = string.IsNullOrEmpty(scrapedUrl) ? url = "URL not found" : url = $"{motorSport.UrlPartial}{scrapedUrl}";
@@ -144,7 +145,7 @@ namespace MotoiCal.Services
             Debug.WriteLine($"URL Collection search time: {stopWatch.Elapsed.Seconds}.{stopWatch.Elapsed.Milliseconds / 10}");
         }
 
-        private void ProcessMotorSportEvents(IMotorSport motorSport)
+        private void ProcessMotorSportEvents(MotorSport motorSport) //REFACTOR THIS
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
             //Parallel.ForEach(motorSport.EventUrlList, async url =>
@@ -164,7 +165,7 @@ namespace MotoiCal.Services
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
-        private void FindMotorSportSessions(IMotorSport motorSport, string url)
+        private void FindMotorSportSessions(MotorSport motorSport, string url) //REFACTOR THIS
         {
             Stopwatch stopWatch = Stopwatch.StartNew();
 
@@ -252,7 +253,7 @@ namespace MotoiCal.Services
         }
 
         private void AddData(
-            IMotorSport motorSport,
+            IRaceTimeTable motorSport, //REFACTOR THIS
             string grandPrix,
             string location,
             string sponser,

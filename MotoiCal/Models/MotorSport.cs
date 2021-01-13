@@ -10,6 +10,8 @@ namespace MotoiCal.Models
     {
         // IRaceTimeTable
         public abstract MotorSportID SportIdentifier { get; }
+        public abstract string DisplayHeader { get; }
+        public abstract string DisplayBody { get; }
         public string Series { get; set; } // F1
         public string GrandPrix { get; set; } // Australian Grand Prix YYYY
         public string Session { get; set; } // Race
@@ -22,8 +24,6 @@ namespace MotoiCal.Models
         public DateTime EndUTC { get; set; } // iCal DD/MM/YYYY HH:MM:SS
 
         // ICalendarEvent
-        public abstract string DisplayHeader { get; }
-        public abstract string DisplayBody { get; }
         public abstract string IcalendarSubject { get; }
         public abstract string IcalendarLocation { get; }
         public abstract string IcalendarDescription { get; }

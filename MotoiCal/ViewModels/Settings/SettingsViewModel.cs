@@ -1,4 +1,5 @@
 ﻿using MotoiCal.Interfaces;
+using MotoiCal.Models;
 using MotoiCal.Models.ButtonManagement;
 using MotoiCal.Utilities.Commands;
 using MotoiCal.Views.Settings;
@@ -21,11 +22,11 @@ namespace MotoiCal.ViewModels.Settings
 
         private AboutContentViewModel aboutContent;
 
-        private IMotorSport formula1;
-        private IMotorSport motoGP;
-        private IMotorSport worldSBK;
+        private MotorSport formula1;
+        private MotorSport motoGP;
+        private MotorSport worldSBK;
 
-        public SettingsViewModel(IMotorSport formula1, IMotorSport motoGP, IMotorSport worldSBK)
+        public SettingsViewModel(MotorSport formula1, MotorSport motoGP, MotorSport worldSBK)
         {
             this.formula1 = formula1;
             this.motoGP = motoGP;

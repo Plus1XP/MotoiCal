@@ -2,8 +2,6 @@
 {
     public interface ICalendarEvent
     {
-        string DisplayHeader { get; }
-        string DisplayBody { get; }
         string IcalendarSubject { get; }
         string IcalendarLocation { get; }
         string IcalendarDescription { get; }

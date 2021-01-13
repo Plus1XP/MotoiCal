@@ -7,6 +7,8 @@ namespace MotoiCal.Interfaces
     public interface IRaceTimeTable
     {
         MotorSportID SportIdentifier { get; }
+        string DisplayHeader { get; }
+        string DisplayBody { get; }
         string Series { get; set; }
         string GrandPrix { get; set; }
         string Session { get; set; }

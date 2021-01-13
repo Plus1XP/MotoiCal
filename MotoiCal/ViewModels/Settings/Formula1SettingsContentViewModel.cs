@@ -1,10 +1,11 @@
 ﻿using MotoiCal.Interfaces;
+using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels.Settings
 {
     class Formula1SettingsContentViewModel : SettingsContentViewModel
     {
-        public Formula1SettingsContentViewModel(IMotorSport motorSport) : base(motorSport)
+        public Formula1SettingsContentViewModel(MotorSport motorSport) : base(motorSport)
         {
             this.IsQualifyingVisible = true;
             this.IsSuperpoleVisible = false;

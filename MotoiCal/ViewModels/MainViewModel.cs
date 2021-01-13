@@ -22,11 +22,9 @@ namespace MotoiCal.ViewModels
         private MotorSportContentViewModel worldSBKMotorSportContent;
         private SettingsViewModel settingsMotorSportContent;
 
-        private Formula1 formula1;
-        private MotoGP motoGP;
-        private WorldSBK worldSBK;
-
-        //private IMotorSport motorSportSeries;
+        private MotorSport formula1;
+        private MotorSport motoGP;
+        private MotorSport worldSBK;
 
         public MainViewModel()
         {
