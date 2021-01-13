@@ -15,13 +15,13 @@ namespace MotoiCal.ViewModels.Settings
 
         public XMLSettingsDataModel SettingsData;
 
-        private IMotorSport motorSportSeries;
+        private MotorSport motorSportSeries;
 
         private bool isPracticeSaved;
         private bool isQualifyingSaved;
         private bool isRaceSaved;
 
-        public SettingsContentViewModel(IMotorSport motorSportSeries)
+        public SettingsContentViewModel(MotorSport motorSportSeries)
         {
             this.motorSportSeries = motorSportSeries;
 
