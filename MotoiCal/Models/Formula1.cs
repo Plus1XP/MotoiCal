@@ -1,4 +1,5 @@
 ﻿using MotoiCal.Enums;
+using MotoiCal.Interfaces;
 using MotoiCal.Utilities.Helpers;
 
 using System;
@@ -7,6 +8,16 @@ namespace MotoiCal.Models
 {
     public class Formula1 : MotorSport
     {
+        public Formula1()
+        {
+
+        }
+
+        public Formula1(IRaceTimeTable motorSport) : base(motorSport)
+        {
+
+        }
+
         public override MotorSportID SportIdentifier => MotorSportID.Formula1;
         public override string DisplayHeader => $"\n{this.Series} {this.GrandPrix.Before($"{DateTime.Now.Year}")} \n{this.Sponser.Between("1 ", $" {DateTime.Now.Year}")} \n{this.Location} \n";
         public override string DisplayBody => $"{this.Series} {this.GrandPrix.Before("Grand")}{this.Session} : {this.Start} - {this.End}";
