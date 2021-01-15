@@ -64,22 +64,29 @@ namespace MotoiCal.Services
             }
         }
 
-        private void AddURLToEventList<T>(T motorSport) where T : IDocNodePath, IDocExclusionList
+        private void AddURLToEventList<T>(T motorSport, HtmlDocument doc) where T : IDocNodePath, IDocExclusionList
         {
             Stopwatch stopWatch3 = Stopwatch.StartNew();
-            foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.UrlPath)) // Add a check here!
+            if (doc.DocumentNode.SelectNodes(motorSport.UrlPath) != null)
             {
-                string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
-                string url = string.IsNullOrEmpty(scrapedUrl) ? "URL not found" : $"{motorSport.UrlPartial}{scrapedUrl}";
-                Debug.WriteLine($"{url} : {scrapedUrl}");
-                if (this.CheckExcludedURL(motorSport, url) || url.Equals("URL not found"))
+                foreach (HtmlNode node in doc.DocumentNode.SelectNodes(motorSport.UrlPath))
                 {
-                    Debug.WriteLine($"Skipped {url}");
-                    continue;
+                    string scrapedUrl = node.Attributes[motorSport.UrlAttribute]?.Value;
+                    string url = string.IsNullOrEmpty(scrapedUrl) ? "URL not found" : $"{motorSport.UrlPartial}{scrapedUrl}";
+                    if (this.scraperModel.CheckExcludedURL(motorSport, url) || url.Equals("URL not found"))
+                    {
+                        Debug.WriteLine($"Skipped: {url}");
+                        continue;
+                    }
+                    motorSport.EventUrlList.Add(url);
+                    Debug.WriteLine($"Added: {url}");
                 }
-                motorSport.EventUrlList.Add(url);
-                Debug.WriteLine($"Added: {url}");
             }
+            else
+            {
+                Debug.WriteLine($"URL Path Invalid: {motorSport.UrlPath}");
+            }
+
             stopWatch3.Stop();
             Debug.WriteLine($"URL Collection search time: {stopWatch3.Elapsed.Seconds}.{stopWatch3.Elapsed.Milliseconds / 10}");
         }
