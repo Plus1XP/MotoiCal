@@ -57,13 +57,13 @@
         }
 
         // Removes unwanted strings from the Formula1 circuit names.
-        public static string CheckForExcludedWords(this string value, string stringToCheck, string[] excludedWords)
+        public static string CheckForExcludedWords(this string value, string[] excludedWords)
         {
             foreach (string word in excludedWords)
             {
-                stringToCheck = stringToCheck.Replace(word, string.Empty);
+                value = value.Replace(word, string.Empty);
             }
-            return value = stringToCheck.Trim();
+            return value.Trim();
         }
     }
 }
