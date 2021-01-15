@@ -40,9 +40,7 @@ namespace MotoiCal.Services
                 Stopwatch stopWatch2 = Stopwatch.StartNew();
                 isEventSkipped = false;
                 this.GetHTMLDoc(url);
-                this.PopulateTimeTableHeader(motorSport);
-                this.PopulateTimeTableBody(motorSport, timeTable);
-                //this.AddTimeTableToCollection(motorSport, timeTable, isEventSkipped);
+                this.PopulateTimeTable(motorSport, doc, timeTable);
                 stopWatch2.Stop();
                 Debug.WriteLine($"Page scrape search time: {stopWatch2.Elapsed.Seconds}.{stopWatch2.Elapsed.Milliseconds / 10}");
             }
@@ -92,17 +90,14 @@ namespace MotoiCal.Services
             Debug.WriteLine($"URL Collection search time: {stopWatch3.Elapsed.Seconds}.{stopWatch3.Elapsed.Milliseconds / 10}");
         }
 
-        private void PopulateTimeTableHeader<T>(T motorSport) where T : IRaceTimeTable, IDocNodePath
-        {
-            motorSport.GrandPrix = this.GetGrandPrix(motorSport);
-            motorSport.Sponser = this.GetSponser(motorSport);
-            motorSport.Location = this.GetLocation(motorSport, motorSport.Sponser);
-        }
-
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
         private void PopulateTimeTableBody<T>(T motorSport, ObservableCollection<IRaceTimeTable> timeTable) where T : IRaceTimeTable, IDocNodePath, IDocExclusionList
         {
+            motorSport.GrandPrix = this.scraperModel.GetGrandPrix(motorSport, doc);
+            motorSport.Sponser = this.scraperModel.GetSponser(motorSport, doc);
+            motorSport.Location = this.scraperModel.GetLocation(motorSport, doc, motorSport.Sponser);
+
             //Debug.Assert(this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null);
             //Debug.Assert(!GrandPrix.Contains("Spain"));
             //Debug.WriteIf(motorSport.Url.Contains("https://www.worldsbk.com/en/event/ESP3/2020"), $"{GrandPrix}");
