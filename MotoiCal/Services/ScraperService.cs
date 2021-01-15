@@ -17,17 +17,11 @@ namespace MotoiCal.Services
 {
     public class ScraperService
     {
-        private HtmlDocument doc;
-        private readonly HtmlWeb webGet;
-        private readonly CalendarManager iCalendar;
-
-        private bool isEventSkipped;
+        private ScraperModel scraperModel;
 
         public ScraperService()
         {
-            this.doc = new HtmlDocument();
-            this.webGet = new HtmlWeb();
-            this.iCalendar = new CalendarManager();
+            this.scraperModel = new ScraperModel();
         }
 
         public ObservableCollection<IRaceTimeTable> GetSeriesCollection(MotorSport motorSport)
@@ -38,8 +32,7 @@ namespace MotoiCal.Services
             foreach (string url in motorSport.EventUrlList)
             {
                 Stopwatch stopWatch2 = Stopwatch.StartNew();
-                isEventSkipped = false;
-                this.GetHTMLDoc(url);
+                HtmlDocument doc = this.GetHTMLDoc(url);
                 this.PopulateTimeTable(motorSport, doc, timeTable);
                 stopWatch2.Stop();
                 Debug.WriteLine($"Page scrape search time: {stopWatch2.Elapsed.Seconds}.{stopWatch2.Elapsed.Milliseconds / 10}");
@@ -50,13 +43,14 @@ namespace MotoiCal.Services
             return timeTable;
         }
 
-        private void GetHTMLDoc(string url)
+        private HtmlDocument GetHTMLDoc(string url)
         {
             // The HTMLWeb parameters set the encoding to the URL, otherwise special characters wont display correctly.
-            this.webGet.AutoDetectEncoding = false;
-            this.webGet.OverrideEncoding = Encoding.UTF8;
+            HtmlWeb webGet = new HtmlWeb();
+            webGet.AutoDetectEncoding = false;
+            webGet.OverrideEncoding = Encoding.UTF8;
             //this.doc.OptionEmptyCollection = true;
-            this.doc = this.webGet.Load(url);
+            return webGet.Load(url);
         }
 
         private void PopulateEventURLList<T>(T motorSport) where T : IDocNodePath, IDocExclusionList
@@ -65,9 +59,9 @@ namespace MotoiCal.Services
             if (motorSport.EventUrlList?.Any() != true)
             {
                 motorSport.EventUrlList = new List<string>();
-                this.GetHTMLDoc(motorSport.Url);
-                this.AddURLToEventList(motorSport);
-            }           
+                HtmlDocument doc = this.GetHTMLDoc(motorSport.Url);
+                this.AddURLToEventList(motorSport, doc);
+            }
         }
 
         private void AddURLToEventList<T>(T motorSport) where T : IDocNodePath, IDocExclusionList
@@ -92,7 +86,7 @@ namespace MotoiCal.Services
 
         // Some Nodes return null if there is a problem with the paths or the data is missing.
         // "?" checks and allows the returned HtmlNodeCollection to be null, "??" returns a string if the node is null.
-        private void PopulateTimeTableBody<T>(T motorSport, ObservableCollection<IRaceTimeTable> timeTable) where T : IRaceTimeTable, IDocNodePath, IDocExclusionList
+        private void PopulateTimeTable<T>(T motorSport, HtmlDocument doc, ObservableCollection<IRaceTimeTable> timeTable) where T : IRaceTimeTable, IDocNodePath, IDocExclusionList
         {
             motorSport.GrandPrix = this.scraperModel.GetGrandPrix(motorSport, doc);
             motorSport.Sponser = this.scraperModel.GetSponser(motorSport, doc);
@@ -103,17 +97,18 @@ namespace MotoiCal.Services
             //Debug.WriteIf(motorSport.Url.Contains("https://www.worldsbk.com/en/event/ESP3/2020"), $"{GrandPrix}");
 
             // MotoGP are updated the schedule, eventsTable loads 404.
-            if (this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
+            if (doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
             {
-                foreach (HtmlNode node in this.doc.DocumentNode.SelectNodes(motorSport.EventTablePath))
+                foreach (HtmlNode node in doc.DocumentNode.SelectNodes(motorSport.EventTablePath))
                 {
-                    motorSport.Series = this.GetSeries(motorSport, node);
-                    motorSport.Session = this.GetSession(motorSport, node);
-                    Tuple<string, string> dateTime = this.GetDateTime(motorSport, node);
-                    motorSport.Start = this.ParseDateTimeLocal(dateTime).Item1;
-                    motorSport.End = this.ParseDateTimeLocal(dateTime).Item2;
-                    motorSport.StartUTC = this.ParseDateTimeUTC(dateTime).Item1;
-                    motorSport.EndUTC = this.ParseDateTimeUTC(dateTime).Item2;
+                    bool isEventSkipped = false;
+                    motorSport.Series = this.scraperModel.GetSeries(motorSport, node, ref isEventSkipped);
+                    motorSport.Session = this.scraperModel.GetSession(motorSport, node, ref isEventSkipped);
+                    Tuple<string, string> dateTime = this.scraperModel.GetDateTime(motorSport, node, ref isEventSkipped);
+                    motorSport.Start = this.scraperModel.ParseDateTimeLocal(dateTime).Item1;
+                    motorSport.End = this.scraperModel.ParseDateTimeLocal(dateTime).Item2;
+                    motorSport.StartUTC = this.scraperModel.ParseDateTimeUTC(dateTime).Item1;
+                    motorSport.EndUTC = this.scraperModel.ParseDateTimeUTC(dateTime).Item2;
 
                     if (!isEventSkipped)
                     {
