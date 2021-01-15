@@ -120,7 +120,10 @@ namespace MotoiCal.Services
                     motorSport.StartUTC = this.ParseDateTimeUTC(dateTime).Item1;
                     motorSport.EndUTC = this.ParseDateTimeUTC(dateTime).Item2;
 
-                    this.AddTimeTableToCollection(motorSport, timeTable);
+                    if (!isEventSkipped)
+                    {
+                        this.AddTimeTableToCollection(motorSport, timeTable);
+                    }
                 }
             }
             else
@@ -131,24 +134,21 @@ namespace MotoiCal.Services
 
         private void AddTimeTableToCollection(IRaceTimeTable motorSport, ObservableCollection<IRaceTimeTable> timeTable)
         {
-            if (!this.isEventSkipped)
+            switch (motorSport.SportIdentifier)
             {
-                switch (motorSport.SportIdentifier)
-                {
-                    case MotorSportID.None:
-                        break;
-                    case MotorSportID.Formula1:
-                        timeTable.Add(new Formula1(motorSport));
-                        break;
-                    case MotorSportID.MotoGP:
-                        timeTable.Add(new MotoGP(motorSport));
-                        break;
-                    case MotorSportID.WorldSBK:
-                        timeTable.Add(new WorldSBK(motorSport));
-                        break;
-                    default:
-                        break;
-                }
+                case MotorSportID.None:
+                    break;
+                case MotorSportID.Formula1:
+                    timeTable.Add(new Formula1(motorSport));
+                    break;
+                case MotorSportID.MotoGP:
+                    timeTable.Add(new MotoGP(motorSport));
+                    break;
+                case MotorSportID.WorldSBK:
+                    timeTable.Add(new WorldSBK(motorSport));
+                    break;
+                default:
+                    break;
             }
         }
     }
