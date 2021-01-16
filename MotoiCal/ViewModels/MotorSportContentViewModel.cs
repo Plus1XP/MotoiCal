@@ -1,10 +1,13 @@
 ﻿using MotoiCal.Interfaces;
+using MotoiCal.Models;
 using MotoiCal.Models.ButtonManagement;
 using MotoiCal.Services;
 using MotoiCal.Utilities.Commands;
 
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -12,23 +15,25 @@ namespace MotoiCal.ViewModels
 {
     class MotorSportContentViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<IRaceTimeTable> timeTable;
+
         private ButtonManagerModel buttonManagerModel;
 
-        private Scraper scraper;
+        private ScraperService scraperService;
 
-        private IMotorSport motorSportSeries;
+        private MotorSport motorSportSeries;
 
         private string resultsText;
 
         private bool isSearching;
 
-        public MotorSportContentViewModel(IMotorSport motorSportSeries)
+        public MotorSportContentViewModel(MotorSport motorSportSeries)
         {
             this.motorSportSeries = motorSportSeries;
 
             this.IsSearching = false;
 
-            this.scraper = new Scraper();
+            this.scraperService = new ScraperService();
 
             this.buttonManagerModel = new ButtonManagerModel();
 
@@ -121,12 +126,10 @@ namespace MotoiCal.ViewModels
         {
             this.buttonManagerModel.SetActiveButton(this.FindRacesButtonStatus);
             this.IsSearching = true;
-            //        string unalteredMainHeader = this.MainHeader;
-            await Task.Run(() => this.ResultsText = this.scraper.ScrapeEventsToiCalendar(this.motorSportSeries));
-            //        this.OnPropertyChanged("MainHeader");
-            //        this.MainHeader += $" {this.scraper.RacesFound(this.MotorSportSeries)} Races";
+            this.timeTable = new ObservableCollection<IRaceTimeTable>();
+            await Task.Run(() => this.timeTable = this.scraperService.GetSeriesCollection(this.motorSportSeries));
+            this.ResultsText = ViewRaceTimeTable(timeTable);
             this.IsSearching = false;
-            //        MessageBox.Show($"DONE! \nScraped {this.scraper.RacesFound(this.MotorSportSeries)} Races \nScraped {this.scraper.EventsFound()} Events", $"{unalteredMainHeader}");
         }
 
         private void GenerateIcal()
