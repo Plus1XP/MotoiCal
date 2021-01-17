@@ -21,6 +21,8 @@ namespace MotoiCal.ViewModels
 
         private ScraperService scraperService;
 
+        private CalendarService calendarService;
+
         private MotorSport motorSportSeries;
 
         private string resultsText;
@@ -34,6 +36,7 @@ namespace MotoiCal.ViewModels
             this.IsSearching = false;
 
             this.scraperService = new ScraperService();
+            this.calendarService = new CalendarService();
 
             this.buttonManagerModel = new ButtonManagerModel();
 
