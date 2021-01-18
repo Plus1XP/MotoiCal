@@ -138,8 +138,7 @@ namespace MotoiCal.ViewModels
         private void GenerateIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.GenerateIcalButtonStatus);
-            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.GenerateiCalendar(this.motorSportSeries, this.motorSportSeries.IsEventReminderActive, this.motorSportSeries.EventReminderMins); // Pass in event reminders
+            this.ResultsText = this.calendarService.GenerateiCalendar(this.motorSportSeries, this.timeTable);
         }
 
         private void ReadIcal()
