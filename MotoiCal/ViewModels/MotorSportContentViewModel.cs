@@ -150,8 +150,8 @@ namespace MotoiCal.ViewModels
         private void DeleteIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.DeleteIcalButtonStatus);
-            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.DeleteiCalendar(this.motorSportSeries);
+            this.ResultsText = this.calendarService.DeleteiCalendar(this.motorSportSeries);
+        }
         }
     }
 }
