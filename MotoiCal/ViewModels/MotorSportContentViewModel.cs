@@ -152,6 +152,27 @@ namespace MotoiCal.ViewModels
             this.buttonManagerModel.SetActiveButton(this.DeleteIcalButtonStatus);
             this.ResultsText = this.calendarService.DeleteiCalendar(this.motorSportSeries);
         }
+
+        // currentSponser is initially set to null, then each loop is given the current Sponser value.
+        // This allows the stringbuilder to check if it needs to update header.
+        // * This was changed from checking again the currentGrandPrix in the COVID update due to multiple races at the same GrandPrix.
+        public string ViewRaceTimeTable(ObservableCollection<IRaceTimeTable> timeTable)
+        {
+            StringBuilder results = new StringBuilder();
+
+            string currentSponser = null;
+
+            foreach (IRaceTimeTable motorSport in timeTable)
+            {
+                string header = motorSport.Sponser == currentSponser ? string.Empty : motorSport.DisplayHeader;
+                string body = motorSport.DisplayBody;
+
+                results.Append(header);
+                results.AppendLine(body);
+
+                currentSponser = motorSport.Sponser;
+            }
+            return results.ToString();
         }
     }
 }
