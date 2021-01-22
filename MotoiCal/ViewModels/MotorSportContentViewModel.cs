@@ -41,11 +41,13 @@ namespace MotoiCal.ViewModels
             this.buttonManagerModel = new ButtonManagerModel();
 
             this.FindRacesCommand = new AsyncCommand(async () => await this.FindRaces());
+            this.EmailIcalCommand = new SyncCommand(this.EmailIcal);
             this.GenerateIcalCommand = new SyncCommand(this.GenerateIcal);
             this.ReadIcalCommand = new SyncCommand(this.ReadIcal);
             this.DeleteIcalCommand = new SyncCommand(this.DeleteIcal);
 
             this.buttonManagerModel.AddButton(this.FindRacesButtonStatus = new ButtonStatusModel("Find Races", "Find Available Races"));
+            this.buttonManagerModel.AddButton(this.EmailIcalButtonStatus = new ButtonStatusModel("Email Ical", "email the ICS file"));
             this.buttonManagerModel.AddButton(this.GenerateIcalButtonStatus = new ButtonStatusModel("Generate Ical", "Generate a ICS File"));
             this.buttonManagerModel.AddButton(this.ReadIcalButtonStatus = new ButtonStatusModel("Read Ical", "Read a ICS File"));
             this.buttonManagerModel.AddButton(this.DeleteIcalButtonStatus = new ButtonStatusModel("Delete Ical", "Delete a ICS File"));
@@ -59,11 +61,13 @@ namespace MotoiCal.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public AsyncCommand FindRacesCommand { get; }
+        public SyncCommand EmailIcalCommand { get; }
         public SyncCommand GenerateIcalCommand { get; }
         public SyncCommand ReadIcalCommand { get; }
         public SyncCommand DeleteIcalCommand { get; }
 
         public ButtonStatusModel FindRacesButtonStatus { get; set; }
+        public ButtonStatusModel EmailIcalButtonStatus { get; set; }
         public ButtonStatusModel GenerateIcalButtonStatus { get; set; }
         public ButtonStatusModel ReadIcalButtonStatus { get; set; }
         public ButtonStatusModel DeleteIcalButtonStatus { get; set; }
@@ -110,6 +114,11 @@ namespace MotoiCal.ViewModels
             this.OnPropertyChanged("FindRacesButtonStatus");
         }
 
+        private void EmailIcalButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("EmailIcalButtonStatus");
+        }
+
         private void GenerateIcalButtonActive(object sender, EventArgs e)
         {
             this.OnPropertyChanged("GenerateIcalButtonStatus");
@@ -133,6 +142,11 @@ namespace MotoiCal.ViewModels
             await Task.Run(() => this.timeTable = this.scraperService.GetSeriesCollection(this.motorSportSeries));
             this.ResultsText = ViewRaceTimeTable(timeTable);
             this.IsSearching = false;
+        }
+
+        private void EmailIcal()
+        {
+            this.buttonManagerModel.SetActiveButton(this.EmailIcalButtonStatus);
         }
 
         private void GenerateIcal()
