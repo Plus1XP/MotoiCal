@@ -19,9 +19,9 @@ namespace MotoiCal.Services
         {
             // Checks if url list has a value, if not then it is assumed the dates have not been pulled.
             //if (motorSport.EventUrlList?.Any() != true)
-            if (string.IsNullOrEmpty(motorSport.IcalendarLocation))
+            if (timeTable == null)
             {
-                return "Can not generate ICS file without first showing dates";
+                return "Cannot generate ICS file without first showing dates";
             }
             else
             {

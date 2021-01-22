@@ -1,4 +1,5 @@
 ﻿using MotoiCal.Enums;
+using MotoiCal.Interfaces;
 using MotoiCal.Utilities.Helpers;
 
 using System.Collections.Generic;
@@ -7,10 +8,20 @@ namespace MotoiCal.Models
 {
     public class WorldSBK : MotorSport
     {
+        public WorldSBK()
+        {
+
+        }
+
+        public WorldSBK(IRaceTimeTable motorSport) : base(motorSport)
+        {
+
+        }
+
         public override MotorSportID SportIdentifier => MotorSportID.WorldSBK;
-        public override string DisplayHeader => $"\n{this.Series} {this.CheckForExcludedWords(this.Sponser)} \n{this.Sponser.Before("Round")}{this.GrandPrix} \n{this.Location} \n";
-        public override string DisplayBody => $"{this.Series} {this.CheckForExcludedWords(this.Sponser.Before("Round"))} {this.Session}: {this.Start} - {this.End}";
-        public override string IcalendarSubject => $"{this.Series} {this.CheckForExcludedWords(this.Sponser.Before("Round"))} {this.Session}";
+        public override string DisplayHeader => $"\n{this.Series} {Sponser.CheckForExcludedWords(this.ExcludedWords)} \n{this.Sponser.Before("Round")}{this.GrandPrix} \n{this.Location} \n";
+        public override string DisplayBody => $"{this.Series} {Sponser.CheckForExcludedWords(this.ExcludedWords).Before("Round")} {this.Session}: {this.Start} - {this.End}";
+        public override string IcalendarSubject => $"{this.Series} {Sponser.CheckForExcludedWords(this.ExcludedWords).Before("Round")} {this.Session}";
         public override string IcalendarLocation => $"{this.Location}";
         public override string IcalendarDescription => $"{this.Sponser.Before("Round")}{this.GrandPrix}";
         public override string FilePath => "WorldSBK.ics";

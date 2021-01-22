@@ -1,10 +1,13 @@
 ﻿using MotoiCal.Interfaces;
+using MotoiCal.Models;
 using MotoiCal.Models.ButtonManagement;
 using MotoiCal.Services;
 using MotoiCal.Utilities.Commands;
 
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -12,23 +15,28 @@ namespace MotoiCal.ViewModels
 {
     class MotorSportContentViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<IRaceTimeTable> timeTable;
+
         private ButtonManagerModel buttonManagerModel;
 
-        private Scraper scraper;
+        private ScraperService scraperService;
 
-        private IMotorSport motorSportSeries;
+        private CalendarService calendarService;
+
+        private MotorSport motorSportSeries;
 
         private string resultsText;
 
         private bool isSearching;
 
-        public MotorSportContentViewModel(IMotorSport motorSportSeries)
+        public MotorSportContentViewModel(MotorSport motorSportSeries)
         {
             this.motorSportSeries = motorSportSeries;
 
             this.IsSearching = false;
 
-            this.scraper = new Scraper();
+            this.scraperService = new ScraperService();
+            this.calendarService = new CalendarService();
 
             this.buttonManagerModel = new ButtonManagerModel();
 
@@ -121,33 +129,50 @@ namespace MotoiCal.ViewModels
         {
             this.buttonManagerModel.SetActiveButton(this.FindRacesButtonStatus);
             this.IsSearching = true;
-            //        string unalteredMainHeader = this.MainHeader;
-            await Task.Run(() => this.ResultsText = this.scraper.ScrapeEventsToiCalendar(this.motorSportSeries));
-            //        this.OnPropertyChanged("MainHeader");
-            //        this.MainHeader += $" {this.scraper.RacesFound(this.MotorSportSeries)} Races";
+            this.timeTable = new ObservableCollection<IRaceTimeTable>();
+            await Task.Run(() => this.timeTable = this.scraperService.GetSeriesCollection(this.motorSportSeries));
+            this.ResultsText = ViewRaceTimeTable(timeTable);
             this.IsSearching = false;
-            //        MessageBox.Show($"DONE! \nScraped {this.scraper.RacesFound(this.MotorSportSeries)} Races \nScraped {this.scraper.EventsFound()} Events", $"{unalteredMainHeader}");
         }
 
         private void GenerateIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.GenerateIcalButtonStatus);
-            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.GenerateiCalendar(this.motorSportSeries, this.motorSportSeries.IsEventReminderActive, this.motorSportSeries.EventReminderMins); // Pass in event reminders
+            this.ResultsText = this.calendarService.GenerateiCalendar(this.motorSportSeries, this.timeTable);
         }
 
         private void ReadIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.ReadIcalButtonStatus);
-            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.ReadiCalendar(this.motorSportSeries);
+            this.ResultsText = this.calendarService.ReadiCalendar(this.motorSportSeries);
         }
 
         private void DeleteIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.DeleteIcalButtonStatus);
-            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.DeleteiCalendar(this.motorSportSeries);
+            this.ResultsText = this.calendarService.DeleteiCalendar(this.motorSportSeries);
+        }
+
+        // currentSponser is initially set to null, then each loop is given the current Sponser value.
+        // This allows the stringbuilder to check if it needs to update header.
+        // * This was changed from checking again the currentGrandPrix in the COVID update due to multiple races at the same GrandPrix.
+        public string ViewRaceTimeTable(ObservableCollection<IRaceTimeTable> timeTable)
+        {
+            StringBuilder results = new StringBuilder();
+
+            string currentSponser = null;
+
+            foreach (IRaceTimeTable motorSport in timeTable)
+            {
+                string header = motorSport.Sponser == currentSponser ? string.Empty : motorSport.DisplayHeader;
+                string body = motorSport.DisplayBody;
+
+                results.Append(header);
+                results.AppendLine(body);
+
+                currentSponser = motorSport.Sponser;
+            }
+            return results.ToString();
         }
     }
 }

@@ -8,6 +8,24 @@ namespace MotoiCal.Models
 {
     public abstract class MotorSport : IRaceTimeTable, ICalendarEvent, IDocNodePath, IDocExclusionList
     {
+        public MotorSport()
+        {
+
+        }
+
+        public MotorSport(IRaceTimeTable motorSport)
+        {
+            this.GrandPrix = motorSport.GrandPrix;
+            this.Location = motorSport.Location;
+            this.Sponser = motorSport.Sponser;
+            this.Series = motorSport.Series;
+            this.Session = motorSport.Session;
+            this.Start = motorSport.Start;
+            this.End = motorSport.End;
+            this.StartUTC = motorSport.StartUTC;
+            this.EndUTC = motorSport.EndUTC;
+        }
+
         // IRaceTimeTable
         public abstract MotorSportID SportIdentifier { get; }
         public abstract string DisplayHeader { get; }
@@ -63,15 +81,5 @@ namespace MotoiCal.Models
         public virtual string[] ExcludedWords => new string[]
         {
         };
-
-        // Removes unwanted strings from the Formula1 circuit names.
-        public string CheckForExcludedWords(string stringToCheck)
-        {
-            foreach (string word in this.ExcludedWords)
-            {
-                stringToCheck = stringToCheck.Replace(word, string.Empty);
-            }
-            return stringToCheck.Trim();
-        }
     }
 }
