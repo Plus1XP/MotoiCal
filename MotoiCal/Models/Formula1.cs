@@ -24,7 +24,6 @@ namespace MotoiCal.Models
         public override string IcalendarSubject => $"{this.Series} {this.GrandPrix.Before("Grand")}{this.Session}";
         public override string IcalendarLocation => $"{this.Location}";
         public override string IcalendarDescription => $"{this.Sponser.Between("1 ", $" {DateTime.Now.Year}")}";
-        public override string FilePath => "Formula1.ics";
 
         public override string Url => $"https://www.formula1.com/en/racing/{DateTime.Now.Year}.html";
         public override string UrlPartial => "https://www.formula1.com";
