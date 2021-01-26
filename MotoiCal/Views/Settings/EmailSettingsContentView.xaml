@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="MotoiCal.Views.Settings.EmailSettingsContentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MotoiCal.Views.Settings"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="0" Grid.Row="0"
+               Margin="20,20,0,20"
+               Content="Email Address:"/>
+        <TextBox Grid.Column="1" Grid.Row="0"
+                 Text="test"
+                 Margin="5,20,0,20"/>
+        <Button Grid.Column="2" Grid.Row="0"
+                Style="{StaticResource WindowButtonStyle}"
+                Content="Save"
+                Margin="0,20,20,20"/>
+
+        <ToggleButton Grid.Column="0" Grid.Row="1" 
+                      Grid.ColumnSpan="2"
+                      Margin="20,20,20,20"
+                      Style="{StaticResource ToggleButtonStyle1}"
+                      Content="Advanced"
+                      IsChecked="{Binding IsPracticeSaved}"/>
+        
+        <Button Grid.Column="2" Grid.Row="1"
+                Visibility="Visible"
+                Style="{StaticResource WindowButtonStyle}"
+                Content="Save"
+                Margin="0,20,20,20"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="2" Visibility="Hidden"
+                   Text="*Only enable advanced settings if you are using a private stmp server."
+                   FontStyle="Italic"
+                   Margin="20,0,20,0"/>
+
+        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+
+            <Label Grid.Column="0" Grid.Row="0" 
+               Margin="20,0,0,0"
+               Content="SMTP Host:"/>
+            <TextBox Grid.Column="1" Grid.Row="0" 
+                 TextWrapping="Wrap"
+                 Margin="5,0,20,0"/>
+
+            <Label Grid.Column="0" Grid.Row="1" 
+                   Margin="20,0,0,0"
+                   Content="SMTP Port:"/>
+            <TextBox Grid.Column="1" Grid.Row="1" 
+                     TextWrapping="Wrap"
+                     Margin="5,0,20,0"/>
+
+            <Label Grid.Column="0" Grid.Row="2" 
+                   Margin="20,0,0,0"
+                   Content="Sender:"/>
+            <TextBox Grid.Column="1" Grid.Row="2" 
+                     TextWrapping="Wrap"
+                     Margin="5,0,20,0"/>
+
+            <Label Grid.Column="0" Grid.Row="3" 
+                   Margin="20,0,0,0"
+                   Content="User Name:"/>
+            <TextBox Grid.Column="1" Grid.Row="3"
+                     TextWrapping="Wrap"
+                     Margin="5,0,20,0"/>
+
+            <Label Grid.Column="0" Grid.Row="4" 
+                   Margin="20,0,0,0"
+                   Content="API Key:"/>
+            <TextBox Grid.Column="1" Grid.Row="4" 
+                     TextWrapping="Wrap"
+                     Margin="5,0,0,0"/>
+        </Grid>
+    </Grid>
+</UserControl>
