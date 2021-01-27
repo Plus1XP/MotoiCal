@@ -23,7 +23,6 @@ namespace MotoiCal.Models
         public override string IcalendarSubject => $"{this.Series} {this.GrandPrix} {this.Session}";
         public override string IcalendarLocation => $"{this.Location}";
         public override string IcalendarDescription => $"{this.Sponser}";
-        public override string FilePath => "MotoGP.ics";
 
         public override string Url => "https://www.motogp.com/en/calendar";
         public override string UrlPartial => "";
