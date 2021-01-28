@@ -24,7 +24,6 @@ namespace MotoiCal.Models
         public override string IcalendarSubject => $"{this.Series} {Sponser.CheckForExcludedWords(this.ExcludedWords).Before("Round")} {this.Session}";
         public override string IcalendarLocation => $"{this.Location}";
         public override string IcalendarDescription => $"{this.Sponser.Before("Round")}{this.GrandPrix}";
-        public override string FilePath => "WorldSBK.ics";
 
         public override string Url => "http://www.worldsbk.com/en/calendar";
         public override string UrlPartial => "http://www.worldsbk.com";
