@@ -86,6 +86,9 @@
     <Compile Include="Views\Settings\AboutContentView.xaml.cs">
       <DependentUpon>AboutContentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Settings\EmailSettingsContentView.xaml.cs">
+      <DependentUpon>EmailSettingsContentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settings\SettingsContentView.xaml.cs">
       <DependentUpon>SettingsContentView.xaml</DependentUpon>
     </Compile>
@@ -100,6 +103,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\AboutContentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\EmailSettingsContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
