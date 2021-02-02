@@ -142,7 +142,7 @@ namespace MotoiCal.ViewModels.Settings
         {
             this.buttonManagerModel.SetActiveButton(this.EmailParametersButtonStatus);
             this.SettingsContentView = new EmailSettingsContentView();
-            this.SettingsContentView.DataContext = new EmailSettingsContentView();
+            this.SettingsContentView.DataContext = new EmailSettingsContentViewModel();
         }
 
         private void About()
