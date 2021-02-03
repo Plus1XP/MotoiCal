@@ -43,7 +43,7 @@
                Margin="20,20,0,20"
                Content="Email Address:"/>
         <TextBox Grid.Column="1" Grid.Row="0"
-                 Text="test"
+                 Text="{Binding EmailAddress}"
                  Margin="5,20,0,20"/>
         <Button Grid.Column="2" Grid.Row="0"
                 Style="{StaticResource WindowButtonStyle}"
@@ -55,20 +55,24 @@
                       Margin="20,20,20,20"
                       Style="{StaticResource ToggleButtonStyle1}"
                       Content="Advanced"
-                      IsChecked="{Binding IsPracticeSaved}"/>
+                      IsChecked="{Binding IsAdvanced}"/>
         
         <Button Grid.Column="2" Grid.Row="1"
-                Visibility="Visible"
+                Visibility="{Binding IsAdvanced, Converter={StaticResource bool2VisibilityConverter}}"
                 Style="{StaticResource WindowButtonStyle}"
                 Content="Save"
                 Margin="0,20,20,20"/>
 
-        <TextBlock Grid.Column="0" Grid.Row="2" Visibility="Hidden"
+        <TextBlock Grid.Column="0" Grid.Row="2"
+                   Grid.ColumnSpan="2"
+                   Visibility="{Binding IsAdvanced, Converter={StaticResource invBool2VisibilityConverter}}"
                    Text="*Only enable advanced settings if you are using a private stmp server."
                    FontStyle="Italic"
                    Margin="20,0,20,0"/>
 
-        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Visibility="Visible">
+        <Grid Grid.Column="0" Grid.Row="2" 
+              Grid.ColumnSpan="3" 
+              Visibility="{Binding IsAdvanced, Converter={StaticResource bool2VisibilityConverter}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -85,39 +89,44 @@
 
 
             <Label Grid.Column="0" Grid.Row="0" 
-               Margin="20,0,0,0"
-               Content="SMTP Host:"/>
+                   Margin="20,0,0,0"
+                   Content="SMTP Host:"/>
             <TextBox Grid.Column="1" Grid.Row="0" 
-                 TextWrapping="Wrap"
-                 Margin="5,0,20,0"/>
+                     TextWrapping="Wrap"
+                     Margin="5,0,20,0"
+                     Text="{Binding Host}"/>
 
             <Label Grid.Column="0" Grid.Row="1" 
                    Margin="20,0,0,0"
                    Content="SMTP Port:"/>
             <TextBox Grid.Column="1" Grid.Row="1" 
                      TextWrapping="Wrap"
-                     Margin="5,0,20,0"/>
+                     Margin="5,0,20,0"
+                     Text="{Binding Port}"/>
 
             <Label Grid.Column="0" Grid.Row="2" 
                    Margin="20,0,0,0"
                    Content="Sender:"/>
             <TextBox Grid.Column="1" Grid.Row="2" 
                      TextWrapping="Wrap"
-                     Margin="5,0,20,0"/>
+                     Margin="5,0,20,0"
+                     Text="{Binding Sender}"/>
 
             <Label Grid.Column="0" Grid.Row="3" 
                    Margin="20,0,0,0"
                    Content="User Name:"/>
             <TextBox Grid.Column="1" Grid.Row="3"
                      TextWrapping="Wrap"
-                     Margin="5,0,20,0"/>
+                     Margin="5,0,20,0"
+                     Text="{Binding UserName}"/>
 
             <Label Grid.Column="0" Grid.Row="4" 
                    Margin="20,0,0,0"
                    Content="API Key:"/>
             <TextBox Grid.Column="1" Grid.Row="4" 
                      TextWrapping="Wrap"
-                     Margin="5,0,0,0"/>
+                     Margin="5,0,0,0"
+                     Text="{Binding Password}"/>
         </Grid>
     </Grid>
 </UserControl>
