@@ -63,10 +63,12 @@
     <Compile Include="Interfaces\IRaceTimeTable.cs" />
     <Compile Include="Interfaces\IDocExclusionList.cs" />
     <Compile Include="Interfaces\IDocNodePath.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\FileManagement\EncryptionManager.cs" />
     <Compile Include="Models\FileManagement\XMLManager.cs" />
     <Compile Include="Models\MotorSport.cs" />
     <Compile Include="Models\ScraperModel.cs" />
+    <Compile Include="Models\XMLEmailConfigDataModel.cs" />
     <Compile Include="Models\XMLSettingsDataModel.cs" />
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\ScraperService.cs" />
