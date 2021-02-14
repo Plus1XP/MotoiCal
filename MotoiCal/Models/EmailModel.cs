@@ -27,6 +27,12 @@ namespace MotoiCal.Models
             set => emailConfig.SetTextBoxValueAsInt("Port", value);
         }
 
+        public bool IsSSL
+        {
+            get => emailConfig.GetToggleValueAsBool("SSL");
+            set => emailConfig.SetToggleValueAsBool("SSL", value);
+        }
+
         public string UserName
         {
             get => emailConfig.GetTextBoxValue("UserName");
