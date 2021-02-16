@@ -71,6 +71,7 @@
     <Compile Include="Models\XMLEmailConfigDataModel.cs" />
     <Compile Include="Models\XMLSettingsDataModel.cs" />
     <Compile Include="Services\CalendarService.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\ScraperService.cs" />
     <Compile Include="Utilities\Commands\AsyncCommand.cs" />
     <Compile Include="Utilities\Commands\SyncCommand.cs" />
