@@ -81,6 +81,7 @@
     <Compile Include="Utilities\Converters\BooleanToVisibilityConveter.cs" />
     <Compile Include="Utilities\Converters\DateToRGBConverter.cs" />
     <Compile Include="Utilities\Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Utilities\Converters\TextToPasswordCharConverter.cs" />
     <Compile Include="ViewModels\Settings\AboutContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\EmailSettingsContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\Formula1SettingsContentViewModel.cs" />
