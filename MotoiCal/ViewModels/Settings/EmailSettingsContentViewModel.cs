@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MotoiCal.Models;
+using MotoiCal.Models.FileManagement;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,16 +12,14 @@ namespace MotoiCal.ViewModels.Settings
 {
     class EmailSettingsContentViewModel : INotifyPropertyChanged
     {
+        EmailModel emailModel;
+
         private bool isAdvanced;
-        private string emailAddress;
-        private string host;
-        private int port;
-        private string sender;
-        private string userName;
-        private string password;
 
         public EmailSettingsContentViewModel()
         {
+            emailModel = new EmailModel();
+
             IsAdvanced = false;
         }
 
@@ -40,11 +41,11 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return emailAddress; 
+                return emailModel.To; 
             }
             set 
             { 
-                emailAddress = value;
+                emailModel.To = value;
                 OnPropertyChanged("EmailAdress");
             }
         }
@@ -54,11 +55,11 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return host; 
+                return emailModel.Host; 
             }
             set 
             { 
-                host = value;
+                emailModel.Host = value;
                 OnPropertyChanged("Host");
             }
         }
@@ -67,12 +68,25 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return port; 
+                return emailModel.Port; 
             }
             set 
             { 
-                port = value;
+                emailModel.Port = value;
                 OnPropertyChanged("Port");
+            }
+        }
+
+        public bool IsSSL
+        {
+            get
+            {
+                return emailModel.IsSSL;
+            }
+            set
+            {
+                emailModel.IsSSL = value;
+                OnPropertyChanged("IsSSL");
             }
         }
 
@@ -80,11 +94,11 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return sender; 
+                return emailModel.From; 
             }
             set 
             { 
-                sender = value;
+                emailModel.From = value;
                 OnPropertyChanged("Sender");
             }
         }
@@ -93,11 +107,11 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return userName; 
+                return emailModel.UserName; 
             }
             set 
             { 
-                userName = value;
+                emailModel.UserName = value;
                 OnPropertyChanged("UserName");
             }
         }
@@ -105,12 +119,12 @@ namespace MotoiCal.ViewModels.Settings
         public string Password
         {
             get 
-            { 
-                return password; 
+            {
+                return emailModel.Password; 
             }
             set 
             { 
-                password = value;
+                emailModel.Password = value;
                 OnPropertyChanged("Password");
             }
         }
