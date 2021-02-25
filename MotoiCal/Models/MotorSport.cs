@@ -10,7 +10,7 @@ namespace MotoiCal.Models
     {
         public MotorSport()
         {
-
+            this.FilePath = $"{SportIdentifier}.ics";
         }
 
         public MotorSport(IRaceTimeTable motorSport)
@@ -47,7 +47,7 @@ namespace MotoiCal.Models
         public abstract string IcalendarDescription { get; }
         public bool IsEventReminderActive { get; set; }
         public int EventReminderMins { get; set; }
-        public abstract string FilePath { get; }
+        public string FilePath { get; }
 
         // IScraperPath
         public virtual List<string> EventUrlList { get; set; }

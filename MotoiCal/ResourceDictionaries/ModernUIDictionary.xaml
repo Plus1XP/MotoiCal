@@ -6,8 +6,9 @@
     <!--<BooleanToVisibilityConverter x:Key="bool2VisibilityConverter" />-->
     <converter:BooleanToRGBConverter x:Key="bool2RGBConverter"/>
     <converter:BooleanToVisibilityConveter x:Key="bool2VisibilityConverter"/>
+    <converter:InverseBooleanToVisibilityConveter x:Key="invBool2VisibilityConverter"/>
     <converter:DateToRGBConverter x:Key="date2RGBConverter"/>
-
+    <converter:TextToPasswordCharConverter x:Key="TextToPasswordCharConverter"/>
 
     <Color x:Key="DarkGreyBackGround">#FF2D2D30</Color>
     <Color x:Key="LightGreyHighLight">#FF3F3F41</Color>

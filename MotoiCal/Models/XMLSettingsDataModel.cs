@@ -14,6 +14,8 @@ namespace MotoiCal.Models
         private const string motoGP_Location = "/Settings/MotoGP/Event";
         private const string worldSBK_Location = "/Settings/WorldSBK/Event";
 
+        private const int defaultEventTriggerValue = 15;
+
         private string motorSportChildElementPath;
 
         private XMLManager xmlManager;
@@ -43,7 +45,7 @@ namespace MotoiCal.Models
 
         public int GetToggleSwitchValueAsInt(string eventName)
         {
-            return this.xmlManager.GetNodeAttributeValueAsInt(settings_Data_Location, this.motorSportChildElementPath, "Name", eventName, "Tirgger");
+            return this.xmlManager.GetNodeAttributeValueAsInt(settings_Data_Location, this.motorSportChildElementPath, "Name", eventName, "Saved") ?? defaultEventTriggerValue;
         }
 
         public void SetToggleSwitchValueAsInt(string eventName, int eventValue)

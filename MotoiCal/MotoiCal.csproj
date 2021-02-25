@@ -39,6 +39,9 @@
       <HintPath>..\packages\HtmlAgilityPack.1.11.17\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,11 +66,15 @@
     <Compile Include="Interfaces\IRaceTimeTable.cs" />
     <Compile Include="Interfaces\IDocExclusionList.cs" />
     <Compile Include="Interfaces\IDocNodePath.cs" />
+    <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\FileManagement\EncryptionManager.cs" />
     <Compile Include="Models\FileManagement\XMLManager.cs" />
     <Compile Include="Models\MotorSport.cs" />
     <Compile Include="Models\ScraperModel.cs" />
+    <Compile Include="Models\XMLEmailConfigDataModel.cs" />
     <Compile Include="Models\XMLSettingsDataModel.cs" />
     <Compile Include="Services\CalendarService.cs" />
+    <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\ScraperService.cs" />
     <Compile Include="Utilities\Commands\AsyncCommand.cs" />
     <Compile Include="Utilities\Commands\SyncCommand.cs" />
@@ -76,7 +83,10 @@
     <Compile Include="Models\ButtonManagement\ButtonStatusModel.cs" />
     <Compile Include="Utilities\Converters\BooleanToVisibilityConveter.cs" />
     <Compile Include="Utilities\Converters\DateToRGBConverter.cs" />
+    <Compile Include="Utilities\Converters\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Utilities\Converters\TextToPasswordCharConverter.cs" />
     <Compile Include="ViewModels\Settings\AboutContentViewModel.cs" />
+    <Compile Include="ViewModels\Settings\EmailSettingsContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\Formula1SettingsContentViewModel.cs" />
     <Compile Include="ViewModels\MotorSportContentViewModel.cs" />
     <Compile Include="ViewModels\Settings\SettingsViewModel.cs" />
@@ -85,6 +95,9 @@
     <Compile Include="ViewModels\Settings\WorldSBKSettingsContentViewModel.cs" />
     <Compile Include="Views\Settings\AboutContentView.xaml.cs">
       <DependentUpon>AboutContentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings\EmailSettingsContentView.xaml.cs">
+      <DependentUpon>EmailSettingsContentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Settings\SettingsContentView.xaml.cs">
       <DependentUpon>SettingsContentView.xaml</DependentUpon>
@@ -100,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Settings\AboutContentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings\EmailSettingsContentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -154,6 +171,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="apikey">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -164,10 +184,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Settings.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <Resource Include="apikey.txt" />
+    <Resource Include="EmailConfig.xml" />
+    <Resource Include="Settings.xml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

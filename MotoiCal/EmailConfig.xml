@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Settings>
+  <Email>
+    <Config Name="EmailAddress" Saved="" />
+    <Config Name="Host" Saved="smtp.sendgrid.net" />
+    <Config Name="Port" Saved="587" />
+    <Config Name="Sender" Saved="motoical@outlook.com" />
+    <Config Name="UserName" Saved="apikey" />
+    <Config Name="Password" Saved="" />
+  </Email>
+</Settings>

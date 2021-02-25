@@ -19,6 +19,7 @@ namespace MotoiCal.ViewModels.Settings
         private Formula1SettingsContentViewModel formula1SettingsContent;
         private MotoGPSettingsContentViewModel motoGPSettingsContent;
         private WorldSBKSettingsContentViewModel worldSBKSettingsContent;
+        private EmailSettingsContentViewModel emailSettingsContent;
 
         private AboutContentViewModel aboutContent;
 
@@ -37,21 +38,25 @@ namespace MotoiCal.ViewModels.Settings
             this.FormulaOneParametersCommand = new SyncCommand(this.FormulaOneParameters);
             this.MotoGPParametersCommand = new SyncCommand(this.MotoGPParameters);
             this.WorldSBKParametersCommand = new SyncCommand(this.WorldSBKParameters);
+            this.EmailParametersCommand = new SyncCommand(this.EmailParameters);
             this.AboutCommand = new SyncCommand(this.About);
 
             this.buttonManagerModel.AddButton(this.FormulaOneParametersButtonStatus = new ButtonStatusModel("Formula One", "Configure Formula One Search Settings"));
             this.buttonManagerModel.AddButton(this.MotoGPParametersButtonStatus = new ButtonStatusModel("MotoGP", "Configure MotoGP Search Settings"));
             this.buttonManagerModel.AddButton(this.WorldSBKParametersButtonStatus = new ButtonStatusModel("World SBK", "Configure World SBK Search Settings"));
+            this.buttonManagerModel.AddButton(this.EmailParametersButtonStatus = new ButtonStatusModel("Email", "Configure Email Settings"));
             this.buttonManagerModel.AddButton(this.AboutButtonStatus = new ButtonStatusModel("About", "Display information about this program"));
 
             this.FormulaOneParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.FormulaOneButtonActive);
             this.MotoGPParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.MotoGPButtonActive);
             this.WorldSBKParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.WorldSBKButtonActive);
+            this.EmailParametersButtonStatus.ButtonStatusChanged = new EventHandler(this.EmailButtonActive);
             this.AboutButtonStatus.ButtonStatusChanged = new EventHandler(this.AboutButtonActive);
 
             this.formula1SettingsContent = new Formula1SettingsContentViewModel(this.formula1);
             this.motoGPSettingsContent = new MotoGPSettingsContentViewModel(this.motoGP);
             this.worldSBKSettingsContent = new WorldSBKSettingsContentViewModel(this.worldSBK);
+            this.emailSettingsContent = new EmailSettingsContentViewModel();
             this.aboutContent = new AboutContentViewModel();
         }
 
@@ -60,11 +65,13 @@ namespace MotoiCal.ViewModels.Settings
         public SyncCommand FormulaOneParametersCommand { get; }
         public SyncCommand MotoGPParametersCommand { get; }
         public SyncCommand WorldSBKParametersCommand { get; }
+        public SyncCommand EmailParametersCommand { get; }
         public SyncCommand AboutCommand { get; }
 
         public ButtonStatusModel FormulaOneParametersButtonStatus { get; set; }
         public ButtonStatusModel MotoGPParametersButtonStatus { get; set; }
         public ButtonStatusModel WorldSBKParametersButtonStatus { get; set; }
+        public ButtonStatusModel EmailParametersButtonStatus { get; set; }
         public ButtonStatusModel AboutButtonStatus { get; set; }
 
         public FrameworkElement SettingsContentView
@@ -100,6 +107,11 @@ namespace MotoiCal.ViewModels.Settings
             this.OnPropertyChanged("WorldSBKParametersButtonStatus");
         }
 
+        private void EmailButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("EmailParametersButtonStatus");
+        }
+
         private void AboutButtonActive(object sender, EventArgs e)
         {
             this.OnPropertyChanged("AboutButtonStatus");
@@ -124,6 +136,13 @@ namespace MotoiCal.ViewModels.Settings
             this.buttonManagerModel.SetActiveButton(this.WorldSBKParametersButtonStatus);
             this.SettingsContentView = new SettingsContentView();
             this.SettingsContentView.DataContext = this.worldSBKSettingsContent;
+        }
+
+        private void EmailParameters()
+        {
+            this.buttonManagerModel.SetActiveButton(this.EmailParametersButtonStatus);
+            this.SettingsContentView = new EmailSettingsContentView();
+            this.SettingsContentView.DataContext = new EmailSettingsContentViewModel();
         }
 
         private void About()

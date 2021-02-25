@@ -7,6 +7,7 @@ using MotoiCal.Utilities.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,8 @@ namespace MotoiCal.ViewModels
 
         private CalendarService calendarService;
 
+        EmailService emailService;
+
         private MotorSport motorSportSeries;
 
         private string resultsText;
@@ -37,16 +40,19 @@ namespace MotoiCal.ViewModels
 
             this.scraperService = new ScraperService();
             this.calendarService = new CalendarService();
+            this.emailService = new EmailService();
 
             this.buttonManagerModel = new ButtonManagerModel();
 
             this.FindRacesCommand = new AsyncCommand(async () => await this.FindRaces());
+            this.EmailIcalCommand = new AsyncCommand(async () => await this.EmailIcal());
             this.GenerateIcalCommand = new SyncCommand(this.GenerateIcal);
             this.ReadIcalCommand = new SyncCommand(this.ReadIcal);
             this.DeleteIcalCommand = new SyncCommand(this.DeleteIcal);
 
-            this.buttonManagerModel.AddButton(this.FindRacesButtonStatus = new ButtonStatusModel("Find Races", "Find Available Races"));
-            this.buttonManagerModel.AddButton(this.GenerateIcalButtonStatus = new ButtonStatusModel("Generate Ical", "Generate a ICS File"));
+            this.buttonManagerModel.AddButton(this.FindRacesButtonStatus = new ButtonStatusModel("Find Races", "Find Available Races")); // Search races
+            this.buttonManagerModel.AddButton(this.EmailIcalButtonStatus = new ButtonStatusModel("Email Ical", "email the ICS file"));
+            this.buttonManagerModel.AddButton(this.GenerateIcalButtonStatus = new ButtonStatusModel("Generate Ical", "Generate a ICS File")); // Genertae Local Ical
             this.buttonManagerModel.AddButton(this.ReadIcalButtonStatus = new ButtonStatusModel("Read Ical", "Read a ICS File"));
             this.buttonManagerModel.AddButton(this.DeleteIcalButtonStatus = new ButtonStatusModel("Delete Ical", "Delete a ICS File"));
 
@@ -59,11 +65,13 @@ namespace MotoiCal.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         public AsyncCommand FindRacesCommand { get; }
+        public SyncCommand EmailIcalCommand { get; }
         public SyncCommand GenerateIcalCommand { get; }
         public SyncCommand ReadIcalCommand { get; }
         public SyncCommand DeleteIcalCommand { get; }
 
         public ButtonStatusModel FindRacesButtonStatus { get; set; }
+        public ButtonStatusModel EmailIcalButtonStatus { get; set; }
         public ButtonStatusModel GenerateIcalButtonStatus { get; set; }
         public ButtonStatusModel ReadIcalButtonStatus { get; set; }
         public ButtonStatusModel DeleteIcalButtonStatus { get; set; }
@@ -110,6 +118,11 @@ namespace MotoiCal.ViewModels
             this.OnPropertyChanged("FindRacesButtonStatus");
         }
 
+        private void EmailIcalButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("EmailIcalButtonStatus");
+        }
+
         private void GenerateIcalButtonActive(object sender, EventArgs e)
         {
             this.OnPropertyChanged("GenerateIcalButtonStatus");
@@ -129,10 +142,23 @@ namespace MotoiCal.ViewModels
         {
             this.buttonManagerModel.SetActiveButton(this.FindRacesButtonStatus);
             this.IsSearching = true;
-            this.timeTable = new ObservableCollection<IRaceTimeTable>();
-            await Task.Run(() => this.timeTable = this.scraperService.GetSeriesCollection(this.motorSportSeries));
+            if (timeTable == null)
+            {
+                this.timeTable = new ObservableCollection<IRaceTimeTable>();
+                await Task.Run(() => this.timeTable = this.scraperService.GetSeriesCollection(this.motorSportSeries));
+
+                // Generate after finding to avoid confusion.
+                this.calendarService.GenerateiCalendar(this.motorSportSeries, this.timeTable);
+            }
+
             this.ResultsText = ViewRaceTimeTable(timeTable);
             this.IsSearching = false;
+        }
+
+        private async Task EmailIcal()
+        {
+            this.buttonManagerModel.SetActiveButton(this.EmailIcalButtonStatus);
+            this.ResultsText = await emailService.SendCalendar(motorSportSeries);
         }
 
         private void GenerateIcal()

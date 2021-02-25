@@ -21,7 +21,7 @@ namespace MotoiCal.Services
             //if (motorSport.EventUrlList?.Any() != true)
             if (timeTable == null)
             {
-                return "Cannot generate ICS file without first showing dates";
+                return "Find Races to generate Ical file.";
             }
             else
             {
