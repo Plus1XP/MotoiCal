@@ -5,7 +5,7 @@ namespace MotoiCal.Interfaces
     public interface IDocExclusionList
     {
         string[] ExcludedUrls { get; }
-        string[] ExcludedClasses { get; }
+        List<string> ExcludedClasses { get; set; }
         List<string> ExcludedEvents { get; set; }
         string[] ExcludedWords { get; }
     }
