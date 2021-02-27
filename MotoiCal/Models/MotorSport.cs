@@ -72,9 +72,7 @@ namespace MotoiCal.Models
         {
         };
 
-        public virtual string[] ExcludedClasses => new string[]
-        {
-        };
+        public virtual List<string> ExcludedClasses { get; set; } = new List<string>();
 
         public virtual List<string> ExcludedEvents { get; set; } = new List<string>();
 
