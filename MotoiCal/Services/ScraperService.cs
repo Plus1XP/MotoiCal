@@ -73,11 +73,11 @@ namespace MotoiCal.Services
                     string url = string.IsNullOrEmpty(scrapedUrl) ? "URL not found" : $"{motorSport.UrlPartial}{scrapedUrl}";
                     if (this.scraperModel.CheckExcludedURL(motorSport, url) || url.Equals("URL not found"))
                     {
-                        Debug.WriteLine($"Skipped: {url}");
+                        Debug.WriteLine($"URL Skipped: {url}");
                         continue;
                     }
                     motorSport.EventUrlList.Add(url);
-                    Debug.WriteLine($"Added: {url}");
+                    Debug.WriteLine($"URL Added: {url}");
                 }
             }
             else
@@ -104,6 +104,13 @@ namespace MotoiCal.Services
             // MotoGP are updated the schedule, eventsTable loads 404.
             if (doc.DocumentNode.SelectNodes(motorSport.EventTablePath) != null)
             {
+                // Tempary Fix to Remove Qatar Test Session, as MotoGP Didnt Add test in URL!
+                if (motorSport.SportIdentifier == MotorSportID.MotoGP && motorSport.Sponser.Contains(motorSport.ExcludedUrls[0]))
+                {
+                    Debug.WriteLine($"Event Skipped: {motorSport.Sponser}");
+                    return;
+                }
+
                 foreach (HtmlNode node in doc.DocumentNode.SelectNodes(motorSport.EventTablePath))
                 {
                     bool isEventSkipped = false;
@@ -117,8 +124,10 @@ namespace MotoiCal.Services
 
                     if (!isEventSkipped)
                     {
+                        Debug.WriteLine($"Session Added: {motorSport.Series} / {motorSport.Session}");
                         this.AddTimeTableToCollection(motorSport, timeTable);
                     }
+                    Debug.WriteLineIf(isEventSkipped == true, $"Session Skipped: {motorSport.Series} / {motorSport.Session}");
                 }
             }
             else
