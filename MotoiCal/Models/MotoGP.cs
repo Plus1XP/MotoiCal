@@ -45,10 +45,10 @@ namespace MotoiCal.Models
             "Test",
         };
 
-        public override string[] ExcludedClasses => new string[]
+        public override List<string> ExcludedClasses {get;set;} = new List<string>()
         {
-            "Moto2",
-            "Moto3",
+            //"Moto2",
+            //"Moto3",
             "MotoE"
         };
 

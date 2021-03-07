@@ -65,6 +65,8 @@ namespace MotoiCal.ViewModels.Settings
         public abstract bool IsQualifyingVisible { get; }
         public abstract bool IsSuperpoleVisible { get; }
         public abstract bool IsWarmupVisible { get; }
+        public abstract bool IsMoto2Visible { get; }
+        public abstract bool IsMoto3Visible { get; }
         public abstract bool IsBehindTheScenesVisible { get; }
         public abstract bool IsAfterTheFlagVisible { get; }
 
@@ -266,6 +268,19 @@ namespace MotoiCal.ViewModels.Settings
             else
             {
                 this.motorSportSeries.ExcludedEvents.Remove(eventName);
+            }
+        }
+
+        // Sets if the Series is scraped or not depending on bool value.
+        public void UpdateIMotorSportSeriesList(bool isEventEnabled, string eventName)
+        {
+            if (!isEventEnabled)
+            {
+                this.motorSportSeries.ExcludedClasses.Add(eventName);
+            }
+            else
+            {
+                this.motorSportSeries.ExcludedClasses.Remove(eventName);
             }
         }
 

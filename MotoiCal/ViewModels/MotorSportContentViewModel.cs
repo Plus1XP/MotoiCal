@@ -190,7 +190,7 @@ namespace MotoiCal.ViewModels
 
             foreach (IRaceTimeTable motorSport in timeTable)
             {
-                string header = motorSport.Sponser == currentSponser ? string.Empty : motorSport.DisplayHeader;
+                string header = motorSport.Sponser == currentSponser ? string.Empty : FilterMotoGPHeaders(motorSport.DisplayHeader);
                 string body = motorSport.DisplayBody;
 
                 results.Append(header);
@@ -199,6 +199,13 @@ namespace MotoiCal.ViewModels
                 currentSponser = motorSport.Sponser;
             }
             return results.ToString();
+        }
+
+        // Sorry about readability. >_< due to ViewRaceTimeTable using first item in list (usually moto2),
+        // this removes moto2 or moto3 from header and replaces with motoGP.
+        private string FilterMotoGPHeaders(string header)
+        {
+            return header.Contains("Moto2") ? header.Replace("Moto2", "MotoGP") : header.Contains("Moto3") ? header.Replace("Moto3", "MotoGP") : header;
         }
     }
 }

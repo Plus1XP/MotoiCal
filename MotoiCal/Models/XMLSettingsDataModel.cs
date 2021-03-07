@@ -131,6 +131,16 @@ namespace MotoiCal.Models
             motoGPRaceEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "True";
             motoGPChildElement.AppendChild(motoGPRaceEventSubChildElement);
 
+            XmlNode motoGPMoto2EventSubChildElement = settingsDoc.CreateElement("Event");
+            motoGPMoto2EventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Moto2";
+            motoGPMoto2EventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "False";
+            motoGPChildElement.AppendChild(motoGPMoto2EventSubChildElement);
+
+            XmlNode motoGPMoto3EventSubChildElement = settingsDoc.CreateElement("Event");
+            motoGPMoto3EventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Moto3";
+            motoGPMoto3EventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "False";
+            motoGPChildElement.AppendChild(motoGPMoto3EventSubChildElement);
+
             XmlNode motoGPBehindTheScenesEventSubChildElement = settingsDoc.CreateElement("Event");
             motoGPBehindTheScenesEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "BehindTheScenes";
             motoGPBehindTheScenesEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "False";
