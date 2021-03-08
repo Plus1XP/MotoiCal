@@ -13,11 +13,18 @@ namespace MotoiCal.Models.FileManagement
 {
     public class EncryptionManager : FileManager
     {
-        public string Password { get; }
+        public string EncryptionKey { get; }
+
+        private byte[] EncryptionIV;
 
         public EncryptionManager()
         {
-            Password = "EnterEncryptionPasswordHere";
+            // Create Secret Key
+            EncryptionKey = "EnterEncryptionPasswordHere";
+
+            // Create Secret IV
+            EncryptionIV = new byte[16] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
+
         }
 
         public string EncryptString(string password, string plainString)
@@ -71,7 +78,7 @@ namespace MotoiCal.Models.FileManagement
             byte[] key = mySHA256.ComputeHash(Encoding.ASCII.GetBytes(password));
 
             // Create secret IV
-            byte[] iv = new byte[16] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
+            //byte[] iv = new byte[16] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
 
             // Instantiate a new Aes object to perform string symmetric encryption
             Aes encryptor = Aes.Create();
@@ -83,7 +90,7 @@ namespace MotoiCal.Models.FileManagement
 
             // Set key and IV
             encryptor.Key = key;
-            encryptor.IV = iv;
+            encryptor.IV = EncryptionIV;
 
             return encryptor;
         }

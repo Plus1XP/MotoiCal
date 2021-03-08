@@ -63,14 +63,14 @@ namespace MotoiCal.Models
 
         public string GetEncryptedTextBoxValue(string eventName)
         {
-            return encryptionManager.DecryptString(encryptionManager.Password,
+            return encryptionManager.DecryptString(encryptionManager.EncryptionKey,
                 this.xmlManager.GetNodeAttributeValueAsString(emailConfig_Data_Location, config_Location, "Name", eventName, "Saved"));
         }
 
         public void SetEncryptedTextBoxValue(string eventName, string eventValue)
         {
             this.xmlManager.SetNodeAttributeValueFromString(emailConfig_Data_Location, config_Location, "Name", eventName, "Saved",
-                encryptionManager.EncryptString(encryptionManager.Password, eventValue));
+                encryptionManager.EncryptString(encryptionManager.EncryptionKey, eventValue));
         }
 
         private void CreateXMLSettingsDocument(string dataLocation)

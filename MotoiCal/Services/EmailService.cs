@@ -54,7 +54,7 @@ namespace MotoiCal.Services
         {
             if (emailModel.From.Equals(apiSender) && string.IsNullOrWhiteSpace(emailModel.Password))
             {
-                return encryptionManager.GetDecryptedFileContents(encryptionManager.Password, apiKeyLocation);
+                return encryptionManager.GetDecryptedFileContents(encryptionManager.EncryptionKey, apiKeyLocation);
             }
             else
             {
@@ -82,7 +82,7 @@ namespace MotoiCal.Services
             this.mail.SubjectEncoding = System.Text.Encoding.UTF8;
 
             // Set body-message & encoding.
-            this.mail.Body = "Happy Viewing!";
+            this.mail.Body = "Calendar attached";
             this.mail.BodyEncoding = System.Text.Encoding.UTF8;
 
             // Set attachment.

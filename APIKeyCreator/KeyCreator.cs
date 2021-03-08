@@ -28,7 +28,7 @@ namespace APIKeyCreator
         public string CreateApiKeyFile()
         {
             string apikey = encryptionManager.ReadFromFile(plainTextFilePath);
-            encryptionManager.EncryptFile(encryptionManager.Password, apikey, encryptedFilePath);
+            encryptionManager.EncryptFile(encryptionManager.EncryptionKey, apikey, encryptedFilePath);
             return "Key File Created";
         }
     }
