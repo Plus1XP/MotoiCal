@@ -1,10 +1,5 @@
 ﻿using MotoiCal.Models.FileManagement;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace MotoiCal.Models
@@ -22,7 +17,7 @@ namespace MotoiCal.Models
         public XMLEmailConfigDataModel()
         {
             this.xmlManager = new XMLManager();
-            encryptionManager = new EncryptionManager();
+            this.encryptionManager = new EncryptionManager();
 
             if (!this.xmlManager.IsFileCreated(emailConfig_Data_Location))
             {
@@ -53,24 +48,24 @@ namespace MotoiCal.Models
 
         public bool GetToggleValueAsBool(string eventName)
         {
-            return xmlManager.GetNodeAttributeValueAsBool(emailConfig_Data_Location, config_Location, "Name", eventName, "Saved");
+            return this.xmlManager.GetNodeAttributeValueAsBool(emailConfig_Data_Location, config_Location, "Name", eventName, "Saved");
         }
 
         public void SetToggleValueAsBool(string eventName, bool eventValue)
         {
-            xmlManager.SetNodeAttributeValueFromBool(emailConfig_Data_Location, config_Location, "Name", eventName, "Saved", eventValue);
+            this.xmlManager.SetNodeAttributeValueFromBool(emailConfig_Data_Location, config_Location, "Name", eventName, "Saved", eventValue);
         }
 
         public string GetEncryptedTextBoxValue(string eventName)
         {
-            return encryptionManager.DecryptString(encryptionManager.EncryptionKey,
+            return this.encryptionManager.DecryptString(this.encryptionManager.EncryptionKey,
                 this.xmlManager.GetNodeAttributeValueAsString(emailConfig_Data_Location, config_Location, "Name", eventName, "Saved"));
         }
 
         public void SetEncryptedTextBoxValue(string eventName, string eventValue)
         {
             this.xmlManager.SetNodeAttributeValueFromString(emailConfig_Data_Location, config_Location, "Name", eventName, "Saved",
-                encryptionManager.EncryptString(encryptionManager.EncryptionKey, eventValue));
+                this.encryptionManager.EncryptString(this.encryptionManager.EncryptionKey, eventValue));
         }
 
         private void CreateXMLSettingsDocument(string dataLocation)

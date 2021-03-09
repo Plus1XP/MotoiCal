@@ -10,7 +10,7 @@ namespace MotoiCal.Models
     {
         public MotorSport()
         {
-            this.FilePath = $"{SportIdentifier}.ics";
+            this.FilePath = $"{this.SportIdentifier}.ics";
         }
 
         public MotorSport(IRaceTimeTable motorSport)

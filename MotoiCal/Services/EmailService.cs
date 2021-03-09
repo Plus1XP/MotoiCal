@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-
-using MotoiCal.Interfaces;
+﻿using MotoiCal.Interfaces;
 using MotoiCal.Models;
 using MotoiCal.Models.FileManagement;
+
+using System;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace MotoiCal.Services
 {
@@ -34,9 +30,9 @@ namespace MotoiCal.Services
 
         public async Task<string> SendCalendar<T>(T motorSport) where T : IRaceTimeTable, ICalendarEvent // Add another method with options for attachment etc
         {
-            if (encryptionManager.IsFileCreated(motorSport.FilePath))
+            if (this.encryptionManager.IsFileCreated(motorSport.FilePath))
             {
-                if (string.IsNullOrWhiteSpace(emailModel.To))
+                if (string.IsNullOrWhiteSpace(this.emailModel.To))
                 {
                     return "Email address is empty, Configure in settings.";
                 }
@@ -52,30 +48,30 @@ namespace MotoiCal.Services
 
         private string GetApiOrUserPassword()
         {
-            if (emailModel.From.Equals(apiSender) && string.IsNullOrWhiteSpace(emailModel.Password))
+            if (this.emailModel.From.Equals(this.apiSender) && string.IsNullOrWhiteSpace(this.emailModel.Password))
             {
-                return encryptionManager.GetDecryptedFileContents(encryptionManager.EncryptionKey, apiKeyLocation);
+                return this.encryptionManager.GetDecryptedFileContents(this.encryptionManager.EncryptionKey, this.apiKeyLocation);
             }
             else
             {
-                return emailModel.Password;
+                return this.emailModel.Password;
             }
         }
 
         private async Task<string> Email<T>(T motorSport) where T : IRaceTimeTable, ICalendarEvent
         {
             // Set smtp-client with basicAuthentication.
-            this.smtp.Host = emailModel.Host;
-            this.smtp.Port = emailModel.Port;
+            this.smtp.Host = this.emailModel.Host;
+            this.smtp.Port = this.emailModel.Port;
 
             // Must be set before NetworkCredentials.
             this.smtp.UseDefaultCredentials = false;
-            this.smtp.Credentials = new NetworkCredential(emailModel.UserName, GetApiOrUserPassword());
-            this.smtp.EnableSsl = emailModel.IsSSL;
+            this.smtp.Credentials = new NetworkCredential(this.emailModel.UserName, this.GetApiOrUserPassword());
+            this.smtp.EnableSsl = this.emailModel.IsSSL;
 
             // Add from & to mailaddresses.
-            this.mail.From = new MailAddress(emailModel.From);
-            this.mail.To.Add(emailModel.To);
+            this.mail.From = new MailAddress(this.emailModel.From);
+            this.mail.To.Add(this.emailModel.To);
 
             // Set subject & encoding.
             this.mail.Subject = $"{motorSport.SportIdentifier} Calendar";
