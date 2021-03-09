@@ -11,15 +11,14 @@ namespace MotoiCal.ViewModels.Settings
         private StringBuilder aboutText;
         private StringBuilder easterEggText;
 
-        private readonly string versionName = "Hammertime";
+        private readonly string versionName = "TheRedBaron";
 
-        private readonly string easterEggDate = "15 Nov"; //DD MMM, YYYY
+        private readonly string easterEggDate = "2 Jun"; //DD MMM, YYYY
         private readonly string easterEggTitle = "\nDid you know?\n";
-        private readonly string easterEggMessage = "On this day, Lewis Hamilton became the joint most successful driver of all time with seven titles.\n" +
-                                                    "His famous catchphrase came from his engineer's need to circumvent the heavy radio restrictions of the time.\n" +
-                                                     "\"You can’t just say, push, because, you don’t know how hard, do you want to put a number on it?\n" +
-                                                      "Let’s just use a different language. So, for an all-out lap it turned out to be Hammertime.\n" +
-                                                       "Lewis suggested ‘put the hammer down’ but I thought that doesn’t sound right..\"";
+        private readonly string easterEggMessage = "On this day, Michael Schumacher won his first Ferrari victory.\n" +
+            "At the start of the race, he lost several positions due to a clutch problem.\n" +
+            "Despite this, he produced a stunning drive in torrential rain and earned the nickname \"Rain Master\"." +
+            "All while finising the 1996 Spanish GP 45 Seconds ahead of Jean Alesi.";
 
         public AboutContentViewModel()
         {
@@ -36,7 +35,7 @@ namespace MotoiCal.ViewModels.Settings
 
         public string VersionName => $"\"{this.versionName}\"";
 
-        public string AppURL => $"https://www.github.com/aleuts";
+        public string AppURL => $"https://www.github.com/Plus1XP";
 
         public string AboutText => this.GetAboutText();
 

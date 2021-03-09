@@ -145,7 +145,6 @@
     <Compile Include="Models\Formula1.cs" />
     <Compile Include="Models\MotoGP.cs" />
     <Compile Include="Enums\MotorSportID.cs" />
-    <Compile Include="Services\Scraper.cs" />
     <Compile Include="Utilities\Helpers\SubstringExtentions.cs" />
     <Compile Include="Models\WorldSBK.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
