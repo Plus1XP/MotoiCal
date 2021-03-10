@@ -7,7 +7,6 @@ using MotoiCal.Utilities.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -142,7 +141,7 @@ namespace MotoiCal.ViewModels
         {
             this.buttonManagerModel.SetActiveButton(this.FindRacesButtonStatus);
             this.IsSearching = true;
-            if (timeTable == null)
+            if (this.timeTable == null)
             {
                 this.timeTable = new ObservableCollection<IRaceTimeTable>();
                 await Task.Run(() => this.timeTable = this.scraperService.GetSeriesCollection(this.motorSportSeries));
@@ -151,14 +150,14 @@ namespace MotoiCal.ViewModels
                 this.calendarService.GenerateiCalendar(this.motorSportSeries, this.timeTable);
             }
 
-            this.ResultsText = ViewRaceTimeTable(timeTable);
+            this.ResultsText = this.ViewRaceTimeTable(this.timeTable);
             this.IsSearching = false;
         }
 
         private async Task EmailIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.EmailIcalButtonStatus);
-            this.ResultsText = await emailService.SendCalendar(motorSportSeries);
+            this.ResultsText = await this.emailService.SendCalendar(this.motorSportSeries);
         }
 
         private void GenerateIcal()
@@ -190,7 +189,7 @@ namespace MotoiCal.ViewModels
 
             foreach (IRaceTimeTable motorSport in timeTable)
             {
-                string header = motorSport.Sponser == currentSponser ? string.Empty : FilterMotoGPHeaders(motorSport.DisplayHeader);
+                string header = motorSport.Sponser == currentSponser ? string.Empty : this.FilterMotoGPHeaders(motorSport.DisplayHeader);
                 string body = motorSport.DisplayBody;
 
                 results.Append(header);

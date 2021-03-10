@@ -1,12 +1,6 @@
 ﻿using MotoiCal.Models;
-using MotoiCal.Models.FileManagement;
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MotoiCal.ViewModels.Settings
 {
@@ -18,21 +12,21 @@ namespace MotoiCal.ViewModels.Settings
 
         public EmailSettingsContentViewModel()
         {
-            emailModel = new EmailModel();
+            this.emailModel = new EmailModel();
 
-            IsAdvanced = false;
+            this.IsAdvanced = false;
         }
 
         public bool IsAdvanced
         {
             get 
             { 
-                return isAdvanced; 
+                return this.isAdvanced; 
             }
             set 
-            { 
-                isAdvanced = value;
-                OnPropertyChanged("IsAdvanced");
+            {
+                this.isAdvanced = value;
+                this.OnPropertyChanged("IsAdvanced");
             }
         }
 
@@ -41,12 +35,12 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return emailModel.To; 
+                return this.emailModel.To; 
             }
             set 
-            { 
-                emailModel.To = value;
-                OnPropertyChanged("EmailAdress");
+            {
+                this.emailModel.To = value;
+                this.OnPropertyChanged("EmailAdress");
             }
         }
 
@@ -55,12 +49,12 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return emailModel.Host; 
+                return this.emailModel.Host; 
             }
             set 
-            { 
-                emailModel.Host = value;
-                OnPropertyChanged("Host");
+            {
+                this.emailModel.Host = value;
+                this.OnPropertyChanged("Host");
             }
         }
 
@@ -68,12 +62,12 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return emailModel.Port; 
+                return this.emailModel.Port; 
             }
             set 
-            { 
-                emailModel.Port = value;
-                OnPropertyChanged("Port");
+            {
+                this.emailModel.Port = value;
+                this.OnPropertyChanged("Port");
             }
         }
 
@@ -81,12 +75,12 @@ namespace MotoiCal.ViewModels.Settings
         {
             get
             {
-                return emailModel.IsSSL;
+                return this.emailModel.IsSSL;
             }
             set
             {
-                emailModel.IsSSL = value;
-                OnPropertyChanged("IsSSL");
+                this.emailModel.IsSSL = value;
+                this.OnPropertyChanged("IsSSL");
             }
         }
 
@@ -94,12 +88,12 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return emailModel.From; 
+                return this.emailModel.From; 
             }
             set 
-            { 
-                emailModel.From = value;
-                OnPropertyChanged("Sender");
+            {
+                this.emailModel.From = value;
+                this.OnPropertyChanged("Sender");
             }
         }
 
@@ -107,12 +101,12 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             { 
-                return emailModel.UserName; 
+                return this.emailModel.UserName; 
             }
             set 
-            { 
-                emailModel.UserName = value;
-                OnPropertyChanged("UserName");
+            {
+                this.emailModel.UserName = value;
+                this.OnPropertyChanged("UserName");
             }
         }
 
@@ -120,12 +114,12 @@ namespace MotoiCal.ViewModels.Settings
         {
             get 
             {
-                return emailModel.Password; 
+                return this.emailModel.Password; 
             }
             set 
-            { 
-                emailModel.Password = value;
-                OnPropertyChanged("Password");
+            {
+                this.emailModel.Password = value;
+                this.OnPropertyChanged("Password");
             }
         }
 

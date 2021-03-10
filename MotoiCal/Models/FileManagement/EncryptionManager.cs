@@ -1,13 +1,7 @@
-﻿using MotoiCal.Models.FileManagement;
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MotoiCal.Models.FileManagement
 {
@@ -20,55 +14,55 @@ namespace MotoiCal.Models.FileManagement
         public EncryptionManager()
         {
             // Create Secret Key
-            EncryptionKey = "EnterEncryptionPasswordHere";
+            this.EncryptionKey = "EnterEncryptionPasswordHere";
 
             // Create Secret IV
-            EncryptionIV = new byte[16] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
+            this.EncryptionIV = new byte[16] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0 };
 
         }
 
         public string EncryptString(string password, string plainString)
         {
-            Aes encryptor = ConfigureEncryptor(password);
-            byte[] plainBytes = ConvertPlainStringToBytes(plainString);
-            byte[] cipherBytes = Encrypt(encryptor, plainBytes);
-            return ConvertCipherBytesToString(cipherBytes);
+            Aes encryptor = this.ConfigureEncryptor(password);
+            byte[] plainBytes = this.ConvertPlainStringToBytes(plainString);
+            byte[] cipherBytes = this.Encrypt(encryptor, plainBytes);
+            return this.ConvertCipherBytesToString(cipherBytes);
         }
 
         public string DecryptString(string password, string cipherString)
         {
-            Aes encryptor = ConfigureEncryptor(password);
-            byte[] cipherBytes = ConvertCipherStringToBytes(cipherString);
-            byte[] plainBytes = Decrypt(encryptor, cipherBytes);
-            return ConvertPlainBytesToString(plainBytes);
+            Aes encryptor = this.ConfigureEncryptor(password);
+            byte[] cipherBytes = this.ConvertCipherStringToBytes(cipherString);
+            byte[] plainBytes = this.Decrypt(encryptor, cipherBytes);
+            return this.ConvertPlainBytesToString(plainBytes);
         }
 
         public void EncryptFile(string password, string plainString, string filePath)
         {
-            Aes encryptor = ConfigureEncryptor(password);
-            byte[] plainBytes = ConvertPlainStringToBytes(plainString);
-            byte[] cipherBytes = Encrypt(encryptor, plainBytes);
-            string cipherString = ConvertCipherBytesToString(cipherBytes);
-            SaveToFile(filePath, cipherString);
+            Aes encryptor = this.ConfigureEncryptor(password);
+            byte[] plainBytes = this.ConvertPlainStringToBytes(plainString);
+            byte[] cipherBytes = this.Encrypt(encryptor, plainBytes);
+            string cipherString = this.ConvertCipherBytesToString(cipherBytes);
+            this.SaveToFile(filePath, cipherString);
         }
 
         public void DecryptFile(string password, string filePath)
         {
-            Aes encryptor = ConfigureEncryptor(password);
-            string cipherText = ReadFromFile(filePath);
-            byte[] cipherBytes = ConvertCipherStringToBytes(cipherText);
-            byte[] plainBytes = Decrypt(encryptor, cipherBytes);
-            string plainString = ConvertPlainBytesToString(plainBytes);
-            SaveToFile(filePath, plainString);
+            Aes encryptor = this.ConfigureEncryptor(password);
+            string cipherText = this.ReadFromFile(filePath);
+            byte[] cipherBytes = this.ConvertCipherStringToBytes(cipherText);
+            byte[] plainBytes = this.Decrypt(encryptor, cipherBytes);
+            string plainString = this.ConvertPlainBytesToString(plainBytes);
+            this.SaveToFile(filePath, plainString);
         }
 
         public string GetDecryptedFileContents(string password, string filePath)
         {
-            Aes encryptor = ConfigureEncryptor(password);
-            string cipherText = ReadFromFile(filePath);
-            byte[] raw = ConvertCipherStringToBytes(cipherText);
-            byte[] final = Decrypt(encryptor, raw);
-            return ConvertPlainBytesToString(final);
+            Aes encryptor = this.ConfigureEncryptor(password);
+            string cipherText = this.ReadFromFile(filePath);
+            byte[] raw = this.ConvertCipherStringToBytes(cipherText);
+            byte[] final = this.Decrypt(encryptor, raw);
+            return this.ConvertPlainBytesToString(final);
         }
 
         private Aes ConfigureEncryptor(string password)
@@ -90,7 +84,7 @@ namespace MotoiCal.Models.FileManagement
 
             // Set key and IV
             encryptor.Key = key;
-            encryptor.IV = EncryptionIV;
+            encryptor.IV = this.EncryptionIV;
 
             return encryptor;
         }

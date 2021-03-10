@@ -1,11 +1,7 @@
 ﻿using MotoiCal.Models.FileManagement;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace APIKeyCreator
 {
@@ -20,15 +16,15 @@ namespace APIKeyCreator
         private string encryptedFilePath;
         public KeyCreator()
         {
-            encryptionManager = new EncryptionManager();
-            plainTextFilePath = $"{projectDirectory}\\motoical\\apikey.txt";
-            encryptedFilePath = $"{projectDirectory}\\motoical\\apikey";
+            this.encryptionManager = new EncryptionManager();
+            this.plainTextFilePath = $"{this.projectDirectory}\\motoical\\apikey.txt";
+            this.encryptedFilePath = $"{this.projectDirectory}\\motoical\\apikey";
     }
 
         public string CreateApiKeyFile()
         {
-            string apikey = encryptionManager.ReadFromFile(plainTextFilePath);
-            encryptionManager.EncryptFile(encryptionManager.EncryptionKey, apikey, encryptedFilePath);
+            string apikey = this.encryptionManager.ReadFromFile(this.plainTextFilePath);
+            this.encryptionManager.EncryptFile(this.encryptionManager.EncryptionKey, apikey, this.encryptedFilePath);
             return "Key File Created";
         }
     }
