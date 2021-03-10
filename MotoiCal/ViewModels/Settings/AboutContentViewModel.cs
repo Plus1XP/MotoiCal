@@ -16,9 +16,9 @@ namespace MotoiCal.ViewModels.Settings
         private readonly string easterEggDate = "2 Jun"; //DD MMM, YYYY
         private readonly string easterEggTitle = "\nDid you know?\n";
         private readonly string easterEggMessage = "On this day, Michael Schumacher won his first Ferrari victory.\n" +
-            "At the start of the race, he lost several positions due to a clutch problem.\n" +
-            "Despite this, he produced a stunning drive in torrential rain and earned the nickname \"Rain Master\"." +
-            "All while finising the 1996 Spanish GP 45 Seconds ahead of Jean Alesi.";
+                                                        "At the start of the race, he lost several positions due to a clutch problem.\n" +
+                                                            "Despite this, he produced a stunning drive in torrential rain and earned the nickname \"Rain Master\".\n" +
+                                                                "All while finising the 1996 Spanish GP 45 Seconds ahead of Jean Alesi.";
 
         public AboutContentViewModel()
         {
