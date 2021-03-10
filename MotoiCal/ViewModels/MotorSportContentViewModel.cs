@@ -1,41 +1,57 @@
-﻿using System;
+﻿using MotoiCal.Interfaces;
+using MotoiCal.Models;
+using MotoiCal.Models.ButtonManagement;
+using MotoiCal.Services;
+using MotoiCal.Utilities.Commands;
+
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-
-using MotoiCal.Models;
 
 namespace MotoiCal.ViewModels
 {
     class MotorSportContentViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<IRaceTimeTable> timeTable;
+
         private ButtonManagerModel buttonManagerModel;
 
-        private Scraper scraper;
+        private ScraperService scraperService;
 
-        private IMotorSport motorSportSeries;
+        private CalendarService calendarService;
+
+        EmailService emailService;
+
+        private MotorSport motorSportSeries;
 
         private string resultsText;
 
         private bool isSearching;
 
-        public MotorSportContentViewModel(IMotorSport motorSportSeries)
+        public MotorSportContentViewModel(MotorSport motorSportSeries)
         {
             this.motorSportSeries = motorSportSeries;
 
             this.IsSearching = false;
 
-            this.scraper = new Scraper();
+            this.scraperService = new ScraperService();
+            this.calendarService = new CalendarService();
+            this.emailService = new EmailService();
 
             this.buttonManagerModel = new ButtonManagerModel();
 
-            this.FindRacesCommand = new AsynchronousRelayCommand(async () => await this.FindRaces());
-            this.GenerateIcalCommand = new SynchronousRelayCommand(this.GenerateIcal);
-            this.ReadIcalCommand = new SynchronousRelayCommand(this.ReadIcal);
-            this.DeleteIcalCommand = new SynchronousRelayCommand(this.DeleteIcal);
+            this.FindRacesCommand = new AsyncCommand(async () => await this.FindRaces());
+            this.EmailIcalCommand = new AsyncCommand(async () => await this.EmailIcal());
+            this.GenerateIcalCommand = new SyncCommand(this.GenerateIcal);
+            this.ReadIcalCommand = new SyncCommand(this.ReadIcal);
+            this.DeleteIcalCommand = new SyncCommand(this.DeleteIcal);
 
-            this.buttonManagerModel.AddButton(this.FindRacesButtonStatus = new ButtonStatusModel("Find Races", "Find Available Races"));
-            this.buttonManagerModel.AddButton(this.GenerateIcalButtonStatus = new ButtonStatusModel("Generate Ical", "Generate a ICS File"));
+            this.buttonManagerModel.AddButton(this.FindRacesButtonStatus = new ButtonStatusModel("Find Races", "Find Available Races")); // Search races
+            this.buttonManagerModel.AddButton(this.EmailIcalButtonStatus = new ButtonStatusModel("Email Ical", "email the ICS file"));
+            this.buttonManagerModel.AddButton(this.GenerateIcalButtonStatus = new ButtonStatusModel("Generate Ical", "Generate a ICS File")); // Genertae Local Ical
             this.buttonManagerModel.AddButton(this.ReadIcalButtonStatus = new ButtonStatusModel("Read Ical", "Read a ICS File"));
             this.buttonManagerModel.AddButton(this.DeleteIcalButtonStatus = new ButtonStatusModel("Delete Ical", "Delete a ICS File"));
 
@@ -47,12 +63,14 @@ namespace MotoiCal.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public SynchronousRelayCommand FindRacesCommand { get; }
-        public SynchronousRelayCommand GenerateIcalCommand { get; }
-        public SynchronousRelayCommand ReadIcalCommand { get; }
-        public SynchronousRelayCommand DeleteIcalCommand { get; }
+        public AsyncCommand FindRacesCommand { get; }
+        public SyncCommand EmailIcalCommand { get; }
+        public SyncCommand GenerateIcalCommand { get; }
+        public SyncCommand ReadIcalCommand { get; }
+        public SyncCommand DeleteIcalCommand { get; }
 
         public ButtonStatusModel FindRacesButtonStatus { get; set; }
+        public ButtonStatusModel EmailIcalButtonStatus { get; set; }
         public ButtonStatusModel GenerateIcalButtonStatus { get; set; }
         public ButtonStatusModel ReadIcalButtonStatus { get; set; }
         public ButtonStatusModel DeleteIcalButtonStatus { get; set; }
@@ -99,6 +117,11 @@ namespace MotoiCal.ViewModels
             this.OnPropertyChanged("FindRacesButtonStatus");
         }
 
+        private void EmailIcalButtonActive(object sender, EventArgs e)
+        {
+            this.OnPropertyChanged("EmailIcalButtonStatus");
+        }
+
         private void GenerateIcalButtonActive(object sender, EventArgs e)
         {
             this.OnPropertyChanged("GenerateIcalButtonStatus");
@@ -118,33 +141,70 @@ namespace MotoiCal.ViewModels
         {
             this.buttonManagerModel.SetActiveButton(this.FindRacesButtonStatus);
             this.IsSearching = true;
-            //        string unalteredMainHeader = this.MainHeader;
-            await Task.Run(() => this.ResultsText = this.scraper.ScrapeEventsToiCalendar(this.motorSportSeries));
-            //        this.OnPropertyChanged("MainHeader");
-            //        this.MainHeader += $" {this.scraper.RacesFound(this.MotorSportSeries)} Races";
+            if (this.timeTable == null)
+            {
+                this.timeTable = new ObservableCollection<IRaceTimeTable>();
+                await Task.Run(() => this.timeTable = this.scraperService.GetSeriesCollection(this.motorSportSeries));
+
+                // Generate after finding to avoid confusion.
+                this.calendarService.GenerateiCalendar(this.motorSportSeries, this.timeTable);
+            }
+
+            this.ResultsText = this.ViewRaceTimeTable(this.timeTable);
             this.IsSearching = false;
-            //        MessageBox.Show($"DONE! \nScraped {this.scraper.RacesFound(this.MotorSportSeries)} Races \nScraped {this.scraper.EventsFound()} Events", $"{unalteredMainHeader}");
+        }
+
+        private async Task EmailIcal()
+        {
+            this.buttonManagerModel.SetActiveButton(this.EmailIcalButtonStatus);
+            this.ResultsText = await this.emailService.SendCalendar(this.motorSportSeries);
         }
 
         private void GenerateIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.GenerateIcalButtonStatus);
-            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.GenerateiCalendar(this.motorSportSeries, this.motorSportSeries.IsEventReminderActive, this.motorSportSeries.EventReminderMins); // Pass in event reminders
+            this.ResultsText = this.calendarService.GenerateiCalendar(this.motorSportSeries, this.timeTable);
         }
 
         private void ReadIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.ReadIcalButtonStatus);
-            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.ReadiCalendar(this.motorSportSeries);
+            this.ResultsText = this.calendarService.ReadiCalendar(this.motorSportSeries);
         }
 
         private void DeleteIcal()
         {
             this.buttonManagerModel.SetActiveButton(this.DeleteIcalButtonStatus);
-            //this.SubHeader = $"{this.motorSportSeries.FilePath}";
-            this.ResultsText = this.scraper.DeleteiCalendar(this.motorSportSeries);
+            this.ResultsText = this.calendarService.DeleteiCalendar(this.motorSportSeries);
+        }
+
+        // currentSponser is initially set to null, then each loop is given the current Sponser value.
+        // This allows the stringbuilder to check if it needs to update header.
+        // * This was changed from checking again the currentGrandPrix in the COVID update due to multiple races at the same GrandPrix.
+        public string ViewRaceTimeTable(ObservableCollection<IRaceTimeTable> timeTable)
+        {
+            StringBuilder results = new StringBuilder();
+
+            string currentSponser = null;
+
+            foreach (IRaceTimeTable motorSport in timeTable)
+            {
+                string header = motorSport.Sponser == currentSponser ? string.Empty : this.FilterMotoGPHeaders(motorSport.DisplayHeader);
+                string body = motorSport.DisplayBody;
+
+                results.Append(header);
+                results.AppendLine(body);
+
+                currentSponser = motorSport.Sponser;
+            }
+            return results.ToString();
+        }
+
+        // Sorry about readability. >_< due to ViewRaceTimeTable using first item in list (usually moto2),
+        // this removes moto2 or moto3 from header and replaces with motoGP.
+        private string FilterMotoGPHeaders(string header)
+        {
+            return header.Contains("Moto2") ? header.Replace("Moto2", "MotoGP") : header.Contains("Moto3") ? header.Replace("Moto3", "MotoGP") : header;
         }
     }
 }

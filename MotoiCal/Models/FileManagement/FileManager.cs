@@ -1,7 +1,6 @@
 ﻿using System.IO;
-using System.Text;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Models.FileManagement
 {
     public class FileManager
     {
@@ -9,9 +8,19 @@ namespace MotoiCal.Models
         {
         }
 
+        public bool IsFolderCreated(string folderPath)
+        {
+            return Directory.Exists(folderPath);
+        }
+
         public bool IsFileCreated(string filePath)
         {
-            return File.Exists(filePath) ? true : false;
+            return File.Exists(filePath);
+        }
+
+        public void CreateFolder(string folderPath)
+        {
+            Directory.CreateDirectory(folderPath);
         }
 
         public void CreateFile(string filePath)
@@ -22,6 +31,11 @@ namespace MotoiCal.Models
         public void ClearFile(string filePath)
         {
             File.WriteAllText(filePath, string.Empty);
+        }
+
+        public void DeleteFolder(string folderPath)
+        {
+            Directory.Delete(folderPath);
         }
 
         public void DeleteFile(string filePath)
@@ -38,12 +52,7 @@ namespace MotoiCal.Models
 
         public string ReadFromFile(string filePath)
         {
-            StringBuilder text = new StringBuilder();
-            foreach (string line in File.ReadLines(filePath))
-            {
-                text.AppendLine(line);
-            }
-            return text.ToString();
+            return File.ReadAllText(filePath);
         }
     }
 }

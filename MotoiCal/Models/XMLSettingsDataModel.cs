@@ -1,4 +1,8 @@
-﻿using System;
+﻿using MotoiCal.Enums;
+using MotoiCal.Interfaces;
+using MotoiCal.Models.FileManagement;
+
+using System;
 using System.Xml;
 
 namespace MotoiCal.Models
@@ -10,11 +14,13 @@ namespace MotoiCal.Models
         private const string motoGP_Location = "/Settings/MotoGP/Event";
         private const string worldSBK_Location = "/Settings/WorldSBK/Event";
 
+        private const int defaultEventTriggerValue = 15;
+
         private string motorSportChildElementPath;
 
         private XMLManager xmlManager;
 
-        public XMLSettingsDataModel(IMotorSport motorSportSeries)
+        public XMLSettingsDataModel(IRaceTimeTable motorSportSeries)
         {
             this.xmlManager = new XMLManager();
 
@@ -39,7 +45,7 @@ namespace MotoiCal.Models
 
         public int GetToggleSwitchValueAsInt(string eventName)
         {
-            return this.xmlManager.GetNodeAttributeValueAsInt(settings_Data_Location, this.motorSportChildElementPath, "Name", eventName, "Tirgger");
+            return this.xmlManager.GetNodeAttributeValueAsInt(settings_Data_Location, this.motorSportChildElementPath, "Name", eventName, "Saved") ?? defaultEventTriggerValue;
         }
 
         public void SetToggleSwitchValueAsInt(string eventName, int eventValue)
@@ -47,7 +53,7 @@ namespace MotoiCal.Models
             this.xmlManager.SetNodeAttributeValueFromInt(settings_Data_Location, this.motorSportChildElementPath, "Name", eventName, "Saved", eventValue);
         }
 
-        private string GetMotorSportSeriesChildElementPath(IMotorSport motorSportSeries)
+        private string GetMotorSportSeriesChildElementPath(IRaceTimeTable motorSportSeries)
         {
             switch (motorSportSeries.SportIdentifier)
             {
@@ -124,6 +130,16 @@ namespace MotoiCal.Models
             motoGPRaceEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Race";
             motoGPRaceEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "True";
             motoGPChildElement.AppendChild(motoGPRaceEventSubChildElement);
+
+            XmlNode motoGPMoto2EventSubChildElement = settingsDoc.CreateElement("Event");
+            motoGPMoto2EventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Moto2";
+            motoGPMoto2EventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "False";
+            motoGPChildElement.AppendChild(motoGPMoto2EventSubChildElement);
+
+            XmlNode motoGPMoto3EventSubChildElement = settingsDoc.CreateElement("Event");
+            motoGPMoto3EventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "Moto3";
+            motoGPMoto3EventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Saved")).Value = "False";
+            motoGPChildElement.AppendChild(motoGPMoto3EventSubChildElement);
 
             XmlNode motoGPBehindTheScenesEventSubChildElement = settingsDoc.CreateElement("Event");
             motoGPBehindTheScenesEventSubChildElement.Attributes.Append(settingsDoc.CreateAttribute("Name")).Value = "BehindTheScenes";

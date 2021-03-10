@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Models.FileManagement
 {
     public class CalendarManager
     {

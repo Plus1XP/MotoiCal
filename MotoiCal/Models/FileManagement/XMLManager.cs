@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Xml;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Models.FileManagement
 {
     public class XMLManager : FileManager
     {
         public XMLManager()
         {
 
+        }
+
+        public string GetNodeAttributeValueAsString(string xmlFileLoaction, string nodePath, string nodeName, string nodeValue, string attributeName)
+        {
+            XmlNodeList nodeList = this.LoadNodeList(this.LoadXmlDocument(xmlFileLoaction), nodePath);
+            XmlAttribute elementAttribute = this.GetAttributeFromNodeList(nodeList, nodeName, nodeValue, attributeName);
+
+            return this.GetAttributeValueAsString(elementAttribute);
         }
 
         public bool GetNodeAttributeValueAsBool(string xmlFileLoaction, string nodePath, string nodeName, string nodeValue, string attributeName)
@@ -18,12 +26,21 @@ namespace MotoiCal.Models
             return this.GetAttributeValueAsBool(elementAttribute);
         }
 
-        public int GetNodeAttributeValueAsInt(string xmlFileLoaction, string nodePath, string nodeName, string nodeValue, string attributeName)
+        public int? GetNodeAttributeValueAsInt(string xmlFileLoaction, string nodePath, string nodeName, string nodeValue, string attributeName)
         {
             XmlNodeList nodeList = this.LoadNodeList(this.LoadXmlDocument(xmlFileLoaction), nodePath);
             XmlAttribute elementAttribute = this.GetAttributeFromNodeList(nodeList, nodeName, nodeValue, attributeName);
 
             return this.GetAttributeValueAsInt(elementAttribute);
+        }
+
+        public void SetNodeAttributeValueFromString(string xmlFileLocation, string nodePath, string nodeName, string nodeValue, string attributeName, string attributeValue)
+        {
+            XmlDocument xmlDoc = this.LoadXmlDocument(xmlFileLocation);
+            XmlNodeList nodeList = this.LoadNodeList(xmlDoc, nodePath);
+            XmlNode node = this.GetNodeFromNodeList(nodeList, nodeName, nodeValue);
+            this.SetNodeAttributeFromString(node, attributeName, attributeValue);
+            this.SaveXmlDocument(xmlDoc, xmlFileLocation);
         }
 
         public void SetNodeAttributeValueFromBool(string xmlFileLocation, string nodePath, string nodeName, string nodeValue, string attributeName, bool attributeValue)
@@ -46,10 +63,17 @@ namespace MotoiCal.Models
 
         public XmlDocument LoadXmlDocument(string xmlFileLoaction)
         {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(this.ReadFromFile(xmlFileLoaction));
-
-            return xmlDoc;
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(this.ReadFromFile(xmlFileLoaction));
+                return xmlDoc;
+            }
+            catch (XmlException)
+            {
+                // If file contains unreadable XML then return a new empty XmlDoc
+                return new XmlDocument();
+            }
         }
 
         public XmlNodeList LoadNodeList(XmlDocument xmlDoc, string nodePath)
@@ -60,9 +84,9 @@ namespace MotoiCal.Models
             return nodeList;
         }
 
-        public void SaveXmlDocument(XmlDocument xmlDoc, string xmlFileLoaction)
+        public void SaveXmlDocument(XmlDocument xmlDoc, string xmlFileLocation)
         {
-            xmlDoc.Save(xmlFileLoaction);
+            xmlDoc.Save(xmlFileLocation);
         }
 
         public XmlNode GetNodeFromNodeList(XmlNodeList nodeList, string nodeName, string nodeValue)
@@ -100,11 +124,12 @@ namespace MotoiCal.Models
             return attribute.Value;
         }
 
-        public int GetAttributeValueAsInt(XmlAttribute attribute)
+        // Add default value incase int can not be determined from XML.
+        public int? GetAttributeValueAsInt(XmlAttribute attribute, int? defaultValue = null)
         {
             if (attribute == null)
             {
-                return 15;
+                return defaultValue;
             }
 
             return Convert.ToInt32(attribute.Value);

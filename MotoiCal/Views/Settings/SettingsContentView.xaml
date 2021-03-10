@@ -17,50 +17,63 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <ToggleButton Grid.Column="0" Grid.Row="0" 
                       Margin="20,20,20,20"
                       Style="{StaticResource ToggleButtonStyle1}"
+                      Content="Moto 2"
+                      IsChecked="{Binding IsMoto2Saved}"
+                      Visibility="{Binding IsMoto2Visible, Converter={StaticResource bool2VisibilityConverter}}"/>
+        <ToggleButton Grid.Column="1" Grid.Row="0" 
+                      Margin="20,20,20,20"
+                      Style="{StaticResource ToggleButtonStyle1}"
+                      Content="Moto 3"
+                      IsChecked="{Binding IsMoto3Saved}"
+                      Visibility="{Binding IsMoto3Visible, Converter={StaticResource bool2VisibilityConverter}}"/>
+        <ToggleButton Grid.Column="0" Grid.Row="1" 
+                      Margin="20,20,20,20"
+                      Style="{StaticResource ToggleButtonStyle1}"
                       Content="Practice Session"
                       IsChecked="{Binding IsPracticeSaved}"/>
-        <ToggleButton Grid.Column="1" Grid.Row="0"
+        <ToggleButton Grid.Column="1" Grid.Row="1"
                       Margin="20,20,20,20"
                       Style="{StaticResource ToggleButtonStyle1}"
                       Content="Qualifying Session"
                       IsChecked="{Binding IsQualifyingSaved}"
                       Visibility="{Binding IsQualifyingVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
-        <ToggleButton Grid.Column="0" Grid.Row="1" 
+        <ToggleButton Grid.Column="0" Grid.Row="2" 
                       Margin="20,20,20,20"
                       Style="{StaticResource ToggleButtonStyle1}"
                       Content="Superpole Session"
                       IsChecked="{Binding IsSuperpoleSaved}"
                       Visibility="{Binding IsSuperpoleVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
-        <ToggleButton Grid.Column="1" Grid.Row="1" 
+        <ToggleButton Grid.Column="1" Grid.Row="2" 
                       Margin="20,20,20,20"
                       Style="{StaticResource ToggleButtonStyle1}"
                       Content="Warm Up Session"
                       IsChecked="{Binding IsWarmUpSaved}"
                       Visibility="{Binding IsWarmupVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
-        <ToggleButton Grid.Column="0" Grid.Row="2" 
+        <ToggleButton Grid.Column="0" Grid.Row="3" 
                       Margin="20,20,20,20"
                       Style="{StaticResource ToggleButtonStyle1}"
                       Content="Race Session"
                       IsChecked="{Binding IsRaceSaved}"/>
-        <ToggleButton Grid.Column="0" Grid.Row="3" 
+        <ToggleButton Grid.Column="0" Grid.Row="4" 
                       Margin="20,20,20,20"
                       Style="{StaticResource ToggleButtonStyle1}"
                       Content="Behind the Scenes"
                       IsChecked="{Binding IsBehindTheScenesSaved}"
                       Visibility="{Binding IsBehindTheScenesVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
-        <ToggleButton Grid.Column="1" Grid.Row="3" 
+        <ToggleButton Grid.Column="1" Grid.Row="4" 
                       Margin="20,20,20,20"
                       Style="{StaticResource ToggleButtonStyle1}"
                       Content="After The Flag"
                       IsChecked="{Binding IsAfterTheFlagSaved}"
                       Visibility="{Binding IsAfterTheFlagVisible, Converter={StaticResource bool2VisibilityConverter}}"/>
-        
-        <StackPanel Grid.Column="0" Grid.Row="4"
+
+        <StackPanel Grid.Column="0" Grid.Row="5"
                     Margin="20,20,20,20">
             <ToggleButton x:Name="EventTrigger"
                           Style="{StaticResource ToggleButtonStyle1}"
@@ -68,7 +81,7 @@
                           IsChecked="{Binding IsEventReminderActive}"/>
         </StackPanel>
         
-        <StackPanel Grid.Column="1" Grid.Row="4"
+        <StackPanel Grid.Column="1" Grid.Row="5"
                     Margin="20,20,20,20"
                     IsEnabled="{Binding IsEventIntervalButtonEnabled}">
             <StackPanel Orientation="Horizontal">

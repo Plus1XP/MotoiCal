@@ -46,6 +46,14 @@
                         Foreground="{Binding WorldSBKParametersButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
                         HorizontalAlignment="Left"/>
                 <Button Style="{StaticResource WindowButtonStyle}"
+                        Content="{Binding EmailParametersButtonStatus.Name}"
+                        ToolTip="{Binding EmailParametersButtonStatus.ToolTip}"
+                        Command="{Binding EmailParametersCommand}"
+                        FontSize="20"
+                        Margin="0,5,0,5"
+                        Foreground="{Binding EmailParametersButtonStatus.ButtonActive, Converter={StaticResource bool2RGBConverter}}"
+                        HorizontalAlignment="Left"/>
+                <Button Style="{StaticResource WindowButtonStyle}"
                         Content="{Binding AboutButtonStatus.Name}"
                         ToolTip="{Binding AboutButtonStatus.ToolTip}"
                         Command="{Binding AboutCommand}"

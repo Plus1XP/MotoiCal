@@ -1,4 +1,4 @@
-﻿namespace MotoiCal.Models
+﻿namespace MotoiCal.Utilities.Helpers
 {
     static class SubstringExtensions
     {
@@ -54,6 +54,16 @@
                 return "";
             }
             return value.Substring(adjustedPosA);
+        }
+
+        // Removes unwanted strings from the Formula1 circuit names.
+        public static string CheckForExcludedWords(this string value, string[] excludedWords)
+        {
+            foreach (string word in excludedWords)
+            {
+                value = value.Replace(word, string.Empty);
+            }
+            return value.Trim();
         }
     }
 }

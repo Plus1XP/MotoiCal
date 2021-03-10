@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Interfaces
 {
-    public interface IMotorSport
+    public interface IDocNodePath
     {
-        MotorSportID SportIdentifier { get; }
-        string FilePath { get; }
+        List<string> EventUrlList { get; set; }
         string Url { get; }
         string UrlPartial { get; }
         string UrlPath { get; }
@@ -21,16 +20,5 @@ namespace MotoiCal.Models
         string EndDatePath { get; }
         string EndDateAttribute { get; }
         string GMTOffset { get; }
-
-        bool IsEventReminderActive { get; set; }
-        int EventReminderMins { get; set; }
-
-        List<string> EventUrlList { get; set; }
-        string[] ExcludedUrls { get; }
-        string[] ExcludedClasses { get; }
-        List<string> ExcludedEvents { get; set; }
-        string[] ExcludedWords { get; }
-
-        string CheckForExcludedWords(string stringToCheck);
     }
 }

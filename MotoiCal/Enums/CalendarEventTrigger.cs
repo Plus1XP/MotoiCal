@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace MotoiCal.Models
+namespace MotoiCal.Enums
 {
     public enum CalendarEventTrigger
     {

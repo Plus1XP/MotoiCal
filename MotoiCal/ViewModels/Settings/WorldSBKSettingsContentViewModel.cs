@@ -8,11 +8,13 @@ namespace MotoiCal.ViewModels.Settings
         private bool isSuperpoleSaved;
         private bool isWarmUpSaved;
 
-        public WorldSBKSettingsContentViewModel(IMotorSport motorSport) : base(motorSport)
+        public WorldSBKSettingsContentViewModel(MotorSport motorSport) : base(motorSport)
         {
             this.IsQualifyingVisible = false;
             this.IsSuperpoleVisible = true;
             this.IsWarmupVisible = true;
+            this.IsMoto2Visible = false;
+            this.IsMoto3Visible = false;
             this.IsBehindTheScenesVisible = false;
             this.IsAfterTheFlagVisible = false;
 
@@ -23,6 +25,8 @@ namespace MotoiCal.ViewModels.Settings
         public override bool IsQualifyingVisible { get; }
         public override bool IsSuperpoleVisible { get; }
         public override bool IsWarmupVisible { get; }
+        public override bool IsMoto2Visible { get; }
+        public override bool IsMoto3Visible { get; }
         public override bool IsBehindTheScenesVisible { get; }
         public override bool IsAfterTheFlagVisible { get; }
 

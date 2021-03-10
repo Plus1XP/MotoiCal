@@ -1,9 +1,14 @@
-﻿using System;
+﻿using MotoiCal.Enums;
 
-namespace MotoiCal.Models
+using System;
+
+namespace MotoiCal.Interfaces
 {
-    public interface IRaceData
+    public interface IRaceTimeTable
     {
+        MotorSportID SportIdentifier { get; }
+        string DisplayHeader { get; }
+        string DisplayBody { get; }
         string Series { get; set; }
         string GrandPrix { get; set; }
         string Session { get; set; }
@@ -14,10 +19,5 @@ namespace MotoiCal.Models
         DateTime End { get; set; }
         DateTime StartUTC { get; set; }
         DateTime EndUTC { get; set; }
-        string DisplayHeader { get; }
-        string DisplayBody { get; }
-        string IcalendarSubject { get; }
-        string IcalendarLocation { get; }
-        string IcalendarDescription { get; }
     }
 }
