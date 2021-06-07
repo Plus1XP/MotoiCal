@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("APIKeyCreator")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Generate encrypted key files.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("https://github.com/Plus1XP")]
 [assembly: AssemblyProduct("APIKeyCreator")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCopyright("Copyright ©  2021 Plus1XP")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

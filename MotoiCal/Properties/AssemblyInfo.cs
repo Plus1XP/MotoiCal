@@ -8,9 +8,9 @@ using System.Windows;
 [assembly: AssemblyTitle("MotoiCal")]
 [assembly: AssemblyDescription("Scrapes motorsport event dates and creates an ics file")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("https://github.com/aleuts")]
-[assembly: AssemblyProduct("Moto-iCal")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("https://github.com/Plus1XP")]
+[assembly: AssemblyProduct("MotoiCal")]
+[assembly: AssemblyCopyright("Copyright ©  2019 Plus1XP")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
